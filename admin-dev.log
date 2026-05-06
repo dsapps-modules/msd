@@ -1,0 +1,308 @@
+
+> quick_ecommerce@1.0.0 dev
+> next dev --turbopack --hostname 127.0.0.1 --port 3000
+
+▲ Next.js 16.2.2 (Turbopack)
+- Local:         http://127.0.0.1:3000
+- Network:       http://127.0.0.1:3000
+- Environments: .env.local
+✓ Ready in 1048ms
+Creating turbopack project { dir: 'c:\\xampp82\\htdocs\\kilocao\\admin', testMode: true }
+- Experiments (use with caution):
+  · staleTimes
+
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/en/seller..." notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" dir="ltr" suppressHydrationWarning={true}>
+                          <body
+-                           cz-shortcut-listen="true"
+                          >
+                  ...
+ 
+ GET /en/seller/dashboard 200 in 3.6s (next.js: 1927ms, proxy.ts: 416ms, generate-params: 1627ms, application-code: 1292ms)
+ GET /en/seller/signin 200 in 1726ms (next.js: 1286ms, proxy.ts: 16ms, generate-params: 1217ms, application-code: 424ms)
+ GET /en/admin/signin 200 in 2.0s (next.js: 1724ms, proxy.ts: 15ms, generate-params: 1586ms, application-code: 291ms)
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/en/seller..." notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" dir="ltr" suppressHydrationWarning={true}>
+                          <body
+-                           cz-shortcut-listen="true"
+                          >
+                  ...
+ 
+[browser] The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[browser] The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[browser] Image with src "/images/no-image.png" has "fill" and a height value of 0. This is likely because the parent element of the image has not been styled to have a set height.
+ GET /en/admin/signin 200 in 833ms (next.js: 158ms, proxy.ts: 158ms, generate-params: 61ms, application-code: 517ms)
+ GET /en 200 in 1442ms (next.js: 1103ms, proxy.ts: 24ms, generate-params: 911ms, application-code: 316ms)
+ GET /en 200 in 441ms (next.js: 47ms, proxy.ts: 23ms, generate-params: 20ms, application-code: 372ms)
+✓ Finished filesystem cache database compaction in 10.7s
+ GET /en/admin/signin 200 in 2.4s (next.js: 510ms, proxy.ts: 301ms, generate-params: 170ms, application-code: 1550ms)
+✓ Compiled in 16.1s
+ GET /en 200 in 1655ms (next.js: 552ms, proxy.ts: 282ms, generate-params: 114ms, application-code: 820ms)
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/en" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" dir="ltr" suppressHydrationWarning={true}>
+                          <body
+-                           cz-shortcut-listen="true"
+                          >
+                  ...
+ 
+ GET /en 200 in 46s (next.js: 597ms, proxy.ts: 508ms, generate-params: 129ms, application-code: 45s)
+ GET /en/admin/dashboard 200 in 3.6s (next.js: 2.6s, proxy.ts: 544ms, generate-params: 1755ms, application-code: 391ms)
+[browser] The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[browser] The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+ GET /en/admin/dashboard 200 in 1652ms (next.js: 286ms, proxy.ts: 173ms, generate-params: 69ms, application-code: 1193ms)
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/en/admin/..." notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" dir="ltr" suppressHydrationWarning={true}>
+                          <body
+-                           cz-shortcut-listen="true"
+                          >
+                  ...
+ 
+[browser] The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[browser] The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+○ Compiling /[locale]/admin/orders ...
+ GET /en/admin/orders 200 in 25.4s (next.js: 22.4s, proxy.ts: 13ms, generate-params: 1072ms, application-code: 2.9s)
+ GET /en/admin/orders 200 in 3.1s (next.js: 540ms, proxy.ts: 386ms, generate-params: 142ms, application-code: 2.2s)
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/en/admin/..." notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" dir="ltr" suppressHydrationWarning={true}>
+                          <body
+-                           cz-shortcut-listen="true"
+                          >
+                  ...
+ 
+○ Compiling /[locale]/admin/categories ...
+ GET /en/admin/categories 200 in 24.6s (next.js: 24.1s, proxy.ts: 24ms, generate-params: 1352ms, application-code: 508ms)
+[browser] Warning: `expandedRowRender` should not use with nested Table 
+ GET /en/admin/categories 200 in 3.2s (next.js: 616ms, proxy.ts: 682ms, generate-params: 108ms, application-code: 1882ms)
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/en/admin/..." notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" dir="ltr" suppressHydrationWarning={true}>
+                          <body
+-                           cz-shortcut-listen="true"
+                          >
+                  ...
+ 
+[browser] Warning: `expandedRowRender` should not use with nested Table 
+ GET /en/admin/categories 200 in 2.4s (next.js: 496ms, proxy.ts: 482ms, generate-params: 171ms, application-code: 1406ms)
+[browser] Warning: `expandedRowRender` should not use with nested Table 
+○ Compiling /[locale]/admin/categories/add-category ...
+ GET /en/admin/categories/add-category 200 in 20.6s (next.js: 20.0s, proxy.ts: 23ms, generate-params: 1391ms, application-code: 628ms)
+ GET /en/admin/categories/add-category 200 in 333ms (next.js: 107ms, proxy.ts: 47ms, generate-params: 18ms, application-code: 179ms)
+✓ Finished writing to filesystem cache in 48s
+ GET /en 200 in 2.3s (next.js: 747ms, proxy.ts: 98ms, generate-params: 222ms, application-code: 1485ms)
+ GET /en 200 in 429ms (next.js: 139ms, proxy.ts: 30ms, generate-params: 206µs, application-code: 260ms)
+ GET /en 200 in 1312ms (next.js: 250ms, proxy.ts: 380ms, generate-params: 82ms, application-code: 682ms)

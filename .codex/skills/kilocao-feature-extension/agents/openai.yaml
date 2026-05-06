@@ -1,0 +1,3 @@
+display_name: Kilocao Feature Extension
+short_description: Planejar features cross-app com contratos claros e impacto controlado.
+default_prompt: Use esta skill para desenhar e implementar novas features no Kilocao considerando backend Laravel, app Flutter, painel admin e testes.
