@@ -1,0 +1,3 @@
+{
+  "/[locale]/api/paytm/route": "app/[locale]/api/paytm/route.js"
+}
