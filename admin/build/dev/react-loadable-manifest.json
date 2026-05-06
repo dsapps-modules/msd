@@ -1,0 +1,44 @@
+{
+  "..\\node_modules\\@tanstack\\query-devtools\\build\\dev.js -> ./DevtoolsComponent/NXRPVNXJ.js": {
+    "id": "..\\node_modules\\@tanstack\\query-devtools\\build\\dev.js -> ./DevtoolsComponent/NXRPVNXJ.js",
+    "files": [
+      "static/chunks/_app-pages-browser_node_modules_tanstack_query-devtools_build_DevtoolsComponent_NXRPVNXJ_js.js"
+    ]
+  },
+  "..\\node_modules\\@tanstack\\query-devtools\\build\\dev.js -> ./DevtoolsPanelComponent/RXFVSJH2.js": {
+    "id": "..\\node_modules\\@tanstack\\query-devtools\\build\\dev.js -> ./DevtoolsPanelComponent/RXFVSJH2.js",
+    "files": [
+      "static/chunks/_app-pages-browser_node_modules_tanstack_query-devtools_build_DevtoolsPanelComponent_RXFVSJH2_js.js"
+    ]
+  },
+  "..\\node_modules\\next\\dist\\client\\dev\\hot-reloader\\app\\web-socket.js -> @vercel/turbopack-ecmascript-runtime/browser/dev/hmr-client/hmr-client.ts": {
+    "id": "..\\node_modules\\next\\dist\\client\\dev\\hot-reloader\\app\\web-socket.js -> @vercel/turbopack-ecmascript-runtime/browser/dev/hmr-client/hmr-client.ts",
+    "files": [
+      "static/chunks/_app-pages-browser_node_modules_next_dist_client_dev_noop-turbopack-hmr_js.js"
+    ]
+  },
+  "app\\[locale]\\admin\\layout.tsx -> @/components/blocks/shared/navbar": {
+    "id": "app\\[locale]\\admin\\layout.tsx -> @/components/blocks/shared/navbar",
+    "files": [
+      "static/chunks/_app-pages-browser_src_components_blocks_shared_navbar_tsx-_57980.js"
+    ]
+  },
+  "app\\[locale]\\admin\\layout.tsx -> @/components/blocks/shared/sidebar": {
+    "id": "app\\[locale]\\admin\\layout.tsx -> @/components/blocks/shared/sidebar",
+    "files": [
+      "static/chunks/_app-pages-browser_src_components_blocks_shared_sidebar_tsx-_28230.js"
+    ]
+  },
+  "app\\[locale]\\seller\\layout.tsx -> @/components/blocks/shared/navbar": {
+    "id": "app\\[locale]\\seller\\layout.tsx -> @/components/blocks/shared/navbar",
+    "files": [
+      "static/chunks/_app-pages-browser_src_components_blocks_shared_navbar_tsx-_57981.js"
+    ]
+  },
+  "app\\[locale]\\seller\\layout.tsx -> @/components/blocks/shared/sidebar": {
+    "id": "app\\[locale]\\seller\\layout.tsx -> @/components/blocks/shared/sidebar",
+    "files": [
+      "static/chunks/_app-pages-browser_src_components_blocks_shared_sidebar_tsx-_28231.js"
+    ]
+  }
+}

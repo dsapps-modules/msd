@@ -1,0 +1,3 @@
+display_name: Kilocao UI Coherence
+short_description: Manter consistencia visual e funcional entre telas e fluxos.
+default_prompt: Use esta skill ao alterar UI no Kilocao para preservar padroes de layout, navegacao, estados e copy no Flutter e no admin.

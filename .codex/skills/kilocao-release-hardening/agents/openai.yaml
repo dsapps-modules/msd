@@ -1,0 +1,3 @@
+display_name: Kilocao Release Hardening
+short_description: Revisar seguranca, configuracao e prontidao de release.
+default_prompt: Use esta skill antes de publicar mudancas no Kilocao para revisar seguranca, pagamentos, configuracao por ambiente e cobertura de regressao.
