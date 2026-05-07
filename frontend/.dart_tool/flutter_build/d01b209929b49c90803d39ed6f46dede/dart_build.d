@@ -1,0 +1,1 @@
+ C:\\xampp82\\htdocs\\kilocao\\frontend\\.dart_tool\\flutter_build\\d01b209929b49c90803d39ed6f46dede\\dart_build_result.json: 

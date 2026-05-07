@@ -1,0 +1,12 @@
+{
+  "name": "quick-ecommerce-e2e",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "routes:test": "node --test route-manifest.test.mjs",
+    "e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.54.2"
+  }
+}
