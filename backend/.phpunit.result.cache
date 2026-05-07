@@ -1,0 +1,1 @@
+{"version":2,"defects":[],"times":{"Tests\\Unit\\SecurityConfigurationTest::test_default_cors_configuration_is_not_wildcard_when_env_is_empty":3.766,"Tests\\Unit\\SecurityConfigurationTest::test_hmac_secret_has_no_insecure_default_fallback":0.076,"Tests\\Unit\\SecurityConfigurationTest::test_stripe_webhook_route_is_not_protected_by_customer_auth_middleware":0.169}}
