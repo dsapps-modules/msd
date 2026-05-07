@@ -1,0 +1,6 @@
+[
+  { "id": "df", "language_code": "default", "label": "Default" },
+  { "id": "en", "language_code": "english", "label": "English" },
+  { "id": "es", "language_code": "spanish", "label": "Spanish" },
+  { "id": "ar", "language_code": "arabic", "label": "Arabic" }
+]
