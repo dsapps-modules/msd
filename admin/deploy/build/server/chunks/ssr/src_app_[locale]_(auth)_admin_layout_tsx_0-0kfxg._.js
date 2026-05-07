@@ -1,0 +1,3 @@
+module.exports=[412704,a=>{"use strict";var b=a.i(187924),c=a.i(504996),d=a.i(32886),e=a.i(214174);a.s(["default",0,function({children:a}){let f=(0,d.useLocale)();return(0,b.jsx)("div",{dir:"ar"===f?"rtl":"ltr",children:(0,b.jsx)(e.Provider,{store:c.store,children:(0,b.jsx)("main",{className:"flex-1 flex flex-col justify-between w-full mx-auto",children:a})})})}])}];
+
+//# sourceMappingURL=src_app_%5Blocale%5D_%28auth%29_admin_layout_tsx_0-0kfxg._.js.map
