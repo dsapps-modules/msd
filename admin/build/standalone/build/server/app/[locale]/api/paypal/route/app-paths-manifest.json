@@ -1,0 +1,3 @@
+{
+  "/[locale]/api/paypal/route": "app/[locale]/api/paypal/route.js"
+}

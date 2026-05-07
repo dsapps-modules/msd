@@ -1,0 +1,3 @@
+{
+  "/[locale]/api/razorpay/route": "app/[locale]/api/razorpay/route.js"
+}
