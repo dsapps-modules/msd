@@ -1,0 +1,25 @@
+# Logs
+*.log
+
+# Node
+node_modules/
+.next/
+dist/
+build/
+.cache/
+
+# Frontend completo (se não quiser versionar)
+frontend/
+
+# OU (melhor prática: versionar código, não build)
+frontend/node_modules/
+frontend/.next/
+frontend/build/
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Ambiente
+.env
+.env.*
