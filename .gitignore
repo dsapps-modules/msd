@@ -1,25 +1,33 @@
-# Logs
-*.log
+#Ambiente
+.env
+.env.*
 
-# Node
-node_modules/
-.next/
-dist/
-build/
-.cache/
+#Backend (Laravel)
+backend/vendor/
+backend/node_modules/
+backend/public/build/
+backend/storage/logs/*
+backend/storage/framework/*
+backend/bootstrap/cache/*
+backend/.env
 
-# Frontend completo (se não quiser versionar)
-frontend/
-
-# OU (melhor prática: versionar código, não build)
+#Frontend (Next.js)
 frontend/node_modules/
 frontend/.next/
 frontend/build/
+frontend/dist/
+frontend/.env
 
-# Sistema
+#Logs
+*.log
+
+#Sistema / IDE
 .DS_Store
 Thumbs.db
+.vscode/
+.idea/
 
-# Ambiente
-.env
-.env.*
+#Outros
+*.zip
+*.sql
+*.tar.gz
