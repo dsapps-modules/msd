@@ -6,7 +6,6 @@ use App\Enums\OrderActivityType;
 use App\Enums\OrderStatusType;
 use App\Enums\WalletOwnerType;
 use App\Http\Controllers\Api\V1\Controller;
-use App\Http\Resources\Admin\AdminOrderStatusResource;
 use App\Http\Resources\Com\OrderPaymentTrackingResource;
 use App\Http\Resources\Com\OrderRefundTrackingResource;
 use App\Http\Resources\Com\OrderTrackingResource;
@@ -118,12 +117,34 @@ class AdminOrderManageController extends Controller
             ->orWhere('invoice_number', 'LIKE', '%' . $request->search . '%'));
 
         $orders = $ordersQuery->orderBy('created_at', 'desc')->paginate($request->per_page ?? 10);
-        // === Order Status Buttons (From Full Order Table, Unfiltered) ===
-        $orderStatusCounts = new AdminOrderStatusResource(Order::all());
+
+        $orderStatusCounts = Order::query()->selectRaw("
+            COUNT(*) as total_count,
+            SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END) as pending_count,
+            SUM(CASE WHEN status = 'confirmed' THEN 1 ELSE 0 END) as confirmed_count,
+            SUM(CASE WHEN status = 'processing' THEN 1 ELSE 0 END) as processing_count,
+            SUM(CASE WHEN status = 'pickup' THEN 1 ELSE 0 END) as pickup_count,
+            SUM(CASE WHEN status = 'shipped' THEN 1 ELSE 0 END) as shipped_count,
+            SUM(CASE WHEN status = 'delivered' THEN 1 ELSE 0 END) as delivered_count,
+            SUM(CASE WHEN status = 'cancelled' THEN 1 ELSE 0 END) as cancelled_count,
+            SUM(CASE WHEN refund_status IN ('requested', 'refunded', 'approved') THEN 1 ELSE 0 END) as refunded_count
+        ")->first();
+
+        $orderStatusButtons = [
+            ['label' => 'All', 'value' => '', 'count' => (int) ($orderStatusCounts->total_count ?? 0)],
+            ['label' => 'Pending', 'value' => 'pending', 'count' => (int) ($orderStatusCounts->pending_count ?? 0)],
+            ['label' => 'Confirmed', 'value' => 'confirmed', 'count' => (int) ($orderStatusCounts->confirmed_count ?? 0)],
+            ['label' => 'Processing', 'value' => 'processing', 'count' => (int) ($orderStatusCounts->processing_count ?? 0)],
+            ['label' => 'Pickup', 'value' => 'pickup', 'count' => (int) ($orderStatusCounts->pickup_count ?? 0)],
+            ['label' => 'Shipped', 'value' => 'shipped', 'count' => (int) ($orderStatusCounts->shipped_count ?? 0)],
+            ['label' => 'Delivered', 'value' => 'delivered', 'count' => (int) ($orderStatusCounts->delivered_count ?? 0)],
+            ['label' => 'Cancelled', 'value' => 'cancelled', 'count' => (int) ($orderStatusCounts->cancelled_count ?? 0)],
+            ['label' => 'Refunded', 'value' => 'refunded', 'count' => (int) ($orderStatusCounts->refunded_count ?? 0)],
+        ];
         return response()->json([
             'orders' => AdminOrderResource::collection($orders),
             'meta' => new PaginationResource($orders),
-            'status' => $orderStatusCounts,
+            'status' => $orderStatusButtons,
         ]);
     }
 

@@ -3,6 +3,7 @@
 .env.*
 
 #Admin
+admin/deploy/
 admin/node_modules/
 admin/.next/
 admin/build/
@@ -29,9 +30,23 @@ frontend/.next/
 frontend/build/
 frontend/dist/
 frontend/.env
+frontend/.dart_tool/
+frontend/.pub-cache/
+frontend/.flutter-plugins
+frontend/.flutter-plugins-dependencies
+frontend/.packages
+frontend/e2e/node_modules/
+frontend/coverage/
+frontend/*.log
+frontend/*.tmp
 
 #Logs
 *.log
+*.err
+*.out
+
+# PHPUnit / cache
+backend/.phpunit.result.cache
 
 #Sistema / IDE
 .DS_Store

@@ -1,7 +1,6 @@
 //app/[locale]/layout.tsx
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-import Script from "next/script";
 import { ReactNode, use } from "react";
 import { availableLocales } from "../../lib/language";
 
@@ -25,11 +24,6 @@ export default function LocaleLayout({
 
   return (
     <div dir={dir}>
-      <Script
-        src="https://challenges.cloudflare.com/turnstile/v0/api.js"
-        async
-        defer
-      />
       <NextIntlClientProvider locale={locale} messages={messages}>
         {children}
       </NextIntlClientProvider>

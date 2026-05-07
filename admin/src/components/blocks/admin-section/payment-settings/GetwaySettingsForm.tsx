@@ -142,7 +142,6 @@ const GetwaySettingsForm = ({
     const filteredCredentialObject = Object.fromEntries(
       Object.entries(values).filter(([key, value]) => key.includes(getwaykey))
     );
-    console.log(filteredCredentialObject);
     const selectedImageId = (lastSelectedLogo?.image_id).toString();
     const defaultData = {
       name: getwayname,

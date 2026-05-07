@@ -57,30 +57,65 @@ export const Sidebar = memo(({ setIsLoading }: any) => {
   const pathname = usePathname();
   const localeDir = pathname.split("/")[1];
   const dir = localeDir === "ar" ? "rtl" : "ltr";
+  const pathnameWithoutLocale = pathname.replace(`/${localeDir}`, "") || "/";
   const MenuItems = getPermissions?.permissions;
   const locale = useLocale();
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  const { refetch: isDashboardRefetch } = useSellerDashboardQuery({
-    language: locale,
-    slug: storedSlug,
-  });
+  const shouldLoadDashboardStats = useMemo(
+    () =>
+      [
+        "/admin/dashboard",
+        "/seller/dashboard",
+        "/seller/store/dashboard",
+      ].includes(pathnameWithoutLocale),
+    [pathnameWithoutLocale]
+  );
 
-  const { refetch: SalesSummaryRefetch } = useSellerSalesSummaryQuery({
-    language: locale,
-    slug: storedSlug,
-  });
+  const { refetch: isDashboardRefetch } = useSellerDashboardQuery(
+    {
+      language: locale,
+      slug: storedSlug,
+    },
+    {
+      enabled: shouldLoadDashboardStats,
+      staleTime: 1000 * 60 * 10,
+    }
+  );
 
-  const { refetch: SellerGrowthRefetch } = useSellerGrowthOrderQuery({
-    language: locale,
-    slug: storedSlug,
-  });
+  const { refetch: SalesSummaryRefetch } = useSellerSalesSummaryQuery(
+    {
+      language: locale,
+      slug: storedSlug,
+    },
+    {
+      enabled: shouldLoadDashboardStats,
+      staleTime: 1000 * 60 * 10,
+    }
+  );
 
-  const { refetch: SellerOtherRefetch } = useSellerOtherSummaryQuery({
-    language: locale,
-    slug: storedSlug,
-  });
+  const { refetch: SellerGrowthRefetch } = useSellerGrowthOrderQuery(
+    {
+      language: locale,
+      slug: storedSlug,
+    },
+    {
+      enabled: shouldLoadDashboardStats,
+      staleTime: 1000 * 60 * 10,
+    }
+  );
+
+  const { refetch: SellerOtherRefetch } = useSellerOtherSummaryQuery(
+    {
+      language: locale,
+      slug: storedSlug,
+    },
+    {
+      enabled: shouldLoadDashboardStats,
+      staleTime: 1000 * 60 * 10,
+    }
+  );
 
   const dashboardLink =
     getPermissions?.activity_scope == "store_level"

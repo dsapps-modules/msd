@@ -12,8 +12,6 @@ import { ReduxProvider } from "@/redux/ReduxProvider";
 import { GlobalClientLayer } from "@/lib/GlobalClientLayer";
 import { QueryProvider } from "@/lib/QueryProvider";
 
-export const dynamic = "force-dynamic";
-
 interface SiteInfo {
   com_site_title: string;
   com_site_subtitle: string;

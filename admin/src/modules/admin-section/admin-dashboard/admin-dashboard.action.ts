@@ -11,8 +11,15 @@ import {
 import { AdminDashboardQueryOptions } from "./admin-dashboard.type";
 import { API_ENDPOINTS } from "@/endpoints/AdminApiEndPoints";
 
+type QueryOptions = {
+  enabled?: boolean;
+  staleTime?: number;
+  skip?: boolean;
+};
+
 export const useAdminDashboardQuery = (
-  options: Partial<AdminDashboardQueryOptions>
+  options: Partial<AdminDashboardQueryOptions>,
+  queryOptions?: QueryOptions
 ) => {
   const { findAll } = useAdminDashboardService();
   const errorToastRef = useRef<string | null>(null);
@@ -21,6 +28,8 @@ export const useAdminDashboardQuery = (
     queryFn: () => findAll(options),
     retry: false,
     refetchOnWindowFocus: false,
+    enabled: queryOptions?.skip ? false : queryOptions?.enabled ?? true,
+    staleTime: queryOptions?.staleTime,
   });
   useEffect(() => {
     //@ts-ignore
@@ -44,7 +53,8 @@ export const useAdminDashboardQuery = (
   };
 };
 export const useAdminSalesSummaryQuery = (
-  options: Partial<AdminDashboardQueryOptions>
+  options: Partial<AdminDashboardQueryOptions>,
+  queryOptions?: QueryOptions
 ) => {
   const { findAll } = useAdminSalesService();
   const errorToastRef = useRef<string | null>(null);
@@ -53,6 +63,8 @@ export const useAdminSalesSummaryQuery = (
     queryFn: () => findAll(options),
     retry: false,
     refetchOnWindowFocus: false,
+    enabled: queryOptions?.skip ? false : queryOptions?.enabled ?? true,
+    staleTime: queryOptions?.staleTime,
   });
   useEffect(() => {
     //@ts-ignore
@@ -76,7 +88,8 @@ export const useAdminSalesSummaryQuery = (
   };
 };
 export const useAdminGrowthOrderQuery = (
-  options: Partial<AdminDashboardQueryOptions>
+  options: Partial<AdminDashboardQueryOptions>,
+  queryOptions?: QueryOptions
 ) => {
   const { findAll } = useAdminOrderGrowthService();
   const errorToastRef = useRef<string | null>(null);
@@ -85,6 +98,8 @@ export const useAdminGrowthOrderQuery = (
     queryFn: () => findAll(options),
     retry: false,
     refetchOnWindowFocus: false,
+    enabled: queryOptions?.skip ? false : queryOptions?.enabled ?? true,
+    staleTime: queryOptions?.staleTime,
   });
   useEffect(() => {
     //@ts-ignore
@@ -108,7 +123,8 @@ export const useAdminGrowthOrderQuery = (
   };
 };
 export const useAdminOtherSummaryQuery = (
-  options: Partial<AdminDashboardQueryOptions>
+  options: Partial<AdminDashboardQueryOptions>,
+  queryOptions?: QueryOptions
 ) => {
   const { findAll } = useAdminOtherSummaryService();
   const errorToastRef = useRef<string | null>(null);
@@ -117,6 +133,8 @@ export const useAdminOtherSummaryQuery = (
     queryFn: () => findAll(options),
     retry: false,
     refetchOnWindowFocus: false,
+    enabled: queryOptions?.skip ? false : queryOptions?.enabled ?? true,
+    staleTime: queryOptions?.staleTime,
   });
   useEffect(() => {
     //@ts-ignore

@@ -11,7 +11,16 @@ import {
 } from "./seller-dashboard.service";
 import { SellerDashboardQueryOptions } from "./seller-dashboard.type";
 
-export const useSellerDashboardQuery = (options: Partial<SellerDashboardQueryOptions>) => {
+type QueryOptions = {
+  enabled?: boolean;
+  staleTime?: number;
+  skip?: boolean;
+};
+
+export const useSellerDashboardQuery = (
+  options: Partial<SellerDashboardQueryOptions>,
+  queryOptions?: QueryOptions
+) => {
   const { findAll } = useSellerDashboardService();
   const errorToastRef = useRef<string | null>(null);
   const { data, isPending, error, refetch, isFetching } = useQuery({
@@ -19,6 +28,8 @@ export const useSellerDashboardQuery = (options: Partial<SellerDashboardQueryOpt
     queryFn: () => findAll(options),
     retry: false,
     refetchOnWindowFocus: false,
+    enabled: queryOptions?.skip ? false : queryOptions?.enabled ?? true,
+    staleTime: queryOptions?.staleTime,
   });
   useEffect(() => {
     //@ts-ignore
@@ -41,7 +52,10 @@ export const useSellerDashboardQuery = (options: Partial<SellerDashboardQueryOpt
     isFetching,
   };
 };
-export const useSellerSalesSummaryQuery = (options: Partial<SellerDashboardQueryOptions>) => {
+export const useSellerSalesSummaryQuery = (
+  options: Partial<SellerDashboardQueryOptions>,
+  queryOptions?: QueryOptions
+) => {
   const { findAll } = useSellerSalesService();
   const errorToastRef = useRef<string | null>(null);
   const { data, isPending, error, refetch, isFetching } = useQuery({
@@ -49,6 +63,8 @@ export const useSellerSalesSummaryQuery = (options: Partial<SellerDashboardQuery
     queryFn: () => findAll(options),
     retry: false,
     refetchOnWindowFocus: false,
+    enabled: queryOptions?.skip ? false : queryOptions?.enabled ?? true,
+    staleTime: queryOptions?.staleTime,
   });
   useEffect(() => {
     //@ts-ignore
@@ -71,7 +87,10 @@ export const useSellerSalesSummaryQuery = (options: Partial<SellerDashboardQuery
     isFetching,
   };
 };
-export const useSellerGrowthOrderQuery = (options: Partial<SellerDashboardQueryOptions>) => {
+export const useSellerGrowthOrderQuery = (
+  options: Partial<SellerDashboardQueryOptions>,
+  queryOptions?: QueryOptions
+) => {
   const { findAll } = useSellerOrderGrowthService();
   const errorToastRef = useRef<string | null>(null);
   const { data, isPending, error, refetch, isFetching } = useQuery({
@@ -79,6 +98,8 @@ export const useSellerGrowthOrderQuery = (options: Partial<SellerDashboardQueryO
     queryFn: () => findAll(options),
     retry: false,
     refetchOnWindowFocus: false,
+    enabled: queryOptions?.skip ? false : queryOptions?.enabled ?? true,
+    staleTime: queryOptions?.staleTime,
   });
   useEffect(() => {
     //@ts-ignore
@@ -101,7 +122,10 @@ export const useSellerGrowthOrderQuery = (options: Partial<SellerDashboardQueryO
     isFetching,
   };
 };
-export const useSellerOtherSummaryQuery = (options: Partial<SellerDashboardQueryOptions>) => {
+export const useSellerOtherSummaryQuery = (
+  options: Partial<SellerDashboardQueryOptions>,
+  queryOptions?: QueryOptions
+) => {
   const { findAll } = useSellerOtherSummaryService();
   const errorToastRef = useRef<string | null>(null);
   const { data, isPending, error, refetch, isFetching } = useQuery({
@@ -109,6 +133,8 @@ export const useSellerOtherSummaryQuery = (options: Partial<SellerDashboardQuery
     queryFn: () => findAll(options),
     retry: false,
     refetchOnWindowFocus: false,
+    enabled: queryOptions?.skip ? false : queryOptions?.enabled ?? true,
+    staleTime: queryOptions?.staleTime,
   });
   useEffect(() => {
     //@ts-ignore
