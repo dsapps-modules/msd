@@ -6,7 +6,6 @@ import {
   SheetHeader,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import GlobalImageLoader from "@/lib/imageLoader";
 import { useGeneralQuery } from "@/modules/common/com/com.action";
 import { useAppDispatch } from "@/redux/hooks";
 import { setDynamicValue, setRefetch } from "@/redux/slices/refetchSlice";
@@ -67,9 +66,8 @@ export function SheetMenu({ getPermissions }: any) {
           {QueryGeneralSettingsData?.com_site_logo ? (
             <div className="relative w-24 h-12">
               <Image
-                loader={GlobalImageLoader}
-                src={QueryGeneralSettingsData?.com_site_logo}
-                alt="quick_ecommerce"
+                src="/images/logo-kilocao.png"
+                alt="loco_kilocao"
                 layout="fill"
                 className="w-full h-full "
               />
@@ -77,8 +75,8 @@ export function SheetMenu({ getPermissions }: any) {
           ) : (
             <div className="relative w-24 h-12">
               <Image
-                src="/images/no-image.png"
-                alt="quick_ecommerce"
+                src="/images/logo-kilocao.png"
+                alt="loco_kilocao"
                 layout="fill"
                 className="w-full h-full"
               />

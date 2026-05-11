@@ -201,16 +201,16 @@ const InvoiceModal: React.FC<ConfirmationModalProps> = ({
                     {QueryGeneralSettingsData?.com_site_logo ? (
                       <div className="relative w-20 h-8">
                         <img
-                          src={QueryGeneralSettingsData?.com_site_logo}
-                          alt="quick_ecommerce"
+                          src="/images/logo-kilocao.png"
+                          alt="loco_kilocao"
                           className="w-full h-full object-contain"
                         />
                       </div>
                     ) : (
                       <div className="relative w-12 h-12">
                         <img
-                          src="/images/no-image.png"
-                          alt="quick_ecommerce"
+                          src="/images/logo-kilocao.png"
+                          alt="loco_kilocao"
                           className="w-full h-full object-contain"
                         />
                       </div>

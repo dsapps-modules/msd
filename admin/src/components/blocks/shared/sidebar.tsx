@@ -3,7 +3,6 @@
 import { Input } from "@/components/ui";
 import { useSidebarToggle } from "@/hooks/use-sidebar-toggle";
 import { useStore } from "@/hooks/use-store";
-import GlobalImageLoader from "@/lib/imageLoader";
 import { cn } from "@/lib/utils";
 import { useGeneralQuery } from "@/modules/common/com/com.action";
 import {
@@ -18,7 +17,6 @@ import { setDynamicValue, setRefetch } from "@/redux/slices/refetchSlice";
 import { setSelectedStore } from "@/redux/slices/storeSlice";
 import { Search } from "lucide-react";
 import { useLocale } from "next-intl";
-import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { memo, useEffect, useMemo, useState } from "react";
 import { Menu } from "./menu";
@@ -47,7 +45,6 @@ export const Sidebar = memo(({ setIsLoading }: any) => {
     () => (general as any)?.site_settings || {},
     [general]
   );
-
 
   const sidebar =
     useStore(useSidebarToggle, (state) => state) ?? {
@@ -188,71 +185,22 @@ export const Sidebar = memo(({ setIsLoading }: any) => {
           <div className="cursor-pointer" onClick={handleLogo}>
             <div
               className={cn(
-                `font-bold text-lg py-0.5 ${
-                  dir == "rtl" ? "pr-4" : "px-2"
-                }  whitespace-nowrap transition-[transform,opacity,display] ease-in-out duration-300 text-slate-900 dark:text-white`,
-                sidebar?.isOpen === true
-                  ? "-translate-x-96 opacity-0 hidden"
-                  : "translate-x-0 opacity-100"
-              )}
-            >
-              {QueryGeneralSettingsData?.com_site_favicon ? (
-                <div className="relative w-8 h-8">
-                  <Image
-                    loader={GlobalImageLoader}
-                    src={QueryGeneralSettingsData?.com_site_favicon}
-                    alt="quick_ecommerce"
-                    fill
-                    sizes="32px"
-                    className="w-full h-full "
-                    priority
-                  />
-                </div>
-              ) : (
-                <div className="relative w-8 h-8">
-                  <Image
-                    src="/images/no-image.png"
-                    alt="quick_ecommerce"
-                    fill
-                    sizes="32px"
-                    className="w-full h-full"
-                    priority
-                  />
-                </div>
-              )}
-            </div>
-            <div
-              className={cn(
-                "font-bold text-lg whitespace-nowrap transition-[transform,opacity,display] ease-in-out duration-300 text-slate-900 dark:text-white",
+                "flex items-center gap-3 whitespace-nowrap transition-[transform,opacity,display] ease-in-out duration-300 text-slate-900 dark:text-white",
                 sidebar?.isOpen === false
-                  ? "-translate-x-96 opacity-0 hidden"
+                  ? "translate-x-0 opacity-100"
                   : "translate-x-0 opacity-100"
               )}
             >
-              {QueryGeneralSettingsData?.com_site_logo ? (
-                <div className="relative w-24 h-12">
-                  <Image
-                    loader={GlobalImageLoader}
-                    src={QueryGeneralSettingsData?.com_site_logo}
-                    alt="quick_ecommerce"
-                    fill
-                    sizes="48px"
-                    className="w-full h-full rounded"
-                    priority
-                  />
-                </div>
-              ) : (
-                <div className="relative w-12 h-12 rounded">
-                  <Image
-                    src="/images/no-image.png"
-                    alt="quick_ecommerce"
-                    fill
-                    sizes="48px"
-                    className="w-full h-full rounded"
-                    priority
-                  />
-                </div>
-              )}
+              <img
+                src="/images/logo-kilocao.png"
+                alt="loco_kilocao"
+                className={cn(
+                  "object-contain",
+                  sidebar?.isOpen === false
+                    ? "w-12 h-12"
+                    : "w-24 h-12 rounded"
+                )}
+              />
             </div>
           </div>
           <div className="flex items-center my-4 lg:my-0"></div>

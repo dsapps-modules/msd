@@ -3,7 +3,6 @@
 import LocaleSwitcher from "@/components/blocks/shared/LocalSwitcher";
 import { ThemeToggle } from "@/components/blocks/shared/theme-toggle";
 import { Button, Skeleton } from "@/components/ui";
-import GlobalImageLoader from "@/lib/imageLoader";
 import { useGeneralQuery } from "@/modules/common/com/com.action";
 import { ExternalLink } from "lucide-react";
 import { useLocale } from "next-intl";
@@ -42,9 +41,8 @@ export function PublicNavbarThemeTwo() {
               {QueryGeneralSettingsData?.com_site_logo ? (
                 <div className="relative w-32 h-12">
                   <Image
-                    loader={GlobalImageLoader}
-                    src={QueryGeneralSettingsData?.com_site_logo}
-                    alt="quick_ecommerce"
+                    src="/images/logo-kilocao.png"
+                    alt="loco_kilocao"
                     fill
                     sizes="128px"
                     className="w-full h-full"
@@ -53,8 +51,8 @@ export function PublicNavbarThemeTwo() {
               ) : (
                 <div className="relative w-32 h-12">
                   <Image
-                    src="/images/no-image.png"
-                    alt="quick_ecommerce"
+                    src="/images/logo-kilocao.png"
+                    alt="loco_kilocao"
                     fill
                     sizes="128px"
                     className="w-full h-full"
@@ -66,9 +64,8 @@ export function PublicNavbarThemeTwo() {
               {QueryGeneralSettingsData?.com_site_favicon ? (
                 <div className="relative w-8 h-8">
                   <Image
-                    loader={GlobalImageLoader}
-                    src={QueryGeneralSettingsData?.com_site_favicon}
-                    alt="quick_ecommerce"
+                    src="/images/logo-kilocao.png"
+                    alt="loco_kilocao"
                     fill
                     sizes="32px"
                     className="w-full h-full"
@@ -77,8 +74,8 @@ export function PublicNavbarThemeTwo() {
               ) : (
                 <div className="relative w-8 h-8">
                   <Image
-                    src="/images/no-image.png"
-                    alt="quick_ecommerce"
+                    src="/images/logo-kilocao.png"
+                    alt="loco_kilocao"
                     fill
                     sizes="32px"
                     className="w-full h-full"
