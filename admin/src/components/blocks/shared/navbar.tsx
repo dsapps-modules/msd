@@ -20,6 +20,8 @@ import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useSidebarToggle } from "@/hooks/use-sidebar-toggle";
+import { useStore } from "@/hooks/use-store";
 import { SheetMenu } from "./sheet-menu";
 import { UserNav } from "./user-nav";
 
@@ -29,6 +31,11 @@ export function Navbar({ MeData, setIsLoading }: any) {
   const LocaleDir = useLocale();
   const locale = pathname.split("/")[1];
   const dir = locale === "ar" ? "rtl" : "ltr";
+  const sidebar =
+    useStore(useSidebarToggle, (state) => state) ?? {
+      isOpen: true,
+      setIsOpen: () => {},
+    };
   const localeRoute = useLocale();
   const pathnameWithoutLocale = pathname.replace(`/${localeRoute}`, "") || "/";
   const selectedStore = useAppSelector((state) => state.store.selectedStore);
@@ -206,11 +213,19 @@ export function Navbar({ MeData, setIsLoading }: any) {
 
   return (
     <header
-      className={`p-2 sticky top-0 z-70 w-full border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-white/80 dark:shadow-secondary dark:bg-custom-dark-blue ${
+      className={cn(
+        "p-2 sticky top-0 z-70 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-white/80 dark:shadow-secondary dark:bg-custom-dark-blue transition-[margin-left,margin-right,width] ease-in-out duration-300",
         data && data.activity_scope === "store_level"
           ? "md:h-[120px] lg:h-[80px] h-[200px]"
-          : "lg:h-[80px] h-[120px]"
-      }  `}
+          : "lg:h-[80px] h-[120px]",
+        sidebar?.isOpen === false
+          ? dir === "rtl"
+            ? "lg:mr-[90px] lg:w-[calc(100%-90px)]"
+            : "lg:ml-[90px] lg:w-[calc(100%-90px)]"
+          : dir === "rtl"
+          ? "lg:mr-72 lg:w-[calc(100%-18rem)]"
+          : "lg:ml-72 lg:w-[calc(100%-18rem)]"
+      )}
     >
       <div className="mx-2 md:mx-4 flex  flex-col md:flex-row h-14 items-start md:items-center ">
         <div className="flex gap-4 lg:gap-0 items-start">
