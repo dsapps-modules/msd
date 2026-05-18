@@ -8,10 +8,12 @@ use App\Http\Controllers\Api\V1\Com\HeaderFooterController;
 use App\Http\Controllers\Api\V1\Com\LiveLocationController;
 use App\Http\Controllers\Api\V1\Com\SubscriberManageController;
 use App\Http\Controllers\Api\V1\ContactManageController;
+use App\Http\Controllers\Api\V1\Auth\DivulgadorLoginController;
 use App\Http\Controllers\Api\V1\Customer\CustomerOrderController;
 use App\Http\Controllers\Api\V1\Customer\CustomerProductQueryController;
 use App\Http\Controllers\Api\V1\Customer\PlaceOrderController;
 use App\Http\Controllers\Api\V1\DeliveryChargeCalculateController;
+use App\Http\Controllers\Api\V1\Divulgador\DivulgadorDashboardController;
 use App\Http\Controllers\Api\V1\FrontendController;
 use App\Http\Controllers\Api\V1\MenuManageController;
 use App\Http\Controllers\Api\V1\OtherChargeInfoController;
@@ -41,6 +43,7 @@ Route::group(['middleware' => ['auth:sanctum', ApiAuthMiddleware::class]], funct
             Route::post('/email-change', [UserController::class, 'userEmailUpdate']);
             Route::patch('/change-password', [UserController::class, 'changePassword']);
         });
+
     });
 });
 
@@ -57,6 +60,18 @@ Route::group(['prefix' => 'v1/'], function () {
             Route::post('forget-password', [UserController::class, 'forgetPassword']);
             Route::post('verify-token', [UserController::class, 'verifyToken']);
             Route::post('reset-password', [UserController::class, 'resetPassword']);
+        });
+
+        Route::prefix('divulgador/')->group(function () {
+            Route::post('login', [DivulgadorLoginController::class, 'login']);
+
+            Route::middleware(['auth:sanctum', ApiAuthMiddleware::class, 'ensure.divulgador.access'])->group(function () {
+                Route::get('dashboard', [DivulgadorDashboardController::class, 'dashboard']);
+                Route::get('produtos', [DivulgadorDashboardController::class, 'products']);
+                Route::get('compradores', [DivulgadorDashboardController::class, 'buyers']);
+                Route::get('links', [DivulgadorDashboardController::class, 'links']);
+                Route::get('financeiro', [DivulgadorDashboardController::class, 'financial'])->middleware('ensure.divulgador.access:divulgador_admin');
+            });
         });
 
         // Product Category

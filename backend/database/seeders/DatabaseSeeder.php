@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionStoreSeeder::class);
         $this->call(PermissionDeliverymanSeeder::class);
         $this->call(ProductDemoSeeder::class);
+        $this->call(DivulgadorDemoSeeder::class);
         // system commission
         $this->call(SystemCommissionSeeder::class);
         $this->call(MenuSeeder::class);

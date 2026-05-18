@@ -10,36 +10,27 @@ import { withLocale } from "@/lib/localized-path";
 import Cookies from "js-cookie";
 import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { DivulgadorRoutes } from "@/config/divulgadorRoutes";
+import { useEffect } from "react";
 
 function SignInPage() {
   const router = useRouter();
   const locale = useLocale();
-  const [checkingAuth, setCheckingAuth] = useState(true);
 
   useEffect(() => {
     const token = Cookies.get(AUTH_TOKEN_KEY);
     const authUser = Cookies.get(AUTH_USER);
 
     if (token && authUser == "store_level") {
-      router.replace(withLocale(locale, SellerRoutes.dashboard));
+      void router.replace(withLocale(locale, SellerRoutes.dashboard));
     } else if (token && authUser == "system_level") {
       Cookies.remove(AUTH_TOKEN_KEY);
       Cookies.remove(AUTH_USER);
-      setCheckingAuth(false);
-    } else {
-      setCheckingAuth(false);
+    } else if (token && authUser == "divulgador_level") {
+      void router.replace(withLocale(locale, DivulgadorRoutes.dashboard));
     }
   }, [locale, router]);
 
-  if (checkingAuth) {
-    return (
-      <div>
-        <PublicNavbarSkeleton />
-        <SignInFormSkeleton />
-      </div>
-    );
-  }
   return (
     <>
       <PublicNavbar />

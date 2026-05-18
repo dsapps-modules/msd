@@ -1,6 +1,8 @@
 import { env } from "@/env.mjs";
+import { API_ENDPOINTS } from "@/endpoints/AdminApiEndPoints";
 import { AUTH_TOKEN_KEY, AUTH_USER } from "@/lib/constants";
 import { Routes } from "@/config/routes";
+import { DivulgadorRoutes } from "@/config/divulgadorRoutes";
 import { SellerRoutes } from "@/config/sellerRoutes";
 import { withLocale } from "@/lib/localized-path";
 import { type ApiResponse, type SearchParamOptions } from "@/types";
@@ -33,12 +35,25 @@ export const useBaseService = <DataType, InputType = unknown>(
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname(); // Get current path
+  const isPublicRoute = useMemo(
+    () =>
+      [
+        API_ENDPOINTS.GENERAL,
+        API_ENDPOINTS.ADMIN_SIGN_IN_SETTINGS,
+        API_ENDPOINTS.LOGIN_SETTINGS,
+      ].includes(route),
+    [route]
+  );
   const pathnameWithoutLocale = useMemo(
     () => pathname?.replace(/^\/[^/]+/, "") || "",
     [pathname]
   );
 
   const getSignInRoute = useCallback(() => {
+    if (pathnameWithoutLocale.startsWith("/divulgador")) {
+      return withLocale(locale, DivulgadorRoutes.signin);
+    }
+
     if (pathnameWithoutLocale.startsWith("/seller")) {
       return withLocale(locale, SellerRoutes.signin);
     }
@@ -58,12 +73,11 @@ export const useBaseService = <DataType, InputType = unknown>(
     instance.interceptors.request.use((config) => {
       const hasFile = config.data && config.data.multipart === true;
 
-      const cookies = Cookies.get(AUTH_TOKEN_KEY);
-      const token = cookies || "";
+      const token = isPublicRoute ? "" : Cookies.get(AUTH_TOKEN_KEY) || "";
 
       config.headers = {
         ...config.headers,
-        Authorization: `Bearer ${token}`,
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
         "X-localization": locale,
         "Content-Type": hasFile ? "multipart/form-data" : "application/json",
       } as unknown as AxiosRequestHeaders;
@@ -74,6 +88,10 @@ export const useBaseService = <DataType, InputType = unknown>(
     instance.interceptors.response.use(
       (response) => response,
       async (error) => {
+        if (isPublicRoute) {
+          return Promise.reject(error);
+        }
+
         const originalRequest: AxiosRequestConfig & { _retry?: boolean } =
           error.config || {};
 

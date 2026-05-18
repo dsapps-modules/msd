@@ -585,7 +585,14 @@ class UserController extends Controller
 
     public function me(Request $request)
     {
-        return new UserResource(auth()->guard('api')->user());
+        $user = $request->user('sanctum') ?? $request->user() ?? auth()->guard('api')->user();
+
+        if (!$user && $request->bearerToken()) {
+            $token = PersonalAccessToken::findToken($request->bearerToken());
+            $user = $token?->tokenable;
+        }
+
+        return new UserResource($user);
     }
 
     public function logout(Request $request)

@@ -5,12 +5,10 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class UserSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $users = [
@@ -56,16 +54,48 @@ class UserSeeder extends Seeder
                 'store_owner' => 0,
                 'stores' => null,
                 'updated_at' => '2022-03-17 16:25:39',
-            ]
+            ],
+            [
+                'activity_scope' => 'divulgador_level',
+                'account_type' => 'divulgador',
+                'created_at' => now(),
+                'divulgador_account_code' => 'demo-divulgador',
+                'email' => 'admin.divulgador@teste.com',
+                'email_verified_at' => now(),
+                'first_name' => 'Admin',
+                'last_name' => 'Divulgador',
+                'password' => Hash::make('password'),
+                'remember_token' => null,
+                'slug' => 'admin-divulgador',
+                'status' => 1,
+                'store_owner' => 0,
+                'stores' => null,
+                'updated_at' => now(),
+            ],
+            [
+                'activity_scope' => 'divulgador_level',
+                'account_type' => 'divulgador',
+                'created_at' => now(),
+                'divulgador_account_code' => 'demo-divulgador',
+                'email' => 'colaborador.divulgador@teste.com',
+                'email_verified_at' => now(),
+                'first_name' => 'Colaborador',
+                'last_name' => 'Divulgador',
+                'password' => Hash::make('password'),
+                'remember_token' => null,
+                'slug' => 'colaborador-divulgador',
+                'status' => 1,
+                'store_owner' => 0,
+                'stores' => null,
+                'updated_at' => now(),
+            ],
         ];
 
         foreach ($users as $user) {
-            $uniqueKeys = ['email' => $user['email']];
-            if (($user['activity_scope'] ?? null) !== 'system_level') {
-                $uniqueKeys = ['slug' => $user['slug']];
-            }
+            $uniqueKeys = ['slug' => $user['slug']];
 
             DB::table('users')->updateOrInsert($uniqueKeys, $user);
+
             if ($user['activity_scope'] === 'system_level') {
                 $userId = DB::table('users')->where('slug', $user['slug'])->value('id');
 
@@ -109,7 +139,38 @@ class UserSeeder extends Seeder
                     );
                 }
             }
-        }
 
+            if ($user['activity_scope'] === 'divulgador_level') {
+                $roleName = $user['email'] === 'admin.divulgador@teste.com'
+                    ? 'divulgador_admin'
+                    : 'divulgador_colaborador';
+                $roleId = Role::query()
+                    ->where('name', $roleName)
+                    ->where('guard_name', 'api')
+                    ->value('id');
+
+                $userId = DB::table('users')->where('email', $user['email'])->value('id');
+
+                if ($userId && $roleId) {
+                    DB::table('model_has_roles')
+                        ->where('model_id', $userId)
+                        ->where('model_type', 'App\\Models\\User')
+                        ->delete();
+
+                    DB::table('model_has_roles')->updateOrInsert(
+                        [
+                            'model_id' => $userId,
+                            'model_type' => 'App\\Models\\User',
+                            'role_id' => $roleId,
+                        ],
+                        [
+                            'model_id' => $userId,
+                            'model_type' => 'App\\Models\\User',
+                            'role_id' => $roleId,
+                        ]
+                    );
+                }
+            }
+        }
     }
 }

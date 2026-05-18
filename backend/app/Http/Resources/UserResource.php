@@ -42,8 +42,11 @@ class UserResource extends JsonResource
             'email_verified_at' => $this->email_verified_at,
             'store_owner' => $this->store_owner,
             'store_seller_id' => $this->store_seller_id,
+            'account_type' => $this->account_type,
+            'divulgador_account_code' => $this->divulgador_account_code,
             'stores' => $stores,
-            'roles' => $this->roles->pluck('name'),
+            'roles' => $this->divulgadorRoleNames(),
+            'role' => $this->divulgadorPrimaryRoleName(),
             'locked' => $this->locked,
             'status' => $this->status
         ];

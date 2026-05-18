@@ -77,5 +77,29 @@ class RolesSeeder extends Seeder
             ]
         );
 
+        DB::table('roles')->updateOrInsert(
+            ['name' => 'divulgador_admin', 'guard_name' => 'api'],
+            [
+                'available_for' => 'divulgador_level',
+                'name' => 'divulgador_admin',
+                'guard_name' => 'api',
+                'locked' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]
+        );
+
+        DB::table('roles')->updateOrInsert(
+            ['name' => 'divulgador_colaborador', 'guard_name' => 'api'],
+            [
+                'available_for' => 'divulgador_level',
+                'name' => 'divulgador_colaborador',
+                'guard_name' => 'api',
+                'locked' => false,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]
+        );
+
     }
 }

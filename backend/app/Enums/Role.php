@@ -6,6 +6,7 @@ enum Role: string
 {
     case SUPER_ADMIN = 'system_level';
     case STORE_OWNER = 'store_level';
+    case DIVULGADOR = 'divulgador_level';
     case CUSTOMER = 'customer_level';
     case DELIVERY_MAN = 'delivery_level';
     case FITTER_MAN = 'fitter_level';

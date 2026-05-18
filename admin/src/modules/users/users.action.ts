@@ -68,11 +68,11 @@ export const useRegisterMutation = ({
       setAuthorized(true);
       localStorage.setItem(
         "email_verification_settings",
-        data?.data?.email_verification_settings.toString()
+        String(data?.data?.email_verification_settings ?? "")
       );
       localStorage.setItem(
         "email_verified",
-        data?.data?.email_verified.toString()
+        String(data?.data?.email_verified ?? "")
       );
       localStorage.setItem("user_email", data?.data?.email);
     },
@@ -196,7 +196,7 @@ export const useShopOwnerLogin = ({
       const {
         token,
         expires_at,
-        permissions,
+        permissions = [],
         email_verified,
         email_verification_settings,
         email,
@@ -209,11 +209,11 @@ export const useShopOwnerLogin = ({
       setAuthorized(true);
       localStorage.setItem(
         "email_verified",
-        data?.data?.email_verified.toString()
+        String(data?.data?.email_verified ?? "")
       );
       localStorage.setItem(
         "email_verification_settings",
-        data?.data?.email_verification_settings.toString()
+        String(data?.data?.email_verification_settings ?? "")
       );
       localStorage.setItem("user_email", data?.data?.email);
 

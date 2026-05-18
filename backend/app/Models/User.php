@@ -6,6 +6,7 @@ use App\Traits\HasMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\DB;
 
 //use Modules\Chat\app\Models\Chat;
 use Modules\Chat\app\Models\Chat;
@@ -36,6 +37,8 @@ class User extends Authenticatable
         'store_owner',
         'store_seller_id',
         'stores',
+        'account_type',
+        'divulgador_account_code',
         'status',
         'google_id',
         'facebook_id',
@@ -207,6 +210,30 @@ class User extends Authenticatable
     public function authors()
     {
         return $this->hasMany(ProductAuthor::class, 'created_by', 'id');
+    }
+
+    public function divulgadorRoleNames(): array
+    {
+        return DB::table('model_has_roles')
+            ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
+            ->where('model_has_roles.model_id', $this->id)
+            ->where('model_has_roles.model_type', self::class)
+            ->where('roles.guard_name', $this->guard_name ?: 'api')
+            ->orderBy('roles.id')
+            ->pluck('roles.name')
+            ->all();
+    }
+
+    public function divulgadorPrimaryRoleName(): ?string
+    {
+        $roles = $this->divulgadorRoleNames();
+
+        return $roles[0] ?? null;
+    }
+
+    public function divulgadorHasRole(string $roleName): bool
+    {
+        return in_array($roleName, $this->divulgadorRoleNames(), true);
     }
 
 }
