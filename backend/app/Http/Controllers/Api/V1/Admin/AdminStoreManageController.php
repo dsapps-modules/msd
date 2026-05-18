@@ -32,11 +32,13 @@ class AdminStoreManageController extends Controller
             $request->per_page ?? 10,
             $request->status ?? "",
             $request->page ?? 1,
-            $request->language ?? DEFAULT_LANGUAGE,
+            $request->language ?? DEFAULT_LANGUAGE ?? 'en',
             $request->search ?? "",
             $request->sortField ?? 'id',
             $request->sort ?? 'asc',
-            []
+            [
+                'seller_id' => $request->seller ?? null,
+            ]
         );
         // Return the stores as a resource collection
         return response()->json([

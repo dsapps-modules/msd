@@ -16,10 +16,10 @@ class AdminUnitManageController extends Controller
     public function __construct(protected UnitInterface $unitRepo) {}
     public function listUnits(Request $request)
     {
-       $units = $this->unitRepo->getPaginatedUnit(
+        $units = $this->unitRepo->getPaginatedUnit(
             $request->limit ?? 10,
             $request->page ?? 1,
-            $request->language ?? DEFAULT_LANGUAGE,
+            $request->language ?? DEFAULT_LANGUAGE ?? 'en',
             $request->search ?? "",
             $request->sortField ?? 'id',
             $request->sort ?? 'asc',

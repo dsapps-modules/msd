@@ -35,12 +35,13 @@ class PartnerLoginController extends Controller
             return response()->json($validator->errors());
         }
 
-        $user = User::where('email', $request->email)
-            ->where('activity_scope', 'store_level')
+        $email = strtolower(trim((string) $request->email));
+
+        $user = User::whereRaw('LOWER(email) = ?', [$email])
             ->where('status', 1)
             ->first();
 
-        if (!$user) {
+        if (!$user || ($user->activity_scope !== 'store_level' && (int) $user->store_owner !== 1)) {
             return response()->json([
                 "status" => false,
                 "status_code" => 422,
@@ -114,6 +115,7 @@ class PartnerLoginController extends Controller
             'phone' => $user->phone,
             'image_url' => ImageModifier::generateImageUrl($user->image),
             "email_verified" => (bool)$user->email_verified,
+            "permissions" => $user->getPermissionNames(),
             "store_owner" => $user->store_owner,
             "store_seller_id" => $user->store_seller_id,
             "stores" => $stores,

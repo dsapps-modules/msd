@@ -612,7 +612,7 @@ class PermissionStoreSeeder extends Seeder
         //Assign PermissionKey to Store Admin Role
         $role = Role::where('id', 2)->first();
         $role->givePermissionTo(Permission::whereIn('available_for', ['store_level', 'COMMON'])->get());
-        $user = User::whereEmail('seller@gmail.com')->first();
+        $user = User::whereEmail('owner@store.com')->first();
         if (!$user) {
             return;
         }

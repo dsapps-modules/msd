@@ -17,10 +17,10 @@ class UserSeeder extends Seeder
             [
                 'activity_scope' => 'system_level',
                 'created_at' => '2025-04-29 00:00:00',
-                'email' => 'admin@gmail.com',
+                'email' => 'divulgador@teste.com.br',
                 'email_verified_at' => now(),
-                'first_name' => 'Super',
-                'last_name' => 'Admin',
+                'first_name' => 'Divulgador',
+                'last_name' => 'Teste',
                 'password' => Hash::make('12345678'),
                 'remember_token' => null,
                 'slug' => 'super-admin',
@@ -86,21 +86,28 @@ class UserSeeder extends Seeder
             }
 
             if ($user['activity_scope'] === 'delivery_level') {
-                DB::table('delivery_men')->insert(
-                    [
-                        'user_id' => 6,
-                        'store_id' => 1,
-                        'vehicle_type_id' => 1,
-                        'area_id' => null,
-                        'identification_type' => 'nid',
-                        'identification_number' => '123456789',
-                        'status' => 'approved',
-                        'created_by' => 1,
-                        'updated_by' => 1,
-                        'created_at' => now(),
-                        'updated_at' => now(),
-                    ]
-                );
+                $deliveryUserId = DB::table('users')
+                    ->where('email', 'deliveryman@demo.com')
+                    ->value('id');
+
+                if ($deliveryUserId) {
+                    DB::table('delivery_men')->updateOrInsert(
+                        ['identification_number' => '123456789'],
+                        [
+                            'user_id' => $deliveryUserId,
+                            'store_id' => 1,
+                            'vehicle_type_id' => 1,
+                            'area_id' => null,
+                            'identification_type' => 'nid',
+                            'identification_number' => '123456789',
+                            'status' => 'approved',
+                            'created_by' => 1,
+                            'updated_by' => 1,
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ]
+                    );
+                }
             }
         }
 

@@ -109,7 +109,7 @@ class ProductManageRepository implements ProductManageInterface
     {
         try {
             $data = Arr::except($data, ['translations']);
-            $data['image'] = (string) $data['image'];
+            $data['image'] = (string) ($data['image'] ?? '');
             $product = Product::create($data);
 
             //Set up media binding for main image
@@ -138,7 +138,7 @@ class ProductManageRepository implements ProductManageInterface
                 }, $data['variants']);
                 // insert all variants at once
                 foreach ($variants as $variant) {
-                    $variant['image'] = (string) $variant['image'];
+                    $variant['image'] = (string) ($variant['image'] ?? '');
                     ProductVariant::create($variant);
                     // Set up media binding for variant image
                     if (!empty($variant['image'])) {
@@ -257,7 +257,7 @@ class ProductManageRepository implements ProductManageInterface
                     $variant['attributes'] = !empty($variant['attributes']) ? json_encode($variant['attributes']) : null;
                     $variant['variant_slug'] = $variant['variant']; // Assign the generated slug
                     $variant['product_id'] = $product->id;
-                    $variant['image'] = (string) $variant['image'];
+                    $variant['image'] = (string) ($variant['image'] ?? '');
 
                     if (!empty($variant['id'])) {
                         // Check if the variant exists

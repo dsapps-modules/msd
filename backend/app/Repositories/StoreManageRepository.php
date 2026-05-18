@@ -79,6 +79,10 @@ class StoreManageRepository implements StoreManageInterface
             $store->where('stores.status', (int)$status);
         }
 
+        if (!empty($filters['seller_id'])) {
+            $store->where('stores.store_seller_id', $filters['seller_id']);
+        }
+
 
         return $store->with(['seller', 'area', 'related_translations'])
             ->orderBy($sortField ?: 'stores.created_at', $sort ?: 'asc')
