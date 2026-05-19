@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\DivulgadorBuyer;
 use App\Models\DivulgadorCampaign;
+use App\Models\DivulgadorDonation;
 use App\Models\DivulgadorLink;
 use App\Models\DivulgadorProduct;
 use Illuminate\Database\Seeder;
@@ -131,6 +132,28 @@ class DivulgadorDemoSeeder extends Seeder
                     'link_divulgacao' => $campaign['link_divulgacao'],
                     'data_inicio' => $campaign['data_inicio'],
                     'status' => $campaign['status'],
+                ]
+            );
+        }
+
+        $donations = [
+            ['donor_name' => 'Mariana Lopes', 'purchase_value' => 250.00, 'donation_value' => 25.00, 'donation_date' => '2026-05-10', 'status' => 'Recebido'],
+            ['donor_name' => 'Carlos Mendes', 'purchase_value' => 180.00, 'donation_value' => 18.00, 'donation_date' => '2026-05-12', 'status' => 'Pendente'],
+            ['donor_name' => 'Fernanda Rocha', 'purchase_value' => 320.00, 'donation_value' => 32.00, 'donation_date' => '2026-05-14', 'status' => 'Recebido'],
+            ['donor_name' => 'João Almeida', 'purchase_value' => 95.00, 'donation_value' => 9.50, 'donation_date' => '2026-05-15', 'status' => 'Pendente'],
+        ];
+
+        foreach ($donations as $donation) {
+            DivulgadorDonation::query()->updateOrCreate(
+                [
+                    'account_code' => $accountCode,
+                    'donor_name' => $donation['donor_name'],
+                    'donation_date' => $donation['donation_date'],
+                ],
+                [
+                    'purchase_value' => $donation['purchase_value'],
+                    'donation_value' => $donation['donation_value'],
+                    'status' => $donation['status'],
                 ]
             );
         }

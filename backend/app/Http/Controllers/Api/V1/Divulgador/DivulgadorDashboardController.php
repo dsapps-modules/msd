@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1\Divulgador;
 use App\Http\Controllers\Api\V1\Controller;
 use App\Models\DivulgadorBuyer;
 use App\Models\DivulgadorCampaign;
+use App\Models\DivulgadorDonation;
 use App\Models\DivulgadorLink;
 use App\Models\DivulgadorProduct;
 use Illuminate\Http\JsonResponse;
@@ -120,6 +121,48 @@ class DivulgadorDashboardController extends Controller
             });
     }
 
+    private function donationList(Request $request)
+    {
+        $code = $this->accountCode($request);
+
+        return DivulgadorDonation::query()
+            ->where('account_code', $code)
+            ->orderByDesc('donation_date')
+            ->get()
+            ->map(function (DivulgadorDonation $donation) {
+                return [
+                    'id' => $donation->id,
+                    'donor_name' => $donation->donor_name,
+                    'purchase_value' => (float) $donation->purchase_value,
+                    'donation_value' => (float) $donation->donation_value,
+                    'donation_date' => optional($donation->donation_date)->format('d/m/Y'),
+                    'status' => $donation->status,
+                ];
+            });
+    }
+
+    private function financialSummary(Request $request): array
+    {
+        $donations = DivulgadorDonation::query()
+            ->where('account_code', $this->accountCode($request))
+            ->get();
+
+        $receivedTotal = $donations
+            ->where('status', 'Recebido')
+            ->sum('donation_value');
+
+        $pendingTotal = $donations
+            ->where('status', 'Pendente')
+            ->sum('donation_value');
+
+        return [
+            'received_total' => (float) $receivedTotal,
+            'pending_total' => (float) $pendingTotal,
+            'donations_count' => $donations->count(),
+            'purchase_total' => (float) $donations->sum('purchase_value'),
+        ];
+    }
+
     public function dashboard(Request $request): JsonResponse
     {
         return response()->json([
@@ -167,10 +210,8 @@ class DivulgadorDashboardController extends Controller
 
         return response()->json([
             'summary' => $this->summaryData($request),
-            'financial' => [
-                'estimated_commissions' => 4780.00,
-                'active_links' => 17,
-            ],
+            'financial' => $this->financialSummary($request),
+            'donations' => $this->donationList($request),
         ]);
     }
 }
