@@ -212,7 +212,7 @@ class User extends Authenticatable
         return $this->hasMany(ProductAuthor::class, 'created_by', 'id');
     }
 
-    public function divulgadorRoleNames(): array
+    public function accountRoleNames(): array
     {
         return DB::table('model_has_roles')
             ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
@@ -224,16 +224,31 @@ class User extends Authenticatable
             ->all();
     }
 
-    public function divulgadorPrimaryRoleName(): ?string
+    public function accountPrimaryRoleName(): ?string
     {
-        $roles = $this->divulgadorRoleNames();
+        $roles = $this->accountRoleNames();
 
         return $roles[0] ?? null;
     }
 
+    public function accountHasRole(string $roleName): bool
+    {
+        return in_array($roleName, $this->accountRoleNames(), true);
+    }
+
+    public function divulgadorRoleNames(): array
+    {
+        return $this->accountRoleNames();
+    }
+
+    public function divulgadorPrimaryRoleName(): ?string
+    {
+        return $this->accountPrimaryRoleName();
+    }
+
     public function divulgadorHasRole(string $roleName): bool
     {
-        return in_array($roleName, $this->divulgadorRoleNames(), true);
+        return $this->accountHasRole($roleName);
     }
 
 }

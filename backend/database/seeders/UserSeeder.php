@@ -89,6 +89,38 @@ class UserSeeder extends Seeder
                 'stores' => null,
                 'updated_at' => now(),
             ],
+            [
+                'activity_scope' => 'fornecedor_level',
+                'account_type' => 'fornecedor',
+                'created_at' => now(),
+                'email' => 'admin.fornecedor@teste.com',
+                'email_verified_at' => now(),
+                'first_name' => 'Admin',
+                'last_name' => 'Fornecedor',
+                'password' => Hash::make('password'),
+                'remember_token' => null,
+                'slug' => 'admin-fornecedor',
+                'status' => 1,
+                'store_owner' => 0,
+                'stores' => null,
+                'updated_at' => now(),
+            ],
+            [
+                'activity_scope' => 'fornecedor_level',
+                'account_type' => 'fornecedor',
+                'created_at' => now(),
+                'email' => 'colaborador.fornecedor@teste.com',
+                'email_verified_at' => now(),
+                'first_name' => 'Colaborador',
+                'last_name' => 'Fornecedor',
+                'password' => Hash::make('password'),
+                'remember_token' => null,
+                'slug' => 'colaborador-fornecedor',
+                'status' => 1,
+                'store_owner' => 0,
+                'stores' => null,
+                'updated_at' => now(),
+            ],
         ];
 
         foreach ($users as $user) {
@@ -140,10 +172,19 @@ class UserSeeder extends Seeder
                 }
             }
 
-            if ($user['activity_scope'] === 'divulgador_level') {
-                $roleName = $user['email'] === 'admin.divulgador@teste.com'
-                    ? 'divulgador_admin'
-                    : 'divulgador_colaborador';
+            if (in_array($user['activity_scope'], ['divulgador_level', 'fornecedor_level'], true)) {
+                $roleName = match ($user['email']) {
+                    'admin.divulgador@teste.com' => 'divulgador_admin',
+                    'colaborador.divulgador@teste.com' => 'divulgador_colaborador',
+                    'admin.fornecedor@teste.com' => 'fornecedor_admin',
+                    'colaborador.fornecedor@teste.com' => 'fornecedor_colaborador',
+                    default => null,
+                };
+
+                if (!$roleName) {
+                    continue;
+                }
+
                 $roleId = Role::query()
                     ->where('name', $roleName)
                     ->where('guard_name', 'api')

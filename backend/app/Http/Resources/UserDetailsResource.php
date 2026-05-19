@@ -39,7 +39,7 @@ class UserDetailsResource extends JsonResource
             "store_owner" => $this->store_owner,
             "store_seller_id" => $this->store_seller_id,
             "stores" => $stores,
-            'roles' => $this->roles->pluck('name'),
+            'roles' => $this->accountRoleNames(),
         ];
     }
 }

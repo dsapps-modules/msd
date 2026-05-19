@@ -9,11 +9,13 @@ use App\Http\Controllers\Api\V1\Com\LiveLocationController;
 use App\Http\Controllers\Api\V1\Com\SubscriberManageController;
 use App\Http\Controllers\Api\V1\ContactManageController;
 use App\Http\Controllers\Api\V1\Auth\DivulgadorLoginController;
+use App\Http\Controllers\Api\V1\Auth\FornecedorLoginController;
 use App\Http\Controllers\Api\V1\Customer\CustomerOrderController;
 use App\Http\Controllers\Api\V1\Customer\CustomerProductQueryController;
 use App\Http\Controllers\Api\V1\Customer\PlaceOrderController;
 use App\Http\Controllers\Api\V1\DeliveryChargeCalculateController;
 use App\Http\Controllers\Api\V1\Divulgador\DivulgadorDashboardController;
+use App\Http\Controllers\Api\V1\Fornecedor\FornecedorDashboardController;
 use App\Http\Controllers\Api\V1\FrontendController;
 use App\Http\Controllers\Api\V1\MenuManageController;
 use App\Http\Controllers\Api\V1\OtherChargeInfoController;
@@ -71,6 +73,14 @@ Route::group(['prefix' => 'v1/'], function () {
                 Route::get('compradores', [DivulgadorDashboardController::class, 'buyers']);
                 Route::get('links', [DivulgadorDashboardController::class, 'links']);
                 Route::get('financeiro', [DivulgadorDashboardController::class, 'financial'])->middleware('ensure.divulgador.access:divulgador_admin');
+            });
+        });
+
+        Route::prefix('fornecedor/')->group(function () {
+            Route::post('login', [FornecedorLoginController::class, 'login']);
+
+            Route::middleware(['auth:sanctum', ApiAuthMiddleware::class, 'ensure.fornecedor.access'])->group(function () {
+                Route::get('dashboard', [FornecedorDashboardController::class, 'dashboard']);
             });
         });
 

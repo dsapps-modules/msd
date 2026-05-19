@@ -36,6 +36,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
             'ensure.divulgador.access' => \App\Http\Middleware\EnsureDivulgadorAccess::class,
+            'ensure.fornecedor.access' => \App\Http\Middleware\EnsureFornecedorAccess::class,
             'verify_api_csrf_token' => \App\Http\Middleware\VerifyApiCsrfToken::class,
             'online.track' => \App\Http\Middleware\UpdateOnlineAt::class,
             'verify.hmac' => \App\Http\Middleware\VerifyHmacSignature::class,

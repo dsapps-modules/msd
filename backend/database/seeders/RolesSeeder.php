@@ -101,5 +101,29 @@ class RolesSeeder extends Seeder
             ]
         );
 
+        DB::table('roles')->updateOrInsert(
+            ['name' => 'fornecedor_admin', 'guard_name' => 'api'],
+            [
+                'available_for' => 'fornecedor_level',
+                'name' => 'fornecedor_admin',
+                'guard_name' => 'api',
+                'locked' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]
+        );
+
+        DB::table('roles')->updateOrInsert(
+            ['name' => 'fornecedor_colaborador', 'guard_name' => 'api'],
+            [
+                'available_for' => 'fornecedor_level',
+                'name' => 'fornecedor_colaborador',
+                'guard_name' => 'api',
+                'locked' => false,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]
+        );
+
     }
 }

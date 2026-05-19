@@ -45,8 +45,8 @@ class UserResource extends JsonResource
             'account_type' => $this->account_type,
             'divulgador_account_code' => $this->divulgador_account_code,
             'stores' => $stores,
-            'roles' => $this->divulgadorRoleNames(),
-            'role' => $this->divulgadorPrimaryRoleName(),
+            'roles' => $this->accountRoleNames(),
+            'role' => $this->accountPrimaryRoleName(),
             'locked' => $this->locked,
             'status' => $this->status
         ];

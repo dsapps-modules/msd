@@ -19,7 +19,7 @@ class ApiAuthMiddleware
         // Check if the request is for login (POST) or any other non-authenticated routes
         $req_url = $request->path();
         // List of prefixes where authentication is required
-        $authRequiredPrefixes = ['api/v1/customer', 'api/v1/seller', 'api/v1/admin', 'api/v1/delivery-man', 'api/v1/divulgador', 'api/user','api/user/me'];
+        $authRequiredPrefixes = ['api/v1/customer', 'api/v1/seller', 'api/v1/admin', 'api/v1/delivery-man', 'api/v1/divulgador', 'api/v1/fornecedor', 'api/user','api/user/me'];
 
         // Check if the request path starts with one of the required prefixes
         foreach ($authRequiredPrefixes as $prefix) {
@@ -39,6 +39,7 @@ class ApiAuthMiddleware
                 $req_url === 'api/v1/seller/reset-password' ||
                 $req_url === 'api/v1/seller/login' ||
                 $req_url === 'api/v1/divulgador/login' ||
+                $req_url === 'api/v1/fornecedor/login' ||
                 $req_url === 'api/token' ||
                 $req_url === 'api/refresh-token' ||
                 $req_url === 'api/v1/customer/refresh-token'
