@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\Divulgador;
 
 use App\Http\Controllers\Api\V1\Controller;
 use App\Models\DivulgadorBuyer;
+use App\Models\DivulgadorCampaign;
 use App\Models\DivulgadorLink;
 use App\Models\DivulgadorProduct;
 use Illuminate\Http\JsonResponse;
@@ -94,10 +95,36 @@ class DivulgadorDashboardController extends Controller
             });
     }
 
+    private function campaignList(Request $request)
+    {
+        $code = $this->accountCode($request);
+
+        return DivulgadorCampaign::query()
+            ->where('account_code', $code)
+            ->where('status', 'ativa')
+            ->orderByDesc('data_inicio')
+            ->limit(2)
+            ->get()
+            ->map(function (DivulgadorCampaign $campaign) {
+                return [
+                    'id' => $campaign->id,
+                    'nome_campanha' => $campaign->nome_campanha,
+                    'produto_nome' => $campaign->produto_nome,
+                    'fornecedor_nome' => $campaign->fornecedor_nome,
+                    'meta_total' => (int) $campaign->meta_total,
+                    'progresso_atual' => (int) $campaign->progresso_atual,
+                    'link_divulgacao' => $campaign->link_divulgacao,
+                    'data_inicio' => optional($campaign->data_inicio)->format('d/m/Y'),
+                    'status' => $campaign->status,
+                ];
+            });
+    }
+
     public function dashboard(Request $request): JsonResponse
     {
         return response()->json([
             'summary' => $this->summaryData($request),
+            'campaigns' => $this->campaignList($request),
             'products' => $this->productList($request),
             'buyers' => $this->buyerList($request),
             'links' => $this->linkList($request),

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\DivulgadorBuyer;
+use App\Models\DivulgadorCampaign;
 use App\Models\DivulgadorLink;
 use App\Models\DivulgadorProduct;
 use Illuminate\Database\Seeder;
@@ -79,6 +80,57 @@ class DivulgadorDemoSeeder extends Seeder
                     'url' => $link['url'],
                     'status' => 'Ativo',
                     'commission_value' => $link['commission_value'],
+                ]
+            );
+        }
+
+        $campaigns = [
+            [
+                'nome_campanha' => 'Aluguel',
+                'produto_nome' => 'Kit Clareador Dental Premium',
+                'fornecedor_nome' => 'Dental Shop Brasil',
+                'meta_total' => 100,
+                'progresso_atual' => 35,
+                'link_divulgacao' => 'https://app.com/r/aluguel123',
+                'data_inicio' => '2026-05-19',
+                'status' => 'ativa',
+            ],
+            [
+                'nome_campanha' => 'Acampamento dos Jovens',
+                'produto_nome' => 'Escova Elétrica SmartClean',
+                'fornecedor_nome' => 'Oral Prime',
+                'meta_total' => 200,
+                'progresso_atual' => 120,
+                'link_divulgacao' => 'https://app.com/r/acampamento789',
+                'data_inicio' => '2026-05-18',
+                'status' => 'ativa',
+            ],
+            [
+                'nome_campanha' => 'Higiene Total',
+                'produto_nome' => 'Fio Dental Expansível',
+                'fornecedor_nome' => 'Sorriso Distribuidora',
+                'meta_total' => 80,
+                'progresso_atual' => 12,
+                'link_divulgacao' => 'https://app.com/r/higiene-total',
+                'data_inicio' => '2026-05-15',
+                'status' => 'inativa',
+            ],
+        ];
+
+        foreach ($campaigns as $campaign) {
+            DivulgadorCampaign::query()->updateOrCreate(
+                [
+                    'account_code' => $accountCode,
+                    'nome_campanha' => $campaign['nome_campanha'],
+                ],
+                [
+                    'produto_nome' => $campaign['produto_nome'],
+                    'fornecedor_nome' => $campaign['fornecedor_nome'],
+                    'meta_total' => $campaign['meta_total'],
+                    'progresso_atual' => $campaign['progresso_atual'],
+                    'link_divulgacao' => $campaign['link_divulgacao'],
+                    'data_inicio' => $campaign['data_inicio'],
+                    'status' => $campaign['status'],
                 ]
             );
         }
