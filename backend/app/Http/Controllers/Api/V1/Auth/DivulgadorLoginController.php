@@ -33,7 +33,7 @@ class DivulgadorLoginController extends Controller
             ->where('status', 1)
             ->first();
 
-        if (!$user || $user->account_type !== 'divulgador' || $user->activity_scope !== 'divulgador_level') {
+        if (!$user || !$user->isDivulgadorAccount() || $user->activity_scope !== 'divulgador_level') {
             return response()->json([
                 'status' => false,
                 'status_code' => 422,

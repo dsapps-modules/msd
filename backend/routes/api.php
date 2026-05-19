@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\V1\Customer\CustomerProductQueryController;
 use App\Http\Controllers\Api\V1\Customer\PlaceOrderController;
 use App\Http\Controllers\Api\V1\DeliveryChargeCalculateController;
 use App\Http\Controllers\Api\V1\Divulgador\DivulgadorDashboardController;
+use App\Http\Controllers\Api\V1\Divulgador\DivulgadorCampaignController;
 use App\Http\Controllers\Api\V1\Fornecedor\FornecedorDashboardController;
 use App\Http\Controllers\Api\V1\FrontendController;
 use App\Http\Controllers\Api\V1\MenuManageController;
@@ -72,7 +73,14 @@ Route::group(['prefix' => 'v1/'], function () {
                 Route::get('produtos', [DivulgadorDashboardController::class, 'products']);
                 Route::get('compradores', [DivulgadorDashboardController::class, 'buyers']);
                 Route::get('links', [DivulgadorDashboardController::class, 'links']);
+                Route::post('links', [DivulgadorDashboardController::class, 'storeLink']);
                 Route::get('financeiro', [DivulgadorDashboardController::class, 'financial'])->middleware('ensure.divulgador.access:divulgador_admin');
+                Route::get('campanhas', [DivulgadorCampaignController::class, 'index']);
+                Route::post('campanhas', [DivulgadorCampaignController::class, 'store']);
+                Route::get('campanhas/{id}', [DivulgadorCampaignController::class, 'show']);
+                Route::put('campanhas/{id}', [DivulgadorCampaignController::class, 'update']);
+                Route::patch('campanhas/{id}', [DivulgadorCampaignController::class, 'update']);
+                Route::delete('campanhas/{id}', [DivulgadorCampaignController::class, 'destroy']);
             });
         });
 

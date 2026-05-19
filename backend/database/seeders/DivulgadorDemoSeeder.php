@@ -7,6 +7,7 @@ use App\Models\DivulgadorCampaign;
 use App\Models\DivulgadorDonation;
 use App\Models\DivulgadorLink;
 use App\Models\DivulgadorProduct;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DivulgadorDemoSeeder extends Seeder
@@ -14,6 +15,9 @@ class DivulgadorDemoSeeder extends Seeder
     public function run(): void
     {
         $accountCode = 'demo-divulgador';
+        $divulgadorId = User::query()
+            ->where('divulgador_account_code', $accountCode)
+            ->value('id');
 
         $products = [
             ['name' => 'Kit Clareador Dental Premium', 'supplier_name' => 'Dental Shop Brasil', 'price' => 189.90, 'stock' => 42, 'status' => 'Ativo'],
@@ -62,78 +66,105 @@ class DivulgadorDemoSeeder extends Seeder
             );
         }
 
+        $campaigns = [
+            [
+                'titulo' => 'Clareamento Solidário 2026',
+                'objetivo' => 'Arrecadar doações por meio da divulgação de kits de clareamento dental.',
+                'meta_financeira' => 5000.00,
+                'banner' => 'https://placehold.co/1200x675/0f172a/ffffff?text=Clareamento+Solid%C3%A1rio+2026',
+                'data_inicio' => '2026-05-01',
+                'data_fim' => '2026-05-31',
+                'nome_campanha' => 'Clareamento Solidário 2026',
+                'produto_nome' => 'Kit Clareador Dental Premium',
+                'fornecedor_nome' => 'Dental Shop Brasil',
+                'meta_total' => 100,
+                'progresso_atual' => 35,
+                'status' => 'ativa',
+            ],
+            [
+                'titulo' => 'Sorriso Tech',
+                'objetivo' => 'Promover produtos odontológicos tecnológicos com geração de doações.',
+                'meta_financeira' => 8000.00,
+                'banner' => 'https://placehold.co/1200x675/134e4a/ffffff?text=Sorriso+Tech',
+                'data_inicio' => '2026-05-10',
+                'data_fim' => '2026-06-30',
+                'nome_campanha' => 'Sorriso Tech',
+                'produto_nome' => 'Escova Elétrica SmartClean',
+                'fornecedor_nome' => 'Oral Prime',
+                'meta_total' => 200,
+                'progresso_atual' => 120,
+                'status' => 'ativa',
+            ],
+            [
+                'titulo' => 'Higiene Total',
+                'objetivo' => 'Campanha de conscientização e divulgação de produtos de higiene bucal.',
+                'meta_financeira' => 3500.00,
+                'banner' => 'https://placehold.co/1200x675/334155/ffffff?text=Higiene+Total',
+                'data_inicio' => '2026-04-01',
+                'data_fim' => '2026-04-30',
+                'nome_campanha' => 'Higiene Total',
+                'produto_nome' => 'Fio Dental Expansível',
+                'fornecedor_nome' => 'Sorriso Distribuidora',
+                'meta_total' => 80,
+                'progresso_atual' => 12,
+                'status' => 'inativa',
+            ],
+        ];
+
+        $campaignModels = [];
+
+        foreach ($campaigns as $campaign) {
+            $campaignModels[] = DivulgadorCampaign::query()->updateOrCreate(
+                [
+                    'account_code' => $accountCode,
+                    'titulo' => $campaign['titulo'],
+                ],
+                [
+                    'divulgador_id' => $divulgadorId,
+                    'titulo' => $campaign['titulo'],
+                    'objetivo' => $campaign['objetivo'],
+                    'meta_financeira' => $campaign['meta_financeira'],
+                    'banner' => $campaign['banner'],
+                    'data_inicio' => $campaign['data_inicio'],
+                    'data_fim' => $campaign['data_fim'],
+                    'nome_campanha' => $campaign['nome_campanha'],
+                    'produto_nome' => $campaign['produto_nome'],
+                    'fornecedor_nome' => $campaign['fornecedor_nome'],
+                    'meta_total' => $campaign['meta_total'],
+                    'progresso_atual' => $campaign['progresso_atual'],
+                    'status' => $campaign['status'],
+                    'link_divulgacao' => null,
+                ]
+            );
+        }
+
         $links = [
-            ['product_index' => 0, 'code' => 'KIT-CLAREADOR-01', 'url' => 'https://kilocao.local/divulgador/kit-clareador', 'commission_value' => 980.00],
-            ['product_index' => 1, 'code' => 'SMARTCLEAN-02', 'url' => 'https://kilocao.local/divulgador/escova-eletrica', 'commission_value' => 870.00],
-            ['product_index' => 2, 'code' => 'IRRIGADOR-03', 'url' => 'https://kilocao.local/divulgador/irrigador-oral', 'commission_value' => 790.00],
-            ['product_index' => 3, 'code' => 'SENSITIVE-04', 'url' => 'https://kilocao.local/divulgador/creme-dental', 'commission_value' => 630.00],
-            ['product_index' => 4, 'code' => 'FIO-DENTAL-05', 'url' => 'https://kilocao.local/divulgador/fio-dental', 'commission_value' => 1510.00],
+            ['campaign_index' => 0, 'code' => 'ABC123CLAREAR', 'commission_value' => 980.00],
+            ['campaign_index' => 1, 'code' => 'XYZ789SORRISO', 'commission_value' => 870.00],
         ];
 
         foreach ($links as $link) {
+            $campaign = $campaignModels[$link['campaign_index']];
+            $publicUrl = 'https://app.com/r/' . strtolower($link['code']);
+
             DivulgadorLink::query()->updateOrCreate(
                 [
                     'account_code' => $accountCode,
                     'code' => $link['code'],
                 ],
                 [
-                    'divulgador_product_id' => $productModels[$link['product_index']]->id,
-                    'url' => $link['url'],
+                    'divulgador_id' => $divulgadorId,
+                    'campaign_id' => $campaign->id,
+                    'divulgador_product_id' => null,
+                    'url' => $publicUrl,
                     'status' => 'Ativo',
                     'commission_value' => $link['commission_value'],
                 ]
             );
-        }
 
-        $campaigns = [
-            [
-                'nome_campanha' => 'Aluguel',
-                'produto_nome' => 'Kit Clareador Dental Premium',
-                'fornecedor_nome' => 'Dental Shop Brasil',
-                'meta_total' => 100,
-                'progresso_atual' => 35,
-                'link_divulgacao' => 'https://app.com/r/aluguel123',
-                'data_inicio' => '2026-05-19',
-                'status' => 'ativa',
-            ],
-            [
-                'nome_campanha' => 'Acampamento dos Jovens',
-                'produto_nome' => 'Escova Elétrica SmartClean',
-                'fornecedor_nome' => 'Oral Prime',
-                'meta_total' => 200,
-                'progresso_atual' => 120,
-                'link_divulgacao' => 'https://app.com/r/acampamento789',
-                'data_inicio' => '2026-05-18',
-                'status' => 'ativa',
-            ],
-            [
-                'nome_campanha' => 'Higiene Total',
-                'produto_nome' => 'Fio Dental Expansível',
-                'fornecedor_nome' => 'Sorriso Distribuidora',
-                'meta_total' => 80,
-                'progresso_atual' => 12,
-                'link_divulgacao' => 'https://app.com/r/higiene-total',
-                'data_inicio' => '2026-05-15',
-                'status' => 'inativa',
-            ],
-        ];
-
-        foreach ($campaigns as $campaign) {
-            DivulgadorCampaign::query()->updateOrCreate(
-                [
-                    'account_code' => $accountCode,
-                    'nome_campanha' => $campaign['nome_campanha'],
-                ],
-                [
-                    'produto_nome' => $campaign['produto_nome'],
-                    'fornecedor_nome' => $campaign['fornecedor_nome'],
-                    'meta_total' => $campaign['meta_total'],
-                    'progresso_atual' => $campaign['progresso_atual'],
-                    'link_divulgacao' => $campaign['link_divulgacao'],
-                    'data_inicio' => $campaign['data_inicio'],
-                    'status' => $campaign['status'],
-                ]
-            );
+            $campaign->update([
+                'link_divulgacao' => $publicUrl,
+            ]);
         }
 
         $donations = [

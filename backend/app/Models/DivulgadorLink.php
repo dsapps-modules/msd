@@ -11,6 +11,8 @@ class DivulgadorLink extends Model
 
     protected $fillable = [
         'account_code',
+        'campaign_id',
+        'divulgador_id',
         'divulgador_product_id',
         'code',
         'url',
@@ -25,5 +27,10 @@ class DivulgadorLink extends Model
     public function product()
     {
         return $this->belongsTo(DivulgadorProduct::class, 'divulgador_product_id');
+    }
+
+    public function campaign()
+    {
+        return $this->belongsTo(DivulgadorCampaign::class, 'campaign_id');
     }
 }

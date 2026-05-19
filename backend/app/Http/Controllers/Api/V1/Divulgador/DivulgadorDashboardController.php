@@ -10,6 +10,7 @@ use App\Models\DivulgadorLink;
 use App\Models\DivulgadorProduct;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class DivulgadorDashboardController extends Controller
 {
@@ -80,13 +81,14 @@ class DivulgadorDashboardController extends Controller
         $code = $this->accountCode($request);
 
         return DivulgadorLink::query()
-            ->with(['product:id,name'])
+            ->with(['campaign:id,titulo,status', 'product:id,name'])
             ->where('account_code', $code)
-            ->orderByDesc('status')
+            ->latest('created_at')
             ->get()
             ->map(function (DivulgadorLink $link) {
                 return [
                     'id' => $link->id,
+                    'campaign_title' => $link->campaign?->titulo,
                     'product_name' => $link->product?->name,
                     'code' => $link->code,
                     'url' => $link->url,
@@ -101,7 +103,12 @@ class DivulgadorDashboardController extends Controller
         $code = $this->accountCode($request);
 
         return DivulgadorCampaign::query()
-            ->where('account_code', $code)
+            ->where(function ($query) use ($code, $request) {
+                $query->where('account_code', $code);
+                if ($request->user()?->id) {
+                    $query->orWhere('divulgador_id', $request->user()->id);
+                }
+            })
             ->where('status', 'ativa')
             ->orderByDesc('data_inicio')
             ->limit(2)
@@ -109,13 +116,15 @@ class DivulgadorDashboardController extends Controller
             ->map(function (DivulgadorCampaign $campaign) {
                 return [
                     'id' => $campaign->id,
-                    'nome_campanha' => $campaign->nome_campanha,
-                    'produto_nome' => $campaign->produto_nome,
-                    'fornecedor_nome' => $campaign->fornecedor_nome,
+                    'titulo' => $campaign->titulo ?: $campaign->nome_campanha,
+                    'objetivo' => $campaign->objetivo ?: '',
+                    'banner_url' => $campaign->banner_url,
+                    'meta_financeira' => (float) ($campaign->meta_financeira ?? $campaign->meta_total ?? 0),
                     'meta_total' => (int) $campaign->meta_total,
                     'progresso_atual' => (int) $campaign->progresso_atual,
                     'link_divulgacao' => $campaign->link_divulgacao,
                     'data_inicio' => optional($campaign->data_inicio)->format('d/m/Y'),
+                    'data_fim' => optional($campaign->data_fim)->format('d/m/Y'),
                     'status' => $campaign->status,
                 ];
             });
@@ -197,6 +206,86 @@ class DivulgadorDashboardController extends Controller
             'summary' => $this->summaryData($request),
             'links' => $this->linkList($request),
         ]);
+    }
+
+    public function storeLink(Request $request): JsonResponse
+    {
+        $request->validate([
+            'campaign_id' => 'required|exists:divulgador_campaigns,id',
+        ]);
+
+        $user = $request->user();
+        $code = $this->accountCode($request);
+        $campaign = DivulgadorCampaign::query()
+            ->where(function ($query) use ($user, $code) {
+                $query->where('account_code', $code);
+                if ($user?->id) {
+                    $query->orWhere('divulgador_id', $user->id);
+                }
+            })
+            ->findOrFail($request->integer('campaign_id'));
+
+        if ($campaign->status !== 'ativa') {
+            return response()->json([
+                'message' => 'Só é possível gerar link para campanhas ativas.',
+                'status' => 422,
+            ], 422);
+        }
+
+        $existingLink = DivulgadorLink::query()
+            ->where('campaign_id', $campaign->id)
+            ->where('account_code', $code)
+            ->latest('id')
+            ->first();
+
+        if ($existingLink) {
+            if (!$campaign->link_divulgacao) {
+                $campaign->update([
+                    'link_divulgacao' => $existingLink->url,
+                ]);
+            }
+
+            return response()->json([
+                'message' => 'A campanha já possui um link gerado.',
+                'link' => [
+                    'id' => $existingLink->id,
+                    'campaign_title' => $campaign->titulo ?: $campaign->nome_campanha,
+                    'code' => $existingLink->code,
+                    'url' => $existingLink->url,
+                    'status' => $existingLink->status,
+                ],
+            ]);
+        }
+
+        $generatedCode = Str::upper(Str::random(10));
+        $baseUrl = rtrim((string) (config('app.frontend_url') ?: config('app.url')), '/');
+        $url = $baseUrl . '/r/' . $generatedCode;
+
+        $link = DivulgadorLink::query()->create([
+            'account_code' => $code,
+            'divulgador_id' => $user?->id,
+            'campaign_id' => $campaign->id,
+            'divulgador_product_id' => null,
+            'code' => $generatedCode,
+            'url' => $url,
+            'status' => 'Ativo',
+            'commission_value' => 0,
+        ]);
+
+        $campaign->update([
+            'link_divulgacao' => $url,
+        ]);
+
+        return response()->json([
+            'message' => 'Link gerado com sucesso.',
+            'link' => [
+                'id' => $link->id,
+                'campaign_title' => $campaign->titulo ?: $campaign->nome_campanha,
+                'code' => $link->code,
+                'url' => $link->url,
+                'status' => $link->status,
+            ],
+        ], 201);
     }
 
     public function financial(Request $request): JsonResponse

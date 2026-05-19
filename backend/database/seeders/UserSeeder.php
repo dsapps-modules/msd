@@ -130,18 +130,22 @@ class UserSeeder extends Seeder
 
             if ($user['activity_scope'] === 'system_level') {
                 $userId = DB::table('users')->where('slug', $user['slug'])->value('id');
+                $superAdminRoleId = Role::query()
+                    ->where('name', 'Super Admin')
+                    ->where('guard_name', 'api')
+                    ->value('id');
 
-                if ($userId) {
+                if ($userId && $superAdminRoleId) {
                     DB::table('model_has_roles')->updateOrInsert(
                         [
                             'model_id' => $userId,
                             'model_type' => 'App\\Models\\User',
-                            'role_id' => 1,
+                            'role_id' => $superAdminRoleId,
                         ],
                         [
                             'model_id' => $userId,
                             'model_type' => 'App\\Models\\User',
-                            'role_id' => 1,
+                            'role_id' => $superAdminRoleId,
                         ]
                     );
                 }

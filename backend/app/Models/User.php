@@ -251,4 +251,18 @@ class User extends Authenticatable
         return $this->accountHasRole($roleName);
     }
 
+    public function isDivulgadorAccount(): bool
+    {
+        return $this->account_type === 'divulgador'
+            || $this->accountHasRole('divulgador_admin')
+            || $this->accountHasRole('divulgador_colaborador');
+    }
+
+    public function isFornecedorAccount(): bool
+    {
+        return $this->account_type === 'fornecedor'
+            || $this->accountHasRole('fornecedor_admin')
+            || $this->accountHasRole('fornecedor_colaborador');
+    }
+
 }
