@@ -29,25 +29,42 @@ async function fetchSiteInfo(): Promise<SiteInfo> {
   );
   if (!res.ok) throw new Error("Failed to fetch site info");
   const data = await res.json();
-  return data.site_settings as SiteInfo;
+  const siteSettings = data.site_settings ?? {};
+
+  return {
+    com_site_title: siteSettings.com_site_title ?? "Quick Ecommerce",
+    com_site_subtitle: siteSettings.com_site_subtitle ?? "Quick Ecommerce",
+    com_site_favicon: siteSettings.com_site_favicon ?? "",
+  };
 }
 
 export async function generateMetadata(): Promise<Metadata> {
   try {
     const data = await fetchSiteInfo();
+    const iconEntries = data.com_site_favicon
+      ? [
+          {
+            url: data.com_site_favicon,
+            type: "image/png",
+            sizes: "512x512",
+          },
+          {
+            url: data.com_site_favicon,
+            type: "image/png",
+            sizes: "192x192",
+          },
+          {
+            url: data.com_site_favicon,
+            sizes: "180x180",
+            type: "image/png",
+          },
+        ]
+      : [{ url: "/favicon.ico" }];
 
     return {
-      title: data.com_site_title,
-      description: data.com_site_subtitle,
-      icons: {
-        icon: [
-          { url: data.com_site_favicon, type: "image/png", sizes: "512x512" },
-          { url: data.com_site_favicon, type: "image/png", sizes: "192x192" },
-        ],
-        apple: [
-          { url: data.com_site_favicon, sizes: "180x180", type: "image/png" },
-        ],
-      },
+      title: data.com_site_title || "Quick Ecommerce",
+      description: data.com_site_subtitle || "Quick Ecommerce",
+      icons: { icon: iconEntries, apple: iconEntries },
     };
   } catch {
     return {

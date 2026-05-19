@@ -10,41 +10,32 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { SellerRoutes } from "@/config/sellerRoutes";
-import { useFirebaseNotifications } from "@/lib/hooks/useFirebaseNotifications";
 import GlobalImageLoader from "@/lib/imageLoader";
 import { useAdminSignInQuery } from "@/modules/admin-section/system-management/page-settings/page-settings.action";
 import { useGeneralQuery } from "@/modules/common/com/com.action";
-import { useShopOwnerLogin } from "@/modules/users/users.action";
 import { LoginInput, LoginSchema } from "@/modules/users/users.schema";
-import { useAppDispatch } from "@/redux/hooks";
-import { setDynamicValue, setRefetch } from "@/redux/slices/refetchSlice";
-import { setSelectedStore } from "@/redux/slices/storeSlice";
 import { AuthFormProps } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Copy, Eye, EyeOff } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import React, { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
-import Loader from "../Loader";
 import ChangePassword from "./modals/ChangePassword";
-import { clearCart } from "@/redux/slices/cartSlice";
 
 const StoreOwnerSignInForm = ({ isRedirect }: AuthFormProps) => {
   const t = useTranslations();
   const pathname = usePathname();
-  const router = useRouter();
+  const searchParams = useSearchParams();
   const locale = pathname.split("/")[1];
   const localeMain = useLocale();
   const dir = locale === "ar" ? "rtl" : "ltr";
-  const { mutate: login, isPending } = useShopOwnerLogin({ isRedirect });
   const [rememberMe, setRememberMe] = useState(false);
   const [on, setOn] = useState(false);
-  const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
+  const [loginImageFallback, setLoginImageFallback] = useState(false);
 
   useEffect(() => {
     setIsLoading(false);
@@ -68,7 +59,7 @@ const StoreOwnerSignInForm = ({ isRedirect }: AuthFormProps) => {
       password: "",
     },
   });
-  const { control, setValue, handleSubmit, reset } = form;
+  const { control, setValue } = form;
 
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [isCaptchaVerified, setIsCaptchaVerified] = useState(false);
@@ -90,37 +81,34 @@ const StoreOwnerSignInForm = ({ isRedirect }: AuthFormProps) => {
     () => (AdminSignInData as any)?.data || [],
     [AdminSignInData]
   );
+  const loginPageImage = QueryGeneralSettingsData?.com_seller_login_page_image;
 
-  const { token: firebaseToken } = useFirebaseNotifications();
+  useEffect(() => {
+    setLoginImageFallback(false);
+  }, [loginPageImage]);
 
-  async function onSubmit({ email, password }: LoginInput) {
-    if (password == "") {
-      return toast.error(t("toast.please_enter_Password"));
+  useEffect(() => {
+    const email = searchParams.get("email");
+    const password = searchParams.get("password");
+
+    if (email) {
+      setValue("email", email);
     }
 
-    const payload: LoginInput & { remember_me?: boolean } = {
-      email,
-      password,
-      ...(rememberMe && { remember_me: true }),
-      ...(firebaseToken && { firebase_device_token: firebaseToken }),
-      ...(GeneralData?.com_google_recaptcha_enable_disable === "on" && {
-        cf_token: captchaToken,
-      }),
-    };
-    login(payload, {
-      onSettled: () => {
-        setIsLoading(false);
-        dispatch(clearCart());
-        localStorage.setItem(
-          "selectedStore",
-          JSON.stringify({ id: "", slug: "" })
-        );
-        dispatch(setSelectedStore({ id: "", type: "", slug: "" }));
-      },
-    });
-  }
+    if (password) {
+      setValue("password", password);
+    }
+
+    if (email || password) {
+      const url = new URL(window.location.href);
+      url.searchParams.delete("email");
+      url.searchParams.delete("password");
+      window.history.replaceState({}, "", `${url.pathname}${url.search}`);
+    }
+  }, [searchParams, setValue]);
+
   const handleCopyClick = () => {
-    setValue("email", "seller@gmail.com");
+    setValue("email", "owner@store.com");
     setValue("password", "12345678");
   };
   return (
@@ -141,27 +129,28 @@ const StoreOwnerSignInForm = ({ isRedirect }: AuthFormProps) => {
               <div className="h-full flex items-center justify-center p-4">
                 {isQuerying ? (
                   <Skeleton className="w-64 h-64 rounded-xl" />
-                ) : QueryGeneralSettingsData?.com_seller_login_page_image ? (
-                  <div className="relative w-full max-w-[1200px] aspect-[3/2]">
+                ) : loginPageImage && !loginImageFallback ? (
+                  <div className="relative w-full max-w-[960px] aspect-[4/3]">
                     {" "}
                     <Image
                       loader={GlobalImageLoader}
-                      src={QueryGeneralSettingsData.com_seller_login_page_image}
+                      src={loginPageImage}
                       alt="Login illustration"
                       fill
                       sizes="(max-width: 768px) 100vw, 1200px"
                       className="object-contain rounded-md"
                       priority
+                      onError={() => setLoginImageFallback(true)}
                     />
                   </div>
                 ) : (
-                  <div className="relative w-full max-w-[200px]">
+                  <div className="relative w-full max-w-[260px] aspect-[2/1]">
                     <Image
-                      src="/images/no-image.png"
-                      alt="Login illustration"
-                      width={200}
-                      height={200}
-                      className="w-full h-auto object-contain rounded-md"
+                      src="/images/logo-kilocao.png"
+                      alt="loco_kilocao"
+                      fill
+                      sizes="260px"
+                      className="object-contain rounded-md"
                       priority
                     />
                   </div>
@@ -184,7 +173,13 @@ const StoreOwnerSignInForm = ({ isRedirect }: AuthFormProps) => {
                     {QueryGeneralSettingsData?.com_seller_login_page_subtitle}
                   </h5>
                   <Form {...form}>
-                    <form onSubmit={handleSubmit(onSubmit)} className="mt-10">
+                    <form
+                      className="mt-10"
+                      method="post"
+                      action={`/${localeMain}/api/seller/login`}
+                      noValidate
+                    >
+                      <input type="hidden" name="locale" value={localeMain} />
                       {/* Email Field */}
                       <FormField
                         control={control}
@@ -285,6 +280,8 @@ const StoreOwnerSignInForm = ({ isRedirect }: AuthFormProps) => {
                         <div className="flex items-center space-x-2">
                           <input
                             type="checkbox"
+                            name="remember_me"
+                            value="true"
                             id="terms"
                             className="peer data-[state=checked]:bg-primary data-[state=checked]:border-primary"
                             checked={rememberMe}
@@ -311,13 +308,8 @@ const StoreOwnerSignInForm = ({ isRedirect }: AuthFormProps) => {
                       <Button
                         className="bg-blue-500 hover:bg-blue-700 w-full text-white"
                         type="submit"
-                        disabled={isPending}
                       >
-                        {isPending ? (
-                          <Loader color="text-white" size="small" />
-                        ) : (
-                          <span>{t("button.login")}</span>
-                        )}
+                        <span>{t("button.login")}</span>
                       </Button>
 
                       {/* Become a Seller */}
@@ -325,6 +317,7 @@ const StoreOwnerSignInForm = ({ isRedirect }: AuthFormProps) => {
                         <p className="text-gray-600 dark:text-white">
                           {t("common.do_not_have_an_account")}{" "}
                           <Button
+                            asChild
                             variant="link"
                             className="text-blue-500 font-semibold p-0"
                           >
@@ -342,7 +335,7 @@ const StoreOwnerSignInForm = ({ isRedirect }: AuthFormProps) => {
                             <span className="text-black dark:text-white">
                               {t("label.email")}:
                             </span>{" "}
-                            seller@gmail.com
+                            owner@store.com
                           </p>
                           <p className="text-sm text-muted-foreground dark:text-gray-400">
                             <span className="text-black dark:text-white">

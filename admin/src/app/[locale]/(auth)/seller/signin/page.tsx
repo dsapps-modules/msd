@@ -11,6 +11,7 @@ import Cookies from "js-cookie";
 import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { DivulgadorRoutes } from "@/config/divulgadorRoutes";
+import { FornecedorRoutes } from "@/config/fornecedorRoutes";
 import { useEffect } from "react";
 
 function SignInPage() {
@@ -28,6 +29,8 @@ function SignInPage() {
       Cookies.remove(AUTH_USER);
     } else if (token && authUser == "divulgador_level") {
       void router.replace(withLocale(locale, DivulgadorRoutes.dashboard));
+    } else if (token && authUser == "fornecedor_level") {
+      void router.replace(withLocale(locale, FornecedorRoutes.dashboard));
     }
   }, [locale, router]);
 

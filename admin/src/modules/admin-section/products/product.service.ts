@@ -30,7 +30,7 @@ export const useProductStatusUpdateService = () => {
   return useBaseService<statusUpdateData>(API_ENDPOINTS.PRODUCT_STATUS_UPDATE);
 };
 
-export const useCouponLineDeleteService = () => {
+export const useProductDeleteService = () => {
   return useBaseService<productDelete, any>(
     API_ENDPOINTS.PRODUCT_REMOVE
   );

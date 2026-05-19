@@ -2,13 +2,13 @@ import CustomLayout from "@/components/layout/CustomLayout";
 import EditSeller from "@/components/screen/admin-section/seller/EditSeller";
 
 
-type Props = {params: Promise<{ id: string }>;};
+type Props = { params: Promise<{ id: string }> };
 const UpdateSellerPage = async ({ params }: Props) => {
-    const param = await params;
+  const { id } = await params;
   return (
     <>
       <CustomLayout>
-        <EditSeller ID={param.id} />
+        <EditSeller ID={id} />
       </CustomLayout>
     </>
   );

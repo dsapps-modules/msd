@@ -46,6 +46,8 @@ export default function CreateOrUpdateSellerForm({ data }: any) {
       setValue("phone", data.phone ?? "");
       setPhoneNumber(data?.phone ?? "");
       setValue("email", data.email ?? "");
+    } else {
+      setPhoneNumber("");
     }
   }, [data, setValue]);
 
@@ -78,6 +80,9 @@ export default function CreateOrUpdateSellerForm({ data }: any) {
           {
             onSuccess: () => {
               reset();
+              setPhoneNumber("");
+              setOn(false);
+              setOnConfirm(false);
               dispatch(setRefetch(true));
             },
           }
@@ -87,6 +92,9 @@ export default function CreateOrUpdateSellerForm({ data }: any) {
           {
             onSuccess: () => {
               reset();
+              setPhoneNumber("");
+              setOn(false);
+              setOnConfirm(false);
               dispatch(setRefetch(true));
             },
           }

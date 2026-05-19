@@ -26,7 +26,7 @@ export const useProductUpdateService = () => {
 };
 
 
-export const useCouponLineDeleteService = () => {
+export const useProductDeleteService = () => {
   return useBaseService<productDelete, any>(
     SELLER_API_ENDPOINTS.PRODUCT_REMOVE
   );

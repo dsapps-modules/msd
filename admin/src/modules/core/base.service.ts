@@ -3,6 +3,7 @@ import { API_ENDPOINTS } from "@/endpoints/AdminApiEndPoints";
 import { AUTH_TOKEN_KEY, AUTH_USER } from "@/lib/constants";
 import { Routes } from "@/config/routes";
 import { DivulgadorRoutes } from "@/config/divulgadorRoutes";
+import { FornecedorRoutes } from "@/config/fornecedorRoutes";
 import { SellerRoutes } from "@/config/sellerRoutes";
 import { withLocale } from "@/lib/localized-path";
 import { type ApiResponse, type SearchParamOptions } from "@/types";
@@ -52,6 +53,10 @@ export const useBaseService = <DataType, InputType = unknown>(
   const getSignInRoute = useCallback(() => {
     if (pathnameWithoutLocale.startsWith("/divulgador")) {
       return withLocale(locale, DivulgadorRoutes.signin);
+    }
+
+    if (pathnameWithoutLocale.startsWith("/fornecedor")) {
+      return withLocale(locale, FornecedorRoutes.signin);
     }
 
     if (pathnameWithoutLocale.startsWith("/seller")) {

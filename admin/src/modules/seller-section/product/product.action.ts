@@ -13,13 +13,13 @@ import { toast } from "react-toastify";
 import { ProductFormData } from "./product.schema";
 import {
   useAltChangeService,
-  useCouponLineDeleteService,
   useDynamicFieldService,
   useMakeFeatureService,
   useMediaDeleteService,
   useMediaLibraryService,
   useProductDescriptionGenerateService,
   useProductEditService,
+  useProductDeleteService,
   useProductQueryService,
   useProductStoreService,
   useProductUpdateService,
@@ -148,7 +148,7 @@ export const useProductUpdateMutation = () => {
 };
 
 export const useProductDelete = () => {
-  const { delete: deleteItem } = useCouponLineDeleteService();
+  const { delete: deleteItem } = useProductDeleteService();
   return useMutation({
     mutationFn: (id: string) => deleteItem(id),
     mutationKey: [SELLER_API_ENDPOINTS.PRODUCT_REMOVE],

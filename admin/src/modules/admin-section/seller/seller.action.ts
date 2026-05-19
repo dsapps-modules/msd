@@ -26,7 +26,7 @@ export const useSellerQuery = (options: Partial<SellerQueryOptions>) => {
   const { findAll } = useSellerService();
 
   const { data, isPending, error, refetch, isFetching } = useQuery({
-    queryKey: [API_ENDPOINTS.SELLER_LIST],
+    queryKey: [API_ENDPOINTS.SELLER_LIST, options],
     queryFn: () => findAll(options),
     ...options,
   });
@@ -45,7 +45,7 @@ export const useAdminSellerListQuery = (
   const { findAll } = useAdminSellerListService();
 
   const { data, isPending, error, refetch, isFetching } = useQuery({
-    queryKey: [API_ENDPOINTS.ADMIN_SELLER_LIST],
+    queryKey: [API_ENDPOINTS.ADMIN_SELLER_LIST, options],
     queryFn: () => findAll(options),
     ...options,
   });

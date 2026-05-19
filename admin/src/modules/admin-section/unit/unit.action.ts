@@ -16,7 +16,7 @@ import { UnitFormData } from "./unit.schema";
 export const useUnitsQuery = (options: Partial<UnitQueryOptions>) => {
   const { findAll } = useUnitListService();
   const { data, isPending, error, refetch, isFetching } = useQuery({
-    queryKey: [API_ENDPOINTS.ADMIN_UNIT_LIST],
+    queryKey: [API_ENDPOINTS.ADMIN_UNIT_LIST, options],
     queryFn: () => findAll(options),
     ...options,
   });

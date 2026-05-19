@@ -39,48 +39,44 @@ export function PublicNavbarThemeTwo() {
           <>
             <div className="hidden md:flex gap-4 lg:gap-0 items-center px-4">
               {QueryGeneralSettingsData?.com_site_logo ? (
-                <div className="relative w-32 h-12">
-                  <Image
-                    src="/images/logo-kilocao.png"
-                    alt="loco_kilocao"
-                    fill
-                    sizes="128px"
-                    className="w-full h-full"
-                  />
-                </div>
+                <Image
+                  src="/images/logo-kilocao.png"
+                  alt="loco_kilocao"
+                  width={264}
+                  height={250}
+                  className="h-12 w-auto object-contain"
+                  priority
+                />
               ) : (
-                <div className="relative w-32 h-12">
-                  <Image
-                    src="/images/logo-kilocao.png"
-                    alt="loco_kilocao"
-                    fill
-                    sizes="128px"
-                    className="w-full h-full"
-                  />
-                </div>
+                <Image
+                  src="/images/logo-kilocao.png"
+                  alt="loco_kilocao"
+                  width={264}
+                  height={250}
+                  className="h-12 w-auto object-contain"
+                  priority
+                />
               )}
             </div>
             <div className="flex md:hidden gap-4 lg:gap-0 items-center">
               {QueryGeneralSettingsData?.com_site_favicon ? (
-                <div className="relative w-8 h-8">
-                  <Image
-                    src="/images/logo-kilocao.png"
-                    alt="loco_kilocao"
-                    fill
-                    sizes="32px"
-                    className="w-full h-full"
-                  />
-                </div>
+                <Image
+                  src="/images/logo-kilocao.png"
+                  alt="loco_kilocao"
+                  width={264}
+                  height={250}
+                  className="h-9 w-auto object-contain"
+                  priority
+                />
               ) : (
-                <div className="relative w-8 h-8">
-                  <Image
-                    src="/images/logo-kilocao.png"
-                    alt="loco_kilocao"
-                    fill
-                    sizes="32px"
-                    className="w-full h-full"
-                  />
-                </div>
+                <Image
+                  src="/images/logo-kilocao.png"
+                  alt="loco_kilocao"
+                  width={264}
+                  height={250}
+                  className="h-9 w-auto object-contain"
+                  priority
+                />
               )}
             </div>
           </>

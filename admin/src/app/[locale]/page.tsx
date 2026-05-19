@@ -11,6 +11,7 @@ import { Routes } from "@/config/routes";
 import { PublicNavbarSkeleton } from "@/components/molecules/PublicNavbarSkeleton";
 import { SignInFormSkeleton } from "@/components/molecules/SignInFormSkeleton";
 import { DivulgadorRoutes } from "@/config/divulgadorRoutes";
+import { FornecedorRoutes } from "@/config/fornecedorRoutes";
 
 const SignInPage = () => {
   const router = useRouter();
@@ -25,6 +26,8 @@ const SignInPage = () => {
       router.replace(`/${locale}${Routes.dashboard}`);
     } else if (token && authUser == "divulgador_level") {
       router.replace(`/${locale}${DivulgadorRoutes.dashboard}`);
+    } else if (token && authUser == "fornecedor_level") {
+      router.replace(`/${locale}${FornecedorRoutes.dashboard}`);
     } else if (token && authUser == "store_level") {
       Cookies.remove(AUTH_TOKEN_KEY);
       Cookies.remove(AUTH_USER);

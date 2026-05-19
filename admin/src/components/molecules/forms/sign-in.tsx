@@ -136,7 +136,7 @@ const SignInForm = ({
     });
   }
   const handleCopyClick = () => {
-    setValue("email", "admin@gmail.com");
+    setValue("email", "divulgador@teste.com.br");
     setValue("password", "12345678");
   };
   return (

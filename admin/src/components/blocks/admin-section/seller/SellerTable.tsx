@@ -16,7 +16,7 @@ import {
   useAdminSellerListQuery,
   useSellerDelete,
 } from "@/modules/admin-section/seller/seller.action";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useAppDispatch } from "@/redux/hooks";
 import { setRefetch } from "@/redux/slices/refetchSlice";
 import {
   CheckCircle,
@@ -54,16 +54,44 @@ interface ColumnType<RecordType> {
   width?: number | string;
   fixed?: "left" | "right" | undefined;
   ellipsis?: boolean;
+  render?: (value: any, record: RecordType) => React.ReactNode;
   children?: ColumnType<RecordType>[];
 }
 type ColumnsType<RecordType> = ColumnType<RecordType>[];
 
+const getStoredItemsPerPage = () => {
+  if (typeof window === "undefined") {
+    return 10;
+  }
+
+  const storedValue = window.localStorage.getItem("itemsPerPage");
+  const parsed = Number.parseInt(storedValue || "10", 10);
+
+  return Number.isFinite(parsed) ? parsed : 10;
+};
+
+const useIsMobile = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkIsMobile();
+    window.addEventListener("resize", checkIsMobile);
+    return () => window.removeEventListener("resize", checkIsMobile);
+  }, []);
+
+  return isMobile;
+};
+
 const SellerTable = ({ searchValue, status }: any) => {
   const t = useTranslations();
-  const isRefetch = useAppSelector((state) => state.refetchValue.isRefetch);
   const locale = useLocale();
+  const isMobile = useIsMobile();
   const [itemsPerPage, setItemsPerPage] = useState<number>(() => {
-    return parseInt(localStorage.getItem("itemsPerPage") || "10");
+    return getStoredItemsPerPage();
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [sortedInfo, setSortedInfo] = useState<{
@@ -76,12 +104,7 @@ const SellerTable = ({ searchValue, status }: any) => {
   const sortField = sortedInfo.order == "ascend" ? "asc" : "desc";
   const [selectedRows, setSelectedRows] = useState<Set<string>>(new Set());
   const [selectedAction, setSelectedAction] = useState<string>("");
-  const sortData =
-    sortedInfo.order == "ascend"
-      ? sortedInfo.columnKey
-      : `${sortedInfo.columnKey}`;
-  const { AdminSellerList, refetch, isPending, error } =
-    useAdminSellerListQuery({
+  const { AdminSellerList, refetch, isPending } = useAdminSellerListQuery({
       per_page: itemsPerPage,
       language: locale,
       page: currentPage,
@@ -105,8 +128,6 @@ const SellerTable = ({ searchValue, status }: any) => {
   useEffect(() => {
     if (Number(currentPage) > Number(LastPage)) {
       setCurrentPage(LastPage);
-    } else {
-      setCurrentPage(currentPage);
     }
   }, [LastPage, currentPage]);
 
@@ -124,10 +145,12 @@ const SellerTable = ({ searchValue, status }: any) => {
   };
 
   const handleSelectItemsPerPage = (value: any) => {
-    const newItemsPerPage = parseInt(value);
+    const newItemsPerPage = Number.parseInt(value, 10);
     setItemsPerPage(newItemsPerPage);
     setCurrentPage(1);
-    localStorage.setItem("itemsPerPage", value);
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("itemsPerPage", value);
+    }
   };
   const [loading, setLoading] = useState(false);
   const { mutate: SellerDelete, isPending: isRequesting } = useSellerDelete();
@@ -186,98 +209,78 @@ const SellerTable = ({ searchValue, status }: any) => {
     );
   };
 
-  const useIsMobile = () => {
-    const [isMobile, setIsMobile] = useState(false);
-
-    useEffect(() => {
-      const checkIsMobile = () => {
-        setIsMobile(window.innerWidth < 768);
-      };
-
-      checkIsMobile();
-      window.addEventListener("resize", checkIsMobile);
-      return () => window.removeEventListener("resize", checkIsMobile);
-    }, []);
-
-    return isMobile;
-  };
-
   const useColumn = (
     fixLeft: boolean,
     fixRight: boolean
   ): ColumnsType<RecordType> => {
-    const isMobile = useIsMobile();
-    const columns: ColumnsType<RecordType> = React.useMemo(
-      () => [
-        {
-          title: "",
-          dataIndex: "selectActions",
-          width: "5%",
-          fixed: fixLeft ? "left" : undefined,
-        },
-        {
-          title: t("table_header.sl"),
-          dataIndex: "serial",
-          fixed: fixLeft ? "left" : undefined,
-          width: "6%",
-        },
-        {
-          title: t("table_header.image"),
-          dataIndex: "image",
-          width: 100,
-          render: (image: string) =>
-            image ? (
-              <div className="relative w-12 h-12">
-                <Image
-                  loader={GlobalImageLoader}
-                  src={image}
-                  alt="seller_image"
-                  fill
-                  sizes="48px"
-                  className="w-full h-full"
-                />{" "}
-              </div>
-            ) : (
-              <div className="relative w-12 h-12">
-                <Image
-                  src="/images/no-image.png"
-                  alt="No Image"
-                  fill
-                  sizes="48px"
-                  className="w-full h-full"
-                />{" "}
-              </div>
-            ),
-        },
-        {
-          title: t("table_header.name"),
-          dataIndex: "full_name",
-          width: 100,
-        },
-        {
-          title: t("table_header.email"),
-          dataIndex: "email",
-          width: 150,
-        },
-        {
-          title: t("table_header.phone"),
-          dataIndex: "phone",
-          width: 100,
-        },
-        {
-          title: t("table_header.status"),
-          dataIndex: "status",
-          width: "15%",
-        },
-        {
-          title: t("table_header.actions"),
-          dataIndex: "actions",
-          width: "12%",
-          fixed: !isMobile && fixRight ? "right" : undefined,
-        },
-      ],
-      [fixLeft, fixRight, isMobile]
-    );
+    const columns: ColumnsType<RecordType> = [
+      {
+        title: "",
+        dataIndex: "selectActions",
+        width: "5%",
+        fixed: fixLeft ? "left" : undefined,
+      },
+      {
+        title: t("table_header.sl"),
+        dataIndex: "serial",
+        fixed: fixLeft ? "left" : undefined,
+        width: "6%",
+      },
+      {
+        title: t("table_header.image"),
+        dataIndex: "image",
+        width: 100,
+        render: (image: string) =>
+          image ? (
+            <div className="relative w-12 h-12">
+              <Image
+                loader={GlobalImageLoader}
+                src={image}
+                alt="seller_image"
+                fill
+                sizes="48px"
+                className="w-full h-full"
+              />
+            </div>
+          ) : (
+            <div className="relative w-12 h-12">
+              <Image
+                src="/images/no-image.png"
+                alt="No Image"
+                fill
+                sizes="48px"
+                className="w-full h-full"
+              />
+            </div>
+          ),
+      },
+      {
+        title: t("table_header.name"),
+        dataIndex: "full_name",
+        width: 100,
+      },
+      {
+        title: t("table_header.email"),
+        dataIndex: "email",
+        width: 150,
+      },
+      {
+        title: t("table_header.phone"),
+        dataIndex: "phone",
+        width: 100,
+      },
+      {
+        title: t("table_header.status"),
+        dataIndex: "status",
+        width: "15%",
+      },
+      {
+        title: t("table_header.actions"),
+        dataIndex: "actions",
+        width: "12%",
+        fixed: !isMobile && fixRight ? "right" : undefined,
+      },
+    ];
     const dispatch = useAppDispatch();
     const router = useRouter();
     const [editRowId, setEditRowId] = useState<string | null>(null);
@@ -313,7 +316,7 @@ const SellerTable = ({ searchValue, status }: any) => {
       }
     };
 
-    const renderColumns = columns.map((col) => {
+    return columns.map((col) => {
       if (col.dataIndex === "selectActions") {
         return {
           ...col,
@@ -420,23 +423,8 @@ const SellerTable = ({ searchValue, status }: any) => {
       }
       return col;
     });
-    return renderColumns;
   };
 
-  useEffect(() => {
-    if (!isPending && !error) {
-      refetch();
-    }
-  }, [
-    searchValue,
-    status,
-    sortField,
-    itemsPerPage,
-    currentPage,
-    isPending,
-    refetch,
-    error,
-  ]);
   const actions = [
     {
       value: "deleted",

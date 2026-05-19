@@ -1,9 +1,9 @@
 import Cookie from "js-cookie";
-import { AUTH_CRED, DIVULGADOR_ADMIN, DIVULGADOR_COLLABORATOR, PERMISSIONS, STAFF, STORE_OWNER, SUPER_ADMIN, TOKEN } from "@/lib/constants";
+import { AUTH_CRED, DIVULGADOR_ADMIN, DIVULGADOR_COLLABORATOR, FORNECEDOR_ADMIN, FORNECEDOR_COLLABORATOR, PERMISSIONS, STAFF, STORE_OWNER, SUPER_ADMIN, TOKEN } from "@/lib/constants";
 import { type Login } from "@/modules/users/users.schema";
 import { parse as parseCookies } from 'cookie';
 
-export const allowedRoles = [SUPER_ADMIN, STORE_OWNER, STAFF, DIVULGADOR_ADMIN, DIVULGADOR_COLLABORATOR];
+export const allowedRoles = [SUPER_ADMIN, STORE_OWNER, STAFF, DIVULGADOR_ADMIN, DIVULGADOR_COLLABORATOR, FORNECEDOR_ADMIN, FORNECEDOR_COLLABORATOR];
 export const adminAndOwnerOnly = [SUPER_ADMIN, STORE_OWNER];
 export const adminOwnerAndStaffOnly = [SUPER_ADMIN, STORE_OWNER, STAFF];
 export const adminOnly = [SUPER_ADMIN];
@@ -12,6 +12,9 @@ export const ownerAndStaffOnly = [STORE_OWNER, STAFF];
 export const divulgadorOnly = [DIVULGADOR_ADMIN, DIVULGADOR_COLLABORATOR];
 export const divulgadorAdminOnly = [DIVULGADOR_ADMIN];
 export const divulgadorCollaboratorOnly = [DIVULGADOR_COLLABORATOR];
+export const fornecedorOnly = [FORNECEDOR_ADMIN, FORNECEDOR_COLLABORATOR];
+export const fornecedorAdminOnly = [FORNECEDOR_ADMIN];
+export const fornecedorCollaboratorOnly = [FORNECEDOR_COLLABORATOR];
 
 export function setAuthCredentials(
   token: string,

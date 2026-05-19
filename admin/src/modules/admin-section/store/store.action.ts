@@ -24,7 +24,7 @@ export const useAdminStoreQuery = (options: Partial<StoreQueryOptions>) => {
   const { findAll } = useAdminStoreQueryService();
   const errorToastRef = useRef<string | null>(null);
   const { data, isPending, error, refetch, isFetching } = useQuery({
-    queryKey: [API_ENDPOINTS.ADMIN_STORE_LIST],
+    queryKey: [API_ENDPOINTS.ADMIN_STORE_LIST, options],
     queryFn: () => findAll(options),
     retry: false,
     refetchOnWindowFocus: false,

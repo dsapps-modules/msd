@@ -47,7 +47,7 @@ export default function SellerLayout({ children }: { children: ReactNode }) {
 
         if (siteSettings.com_maintenance_mode === "on") {
           const maintenanceRes = await fetch(
-            `${process.env.NEXT_PUBLIC_REST_API_ENDPOINT}v1/maintenance-page-settings`,
+            `${process.env.NEXT_PUBLIC_REST_API_ENDPOINT}/v1/maintenance-page-settings`,
             { cache: "no-store" }
           );
           const maintenanceData = await maintenanceRes.json();
@@ -64,7 +64,7 @@ export default function SellerLayout({ children }: { children: ReactNode }) {
           }
         }
       } catch (error) {
-        throw error;
+        console.error("Seller auth layout maintenance check failed:", error);
       }
     };
 

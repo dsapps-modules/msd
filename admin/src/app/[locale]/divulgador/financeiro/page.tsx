@@ -1,17 +1,16 @@
 "use client";
 
-import { FinanceCard, LinksTable, SummaryCards } from "@/components/blocks/divulgador-section/DivulgadorPanels";
+import { SummaryCards } from "@/components/blocks/divulgador-section/DivulgadorPanels";
+import { DonationsTable, FinancialSummaryCards } from "@/components/blocks/divulgador-section/DivulgadorFinancial";
 import { Card, CardContent } from "@/components/ui";
 import {
   useDivulgadorDashboardQuery,
   useDivulgadorFinancialQuery,
-  useDivulgadorLinksQuery,
 } from "@/modules/divulgador-section/divulgador.action";
 
 export default function DivulgadorFinancialPage() {
   const { divulgadorFinancial, isPending } = useDivulgadorFinancialQuery({});
   const { divulgadorDashboard } = useDivulgadorDashboardQuery({});
-  const { divulgadorLinks } = useDivulgadorLinksQuery({});
 
   const summary = divulgadorDashboard?.summary ?? {
     products_available: 24,
@@ -23,9 +22,12 @@ export default function DivulgadorFinancialPage() {
   };
 
   const financial = divulgadorFinancial?.financial ?? {
-    estimated_commissions: 4780,
-    active_links: 17,
+    received_total: 0,
+    pending_total: 0,
+    donations_count: 0,
+    purchase_total: 0,
   };
+  const donations = divulgadorFinancial?.donations ?? [];
 
   if (isPending) {
     return (
@@ -37,12 +39,20 @@ export default function DivulgadorFinancialPage() {
 
   return (
     <div className="space-y-6">
+      <div className="space-y-2">
+        <h1 className="text-3xl font-semibold text-slate-900">Financeiro</h1>
+        <p className="text-sm text-slate-500">
+          Acompanhe as doações geradas pelas compras realizadas por seus links de divulgação.
+        </p>
+      </div>
       <SummaryCards summary={summary} isAdmin={true} />
-      <FinanceCard
-        estimatedCommissions={financial.estimated_commissions}
-        activeLinks={financial.active_links}
+      <FinancialSummaryCards
+        receivedTotal={financial.received_total}
+        pendingTotal={financial.pending_total}
+        donationsCount={financial.donations_count}
+        purchaseTotal={financial.purchase_total}
       />
-      <LinksTable items={divulgadorLinks?.links ?? []} />
+      <DonationsTable items={donations} />
     </div>
   );
 }

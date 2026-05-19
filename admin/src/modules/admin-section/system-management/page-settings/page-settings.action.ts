@@ -100,10 +100,12 @@ export const useAdminSignInQuery = (
 ) => {
   const { findAll } = useAdminSignInService();
   const errorToastRef = useRef<string | null>(null);
+  const isClient = typeof window !== "undefined";
   const { data, isPending, error, refetch, isFetching } = useQuery({
     queryKey: [API_ENDPOINTS.ADMIN_SIGN_IN_SETTINGS],
     queryFn: () => findAll(options),
     refetchOnWindowFocus: false,
+    enabled: options.enabled ?? isClient,
     ...options,
   });
   useEffect(() => {

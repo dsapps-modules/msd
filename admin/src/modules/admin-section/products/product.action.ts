@@ -14,13 +14,13 @@ import { useMemo } from "react";
 import { ProductFormData, statusUpdateData } from "./product.schema";
 import {
   useAltChangeService,
-  useCouponLineDeleteService,
   useDynamicFieldService,
   useMakeFeatureService,
   useMediaDeleteService,
   useMediaLibraryService,
   useProductDescriptionGenerateService,
   useProductEditService,
+  useProductDeleteService,
   useProductQueryService,
   useProductRequestDetailsService,
   useProductStatusUpdateService,
@@ -193,7 +193,7 @@ export const useProductStatusUpdate = () => {
 };
 
 export const useProductDelete = () => {
-  const { delete: deleteItem } = useCouponLineDeleteService();
+  const { delete: deleteItem } = useProductDeleteService();
   return useMutation({
     mutationFn: (id: string) => deleteItem(id),
     mutationKey: [API_ENDPOINTS.PRODUCT_REMOVE],
