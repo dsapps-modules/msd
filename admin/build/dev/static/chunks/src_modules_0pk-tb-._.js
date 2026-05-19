@@ -7,8 +7,11 @@ __turbopack_context__.s([
     ()=>useBaseService
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$env$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/env.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$endpoints$2f$AdminApiEndPoints$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/endpoints/AdminApiEndPoints.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$constants$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/lib/constants.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$config$2f$routes$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/config/routes.ts [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$config$2f$divulgadorRoutes$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/config/divulgadorRoutes.ts [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$config$2f$fornecedorRoutes$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/config/fornecedorRoutes.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$config$2f$sellerRoutes$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/config/sellerRoutes.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$localized$2d$path$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/lib/localized-path.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/axios/lib/axios.js [app-client] (ecmascript)");
@@ -18,6 +21,9 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/navigation.js [app-client] (ecmascript)"); // Import useRouter
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$toastify$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react-toastify/dist/index.mjs [app-client] (ecmascript)");
 var _s = __turbopack_context__.k.signature();
+;
+;
+;
 ;
 ;
 ;
@@ -42,6 +48,15 @@ const useBaseService = (route)=>{
     const locale = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$use$2d$intl$2f$dist$2f$esm$2f$development$2f$react$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLocale"])();
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"])();
     const pathname = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["usePathname"])(); // Get current path
+    const isPublicRoute = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
+        "useBaseService.useMemo[isPublicRoute]": ()=>[
+                __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$endpoints$2f$AdminApiEndPoints$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["API_ENDPOINTS"].GENERAL,
+                __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$endpoints$2f$AdminApiEndPoints$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["API_ENDPOINTS"].ADMIN_SIGN_IN_SETTINGS,
+                __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$endpoints$2f$AdminApiEndPoints$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["API_ENDPOINTS"].LOGIN_SETTINGS
+            ].includes(route)
+    }["useBaseService.useMemo[isPublicRoute]"], [
+        route
+    ]);
     const pathnameWithoutLocale = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
         "useBaseService.useMemo[pathnameWithoutLocale]": ()=>pathname?.replace(/^\/[^/]+/, "") || ""
     }["useBaseService.useMemo[pathnameWithoutLocale]"], [
@@ -49,6 +64,12 @@ const useBaseService = (route)=>{
     ]);
     const getSignInRoute = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
         "useBaseService.useCallback[getSignInRoute]": ()=>{
+            if (pathnameWithoutLocale.startsWith("/divulgador")) {
+                return (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$localized$2d$path$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["withLocale"])(locale, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$config$2f$divulgadorRoutes$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DivulgadorRoutes"].signin);
+            }
+            if (pathnameWithoutLocale.startsWith("/fornecedor")) {
+                return (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$localized$2d$path$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["withLocale"])(locale, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$config$2f$fornecedorRoutes$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FornecedorRoutes"].signin);
+            }
             if (pathnameWithoutLocale.startsWith("/seller")) {
                 return (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$localized$2d$path$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["withLocale"])(locale, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$config$2f$sellerRoutes$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SellerRoutes"].signin);
             }
@@ -70,11 +91,12 @@ const useBaseService = (route)=>{
             instance.interceptors.request.use({
                 "useBaseService.useMemo[axiosInstance]": (config)=>{
                     const hasFile = config.data && config.data.multipart === true;
-                    const cookies = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$constants$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AUTH_TOKEN_KEY"]);
-                    const token = cookies || "";
+                    const token = isPublicRoute ? "" : __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$constants$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AUTH_TOKEN_KEY"]) || "";
                     config.headers = {
                         ...config.headers,
-                        Authorization: `Bearer ${token}`,
+                        ...token ? {
+                            Authorization: `Bearer ${token}`
+                        } : {},
                         "X-localization": locale,
                         "Content-Type": hasFile ? "multipart/form-data" : "application/json"
                     };
@@ -85,6 +107,9 @@ const useBaseService = (route)=>{
                 "useBaseService.useMemo[axiosInstance]": (response)=>response
             }["useBaseService.useMemo[axiosInstance]"], {
                 "useBaseService.useMemo[axiosInstance]": async (error)=>{
+                    if (isPublicRoute) {
+                        return Promise.reject(error);
+                    }
                     const originalRequest = error.config || {};
                     if (error.response?.status === 401 && !originalRequest._retry && !originalRequest.url?.endsWith("/refresh-token")) {
                         originalRequest._retry = true;
@@ -242,7 +267,7 @@ const useBaseService = (route)=>{
         getAxiosInstance: ()=>axiosInstance
     };
 };
-_s(useBaseService, "YdCIRHWtq5TZwG7kKxXn6AvEdU8=", false, function() {
+_s(useBaseService, "p950e8xPGuvm9Q71N1WyFdSHX3Y=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$use$2d$intl$2f$dist$2f$esm$2f$development$2f$react$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLocale"],
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"],
@@ -570,8 +595,8 @@ const useRegisterMutation = ({ isRedirect = true })=>{
                 setToken(data?.data?.token);
                 (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$auth$2d$utils$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["setAuthCredentials"])(data?.data?.token, data?.data?.permissions);
                 setAuthorized(true);
-                localStorage.setItem("email_verification_settings", data?.data?.email_verification_settings.toString());
-                localStorage.setItem("email_verified", data?.data?.email_verified.toString());
+                localStorage.setItem("email_verification_settings", String(data?.data?.email_verification_settings ?? ""));
+                localStorage.setItem("email_verified", String(data?.data?.email_verified ?? ""));
                 localStorage.setItem("user_email", data?.data?.email);
             }
         }["useRegisterMutation.useMutation"],
@@ -762,15 +787,15 @@ const useShopOwnerLogin = ({ isRedirect = true })=>{
                     return;
                 }
                 __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$toastify$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].success(data?.data?.message);
-                const { token, expires_at, permissions, email_verified, email_verification_settings, email } = data.data;
+                const { token, expires_at, permissions = [], email_verified, email_verification_settings, email } = data.data;
                 __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].set(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$constants$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AUTH_TOKEN_KEY"], token);
                 __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].set(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$constants$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AUTH_USER"], "store_level");
                 localStorage.setItem("expires_at", expires_at);
                 setToken(token);
                 (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$auth$2d$utils$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["setAuthCredentials"])(token, permissions);
                 setAuthorized(true);
-                localStorage.setItem("email_verified", data?.data?.email_verified.toString());
-                localStorage.setItem("email_verification_settings", data?.data?.email_verification_settings.toString());
+                localStorage.setItem("email_verified", String(data?.data?.email_verified ?? ""));
+                localStorage.setItem("email_verification_settings", String(data?.data?.email_verification_settings ?? ""));
                 localStorage.setItem("user_email", data?.data?.email);
                 if (isRedirect) {
                     if (email_verified === false && email_verification_settings === "on") {
@@ -1724,8 +1749,6 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
 __turbopack_context__.s([
     "useAltChangeService",
     ()=>useAltChangeService,
-    "useCouponLineDeleteService",
-    ()=>useCouponLineDeleteService,
     "useDynamicFieldService",
     ()=>useDynamicFieldService,
     "useMakeFeatureService",
@@ -1734,6 +1757,8 @@ __turbopack_context__.s([
     ()=>useMediaDeleteService,
     "useMediaLibraryService",
     ()=>useMediaLibraryService,
+    "useProductDeleteService",
+    ()=>useProductDeleteService,
     "useProductDescriptionGenerateService",
     ()=>useProductDescriptionGenerateService,
     "useProductEditService",
@@ -1806,11 +1831,11 @@ _s4(useProductUpdateService, "KR2T+pa+QZNhxvOYYvu7ThAdwKY=", false, function() {
         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$core$2f$base$2e$service$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useBaseService"]
     ];
 });
-const useCouponLineDeleteService = ()=>{
+const useProductDeleteService = ()=>{
     _s5();
     return (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$core$2f$base$2e$service$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useBaseService"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$endpoints$2f$SellerApiEndPoints$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SELLER_API_ENDPOINTS"].PRODUCT_REMOVE);
 };
-_s5(useCouponLineDeleteService, "KR2T+pa+QZNhxvOYYvu7ThAdwKY=", false, function() {
+_s5(useProductDeleteService, "KR2T+pa+QZNhxvOYYvu7ThAdwKY=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$core$2f$base$2e$service$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useBaseService"]
     ];
@@ -2115,7 +2140,7 @@ _s4(useProductUpdateMutation, "ZoClbp93+BKOCmKgiS1eZV+Q0H0=", false, function() 
 });
 const useProductDelete = ()=>{
     _s5();
-    const { delete: deleteItem } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$seller$2d$section$2f$product$2f$product$2e$service$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCouponLineDeleteService"])();
+    const { delete: deleteItem } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$seller$2d$section$2f$product$2f$product$2e$service$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useProductDeleteService"])();
     return (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$tanstack$2f$react$2d$query$2f$build$2f$modern$2f$useMutation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMutation"])({
         mutationFn: {
             "useProductDelete.useMutation": (id)=>deleteItem(id)
@@ -2150,9 +2175,9 @@ const useProductDelete = ()=>{
         }["useProductDelete.useMutation"]
     });
 };
-_s5(useProductDelete, "E6jc/DutGEdIrUZ1GENqF8Nl52k=", false, function() {
+_s5(useProductDelete, "laZnpS4eC2RqTPW5CFNCFkp+8tA=", false, function() {
     return [
-        __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$seller$2d$section$2f$product$2f$product$2e$service$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCouponLineDeleteService"],
+        __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$seller$2d$section$2f$product$2f$product$2e$service$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useProductDeleteService"],
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$tanstack$2f$react$2d$query$2f$build$2f$modern$2f$useMutation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMutation"]
     ];
 });
@@ -2508,6 +2533,7 @@ const useGeneralQuery = (options)=>{
     _s();
     const { findAll } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$common$2f$com$2f$com$2e$service$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useGeneralListService"])();
     const errorToastRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const isClient = ("TURBOPACK compile-time value", "object") !== "undefined";
     const { data, isPending, error, refetch, isFetching } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$tanstack$2f$react$2d$query$2f$build$2f$modern$2f$useQuery$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useQuery"])({
         queryKey: [
             __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$endpoints$2f$AdminApiEndPoints$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["API_ENDPOINTS"].GENERAL
@@ -2516,6 +2542,7 @@ const useGeneralQuery = (options)=>{
             "useGeneralQuery.useQuery": ()=>findAll(options)
         }["useGeneralQuery.useQuery"],
         refetchOnWindowFocus: false,
+        enabled: options.enabled ?? isClient,
         ...options
     });
     return {
@@ -2535,6 +2562,7 @@ _s(useGeneralQuery, "JVyzp9dYcPqfkpCwj6IDA7LELow=", false, function() {
 const useCurrencyQuery = (options)=>{
     _s1();
     const { findAll } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$common$2f$com$2f$com$2e$service$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCurrencyListService"])();
+    const isClient = ("TURBOPACK compile-time value", "object") !== "undefined";
     const { data, isPending, error, refetch, isFetching } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$tanstack$2f$react$2d$query$2f$build$2f$modern$2f$useQuery$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useQuery"])({
         queryKey: [
             __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$endpoints$2f$AdminApiEndPoints$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["API_ENDPOINTS"].CURRENCY
@@ -2542,6 +2570,7 @@ const useCurrencyQuery = (options)=>{
         queryFn: {
             "useCurrencyQuery.useQuery": ()=>findAll(options)
         }["useCurrencyQuery.useQuery"],
+        enabled: options.enabled ?? isClient,
         ...options
     });
     return {
@@ -2561,6 +2590,7 @@ _s1(useCurrencyQuery, "3EK95S1+7dyYhXE9MRf9SVHdCJo=", false, function() {
 const useCurrencyDropdownListQuery = (options)=>{
     _s2();
     const { findAll } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$common$2f$com$2f$com$2e$service$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCurrencyDropdownListService"])();
+    const isClient = ("TURBOPACK compile-time value", "object") !== "undefined";
     const { data, isPending, error, refetch, isFetching } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$tanstack$2f$react$2d$query$2f$build$2f$modern$2f$useQuery$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useQuery"])({
         queryKey: [
             __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$endpoints$2f$AdminApiEndPoints$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["API_ENDPOINTS"].CURRENCY_DROPDOWN_LIST
@@ -2568,6 +2598,7 @@ const useCurrencyDropdownListQuery = (options)=>{
         queryFn: {
             "useCurrencyDropdownListQuery.useQuery": ()=>findAll(options)
         }["useCurrencyDropdownListQuery.useQuery"],
+        enabled: options.enabled ?? isClient,
         ...options
     });
     return {
@@ -2670,7 +2701,7 @@ var _s = __turbopack_context__.k.signature(), _s1 = __turbopack_context__.k.sign
 ;
 ;
 ;
-const useSellerDashboardQuery = (options)=>{
+const useSellerDashboardQuery = (options, queryOptions)=>{
     _s();
     const { findAll } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$seller$2d$section$2f$seller$2d$dashboard$2f$seller$2d$dashboard$2e$service$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSellerDashboardService"])();
     const errorToastRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
@@ -2682,7 +2713,9 @@ const useSellerDashboardQuery = (options)=>{
             "useSellerDashboardQuery.useQuery": ()=>findAll(options)
         }["useSellerDashboardQuery.useQuery"],
         retry: false,
-        refetchOnWindowFocus: false
+        refetchOnWindowFocus: false,
+        enabled: queryOptions?.skip ? false : queryOptions?.enabled ?? true,
+        staleTime: queryOptions?.staleTime
     });
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "useSellerDashboardQuery.useEffect": ()=>{
@@ -2716,7 +2749,7 @@ _s(useSellerDashboardQuery, "9p6Gzkf3lZ5kMhW0hd1aOD4Sr7Y=", false, function() {
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$tanstack$2f$react$2d$query$2f$build$2f$modern$2f$useQuery$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useQuery"]
     ];
 });
-const useSellerSalesSummaryQuery = (options)=>{
+const useSellerSalesSummaryQuery = (options, queryOptions)=>{
     _s1();
     const { findAll } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$seller$2d$section$2f$seller$2d$dashboard$2f$seller$2d$dashboard$2e$service$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSellerSalesService"])();
     const errorToastRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
@@ -2728,7 +2761,9 @@ const useSellerSalesSummaryQuery = (options)=>{
             "useSellerSalesSummaryQuery.useQuery": ()=>findAll(options)
         }["useSellerSalesSummaryQuery.useQuery"],
         retry: false,
-        refetchOnWindowFocus: false
+        refetchOnWindowFocus: false,
+        enabled: queryOptions?.skip ? false : queryOptions?.enabled ?? true,
+        staleTime: queryOptions?.staleTime
     });
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "useSellerSalesSummaryQuery.useEffect": ()=>{
@@ -2762,7 +2797,7 @@ _s1(useSellerSalesSummaryQuery, "DOPALmvOGVWBDpmLVkEZZUnAgA4=", false, function(
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$tanstack$2f$react$2d$query$2f$build$2f$modern$2f$useQuery$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useQuery"]
     ];
 });
-const useSellerGrowthOrderQuery = (options)=>{
+const useSellerGrowthOrderQuery = (options, queryOptions)=>{
     _s2();
     const { findAll } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$seller$2d$section$2f$seller$2d$dashboard$2f$seller$2d$dashboard$2e$service$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSellerOrderGrowthService"])();
     const errorToastRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
@@ -2774,7 +2809,9 @@ const useSellerGrowthOrderQuery = (options)=>{
             "useSellerGrowthOrderQuery.useQuery": ()=>findAll(options)
         }["useSellerGrowthOrderQuery.useQuery"],
         retry: false,
-        refetchOnWindowFocus: false
+        refetchOnWindowFocus: false,
+        enabled: queryOptions?.skip ? false : queryOptions?.enabled ?? true,
+        staleTime: queryOptions?.staleTime
     });
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "useSellerGrowthOrderQuery.useEffect": ()=>{
@@ -2808,7 +2845,7 @@ _s2(useSellerGrowthOrderQuery, "urgRUVTGX0KYoxKb13Oi2fzGTo0=", false, function()
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$tanstack$2f$react$2d$query$2f$build$2f$modern$2f$useQuery$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useQuery"]
     ];
 });
-const useSellerOtherSummaryQuery = (options)=>{
+const useSellerOtherSummaryQuery = (options, queryOptions)=>{
     _s3();
     const { findAll } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$seller$2d$section$2f$seller$2d$dashboard$2f$seller$2d$dashboard$2e$service$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSellerOtherSummaryService"])();
     const errorToastRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
@@ -2820,7 +2857,9 @@ const useSellerOtherSummaryQuery = (options)=>{
             "useSellerOtherSummaryQuery.useQuery": ()=>findAll(options)
         }["useSellerOtherSummaryQuery.useQuery"],
         retry: false,
-        refetchOnWindowFocus: false
+        refetchOnWindowFocus: false,
+        enabled: queryOptions?.skip ? false : queryOptions?.enabled ?? true,
+        staleTime: queryOptions?.staleTime
     });
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "useSellerOtherSummaryQuery.useEffect": ()=>{

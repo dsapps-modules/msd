@@ -1,5 +1,21 @@
 {
   "/[locale]/(auth)/admin/signin/page": "app/[locale]/(auth)/admin/signin/page.js",
+  "/[locale]/(auth)/become-a-seller/page": "app/[locale]/(auth)/become-a-seller/page.js",
+  "/[locale]/(auth)/divulgador/signin/page": "app/[locale]/(auth)/divulgador/signin/page.js",
+  "/[locale]/(auth)/seller/signin/page": "app/[locale]/(auth)/seller/signin/page.js",
   "/[locale]/admin/dashboard/page": "app/[locale]/admin/dashboard/page.js",
-  "/[locale]/page": "app/[locale]/page.js"
+  "/[locale]/admin/product/list/page": "app/[locale]/admin/product/list/page.js",
+  "/[locale]/admin/seller/list/page": "app/[locale]/admin/seller/list/page.js",
+  "/[locale]/api/divulgador/login/route": "app/[locale]/api/divulgador/login/route.js",
+  "/[locale]/api/seller/login/route": "app/[locale]/api/seller/login/route.js",
+  "/[locale]/divulgador/compradores/page": "app/[locale]/divulgador/compradores/page.js",
+  "/[locale]/divulgador/dashboard/page": "app/[locale]/divulgador/dashboard/page.js",
+  "/[locale]/divulgador/financeiro/page": "app/[locale]/divulgador/financeiro/page.js",
+  "/[locale]/divulgador/links-de-divulgacao/page": "app/[locale]/divulgador/links-de-divulgacao/page.js",
+  "/[locale]/divulgador/produtos/page": "app/[locale]/divulgador/produtos/page.js",
+  "/[locale]/page": "app/[locale]/page.js",
+  "/[locale]/seller/dashboard/page": "app/[locale]/seller/dashboard/page.js",
+  "/[locale]/seller/store/product/add/page": "app/[locale]/seller/store/product/add/page.js",
+  "/[locale]/seller/store/product/list/page": "app/[locale]/seller/store/product/list/page.js",
+  "/_not-found/page": "app/_not-found/page.js"
 }

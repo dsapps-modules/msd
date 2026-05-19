@@ -4328,6 +4328,7 @@ __turbopack_context__.s([
     ()=>useBaseService
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$env$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/env.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$endpoints$2f$AdminApiEndPoints$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/endpoints/AdminApiEndPoints.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$constants$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/lib/constants.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$config$2f$routes$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/config/routes.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$config$2f$sellerRoutes$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/config/sellerRoutes.ts [app-client] (ecmascript)");
@@ -4339,6 +4340,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/navigation.js [app-client] (ecmascript)"); // Import useRouter
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$toastify$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react-toastify/dist/index.mjs [app-client] (ecmascript)");
 var _s = __turbopack_context__.k.signature();
+;
 ;
 ;
 ;
@@ -4363,6 +4365,15 @@ const useBaseService = (route)=>{
     const locale = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$use$2d$intl$2f$dist$2f$esm$2f$development$2f$react$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLocale"])();
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"])();
     const pathname = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["usePathname"])(); // Get current path
+    const isPublicRoute = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
+        "useBaseService.useMemo[isPublicRoute]": ()=>[
+                __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$endpoints$2f$AdminApiEndPoints$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["API_ENDPOINTS"].GENERAL,
+                __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$endpoints$2f$AdminApiEndPoints$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["API_ENDPOINTS"].ADMIN_SIGN_IN_SETTINGS,
+                __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$endpoints$2f$AdminApiEndPoints$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["API_ENDPOINTS"].LOGIN_SETTINGS
+            ].includes(route)
+    }["useBaseService.useMemo[isPublicRoute]"], [
+        route
+    ]);
     const pathnameWithoutLocale = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
         "useBaseService.useMemo[pathnameWithoutLocale]": ()=>pathname?.replace(/^\/[^/]+/, "") || ""
     }["useBaseService.useMemo[pathnameWithoutLocale]"], [
@@ -4391,11 +4402,12 @@ const useBaseService = (route)=>{
             instance.interceptors.request.use({
                 "useBaseService.useMemo[axiosInstance]": (config)=>{
                     const hasFile = config.data && config.data.multipart === true;
-                    const cookies = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$constants$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AUTH_TOKEN_KEY"]);
-                    const token = cookies || "";
+                    const token = isPublicRoute ? "" : __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$constants$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AUTH_TOKEN_KEY"]) || "";
                     config.headers = {
                         ...config.headers,
-                        Authorization: `Bearer ${token}`,
+                        ...token ? {
+                            Authorization: `Bearer ${token}`
+                        } : {},
                         "X-localization": locale,
                         "Content-Type": hasFile ? "multipart/form-data" : "application/json"
                     };
@@ -4406,6 +4418,9 @@ const useBaseService = (route)=>{
                 "useBaseService.useMemo[axiosInstance]": (response)=>response
             }["useBaseService.useMemo[axiosInstance]"], {
                 "useBaseService.useMemo[axiosInstance]": async (error)=>{
+                    if (isPublicRoute) {
+                        return Promise.reject(error);
+                    }
                     const originalRequest = error.config || {};
                     if (error.response?.status === 401 && !originalRequest._retry && !originalRequest.url?.endsWith("/refresh-token")) {
                         originalRequest._retry = true;
@@ -4563,7 +4578,7 @@ const useBaseService = (route)=>{
         getAxiosInstance: ()=>axiosInstance
     };
 };
-_s(useBaseService, "YdCIRHWtq5TZwG7kKxXn6AvEdU8=", false, function() {
+_s(useBaseService, "p950e8xPGuvm9Q71N1WyFdSHX3Y=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$use$2d$intl$2f$dist$2f$esm$2f$development$2f$react$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLocale"],
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"],
@@ -4847,6 +4862,7 @@ const useAdminSignInQuery = (options)=>{
     _s4();
     const { findAll } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$admin$2d$section$2f$system$2d$management$2f$page$2d$settings$2f$page$2d$settings$2e$service$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useAdminSignInService"])();
     const errorToastRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const isClient = ("TURBOPACK compile-time value", "object") !== "undefined";
     const { data, isPending, error, refetch, isFetching } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$tanstack$2f$react$2d$query$2f$build$2f$modern$2f$useQuery$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useQuery"])({
         queryKey: [
             __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$endpoints$2f$AdminApiEndPoints$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["API_ENDPOINTS"].ADMIN_SIGN_IN_SETTINGS
@@ -4855,6 +4871,7 @@ const useAdminSignInQuery = (options)=>{
             "useAdminSignInQuery.useQuery": ()=>findAll(options)
         }["useAdminSignInQuery.useQuery"],
         refetchOnWindowFocus: false,
+        enabled: options.enabled ?? isClient,
         ...options
     });
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
@@ -5264,6 +5281,7 @@ const useGeneralQuery = (options)=>{
     _s();
     const { findAll } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$common$2f$com$2f$com$2e$service$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useGeneralListService"])();
     const errorToastRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const isClient = ("TURBOPACK compile-time value", "object") !== "undefined";
     const { data, isPending, error, refetch, isFetching } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$tanstack$2f$react$2d$query$2f$build$2f$modern$2f$useQuery$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useQuery"])({
         queryKey: [
             __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$endpoints$2f$AdminApiEndPoints$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["API_ENDPOINTS"].GENERAL
@@ -5272,6 +5290,7 @@ const useGeneralQuery = (options)=>{
             "useGeneralQuery.useQuery": ()=>findAll(options)
         }["useGeneralQuery.useQuery"],
         refetchOnWindowFocus: false,
+        enabled: options.enabled ?? isClient,
         ...options
     });
     return {
@@ -5291,6 +5310,7 @@ _s(useGeneralQuery, "JVyzp9dYcPqfkpCwj6IDA7LELow=", false, function() {
 const useCurrencyQuery = (options)=>{
     _s1();
     const { findAll } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$common$2f$com$2f$com$2e$service$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCurrencyListService"])();
+    const isClient = ("TURBOPACK compile-time value", "object") !== "undefined";
     const { data, isPending, error, refetch, isFetching } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$tanstack$2f$react$2d$query$2f$build$2f$modern$2f$useQuery$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useQuery"])({
         queryKey: [
             __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$endpoints$2f$AdminApiEndPoints$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["API_ENDPOINTS"].CURRENCY
@@ -5298,6 +5318,7 @@ const useCurrencyQuery = (options)=>{
         queryFn: {
             "useCurrencyQuery.useQuery": ()=>findAll(options)
         }["useCurrencyQuery.useQuery"],
+        enabled: options.enabled ?? isClient,
         ...options
     });
     return {
@@ -5317,6 +5338,7 @@ _s1(useCurrencyQuery, "3EK95S1+7dyYhXE9MRf9SVHdCJo=", false, function() {
 const useCurrencyDropdownListQuery = (options)=>{
     _s2();
     const { findAll } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$common$2f$com$2f$com$2e$service$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCurrencyDropdownListService"])();
+    const isClient = ("TURBOPACK compile-time value", "object") !== "undefined";
     const { data, isPending, error, refetch, isFetching } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$tanstack$2f$react$2d$query$2f$build$2f$modern$2f$useQuery$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useQuery"])({
         queryKey: [
             __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$endpoints$2f$AdminApiEndPoints$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["API_ENDPOINTS"].CURRENCY_DROPDOWN_LIST
@@ -5324,6 +5346,7 @@ const useCurrencyDropdownListQuery = (options)=>{
         queryFn: {
             "useCurrencyDropdownListQuery.useQuery": ()=>findAll(options)
         }["useCurrencyDropdownListQuery.useQuery"],
+        enabled: options.enabled ?? isClient,
         ...options
     });
     return {
@@ -5985,8 +6008,8 @@ const useRegisterMutation = ({ isRedirect = true })=>{
                 setToken(data?.data?.token);
                 (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$auth$2d$utils$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["setAuthCredentials"])(data?.data?.token, data?.data?.permissions);
                 setAuthorized(true);
-                localStorage.setItem("email_verification_settings", data?.data?.email_verification_settings.toString());
-                localStorage.setItem("email_verified", data?.data?.email_verified.toString());
+                localStorage.setItem("email_verification_settings", String(data?.data?.email_verification_settings ?? ""));
+                localStorage.setItem("email_verified", String(data?.data?.email_verified ?? ""));
                 localStorage.setItem("user_email", data?.data?.email);
             }
         }["useRegisterMutation.useMutation"],
@@ -6184,8 +6207,8 @@ const useShopOwnerLogin = ({ isRedirect = true })=>{
                 setToken(token);
                 (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$auth$2d$utils$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["setAuthCredentials"])(token, permissions);
                 setAuthorized(true);
-                localStorage.setItem("email_verified", data?.data?.email_verified.toString());
-                localStorage.setItem("email_verification_settings", data?.data?.email_verification_settings.toString());
+                localStorage.setItem("email_verified", String(data?.data?.email_verified ?? ""));
+                localStorage.setItem("email_verification_settings", String(data?.data?.email_verification_settings ?? ""));
                 localStorage.setItem("user_email", data?.data?.email);
                 if (isRedirect) {
                     if (email_verified === false && email_verification_settings === "on") {
@@ -8668,7 +8691,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$blocks$
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$index$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/src/components/ui/index.tsx [app-client] (ecmascript) <locals>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/ui/button.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$skeleton$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/ui/skeleton.tsx [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$imageLoader$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/lib/imageLoader.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$common$2f$com$2f$com$2e$action$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/modules/common/com/com.action.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$external$2d$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ExternalLink$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/external-link.js [app-client] (ecmascript) <export default as ExternalLink>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$use$2d$intl$2f$dist$2f$esm$2f$development$2f$react$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/use-intl/dist/esm/development/react.js [app-client] (ecmascript)");
@@ -8679,7 +8701,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 ;
 var _s = __turbopack_context__.k.signature();
 "use client";
-;
 ;
 ;
 ;
@@ -8725,7 +8746,7 @@ function PublicNavbar() {
                     className: "w-32 h-12 rounded-xl"
                 }, void 0, false, {
                     fileName: "[project]/src/components/blocks/shared/PublicNavbar.tsx",
-                    lineNumber: 56,
+                    lineNumber: 55,
                     columnNumber: 11
                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "cursor-pointer",
@@ -8733,94 +8754,68 @@ function PublicNavbar() {
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "hidden md:flex gap-4 lg:gap-0 items-center px-4",
-                            children: QueryGeneralSettingsData?.com_site_logo ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "relative w-32 h-12",
-                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                                    loader: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$imageLoader$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"],
-                                    src: QueryGeneralSettingsData?.com_site_logo,
-                                    alt: "quick_ecommerce",
-                                    fill: true,
-                                    sizes: "128px",
-                                    className: "w-full h-full"
-                                }, void 0, false, {
-                                    fileName: "[project]/src/components/blocks/shared/PublicNavbar.tsx",
-                                    lineNumber: 62,
-                                    columnNumber: 19
-                                }, this)
+                            children: QueryGeneralSettingsData?.com_site_logo ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                                src: "/images/logo-kilocao.png",
+                                alt: "loco_kilocao",
+                                width: 264,
+                                height: 250,
+                                className: "h-12 w-auto object-contain",
+                                priority: true
                             }, void 0, false, {
                                 fileName: "[project]/src/components/blocks/shared/PublicNavbar.tsx",
-                                lineNumber: 61,
+                                lineNumber: 60,
                                 columnNumber: 17
-                            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "relative w-32 h-12",
-                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                                    src: "/images/no-image.png",
-                                    alt: "quick_ecommerce",
-                                    fill: true,
-                                    sizes: "128px",
-                                    className: "w-full h-full"
-                                }, void 0, false, {
-                                    fileName: "[project]/src/components/blocks/shared/PublicNavbar.tsx",
-                                    lineNumber: 73,
-                                    columnNumber: 19
-                                }, this)
+                            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                                src: "/images/logo-kilocao.png",
+                                alt: "loco_kilocao",
+                                width: 264,
+                                height: 250,
+                                className: "h-12 w-auto object-contain",
+                                priority: true
                             }, void 0, false, {
                                 fileName: "[project]/src/components/blocks/shared/PublicNavbar.tsx",
-                                lineNumber: 72,
+                                lineNumber: 69,
                                 columnNumber: 17
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/blocks/shared/PublicNavbar.tsx",
-                            lineNumber: 59,
+                            lineNumber: 58,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "flex md:hidden gap-4 lg:gap-0 items-center",
-                            children: QueryGeneralSettingsData?.com_site_favicon ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "relative w-8 h-8",
-                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                                    loader: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$imageLoader$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"],
-                                    src: QueryGeneralSettingsData?.com_site_favicon,
-                                    alt: "quick_ecommerce",
-                                    fill: true,
-                                    sizes: "32px",
-                                    className: "w-full h-full"
-                                }, void 0, false, {
-                                    fileName: "[project]/src/components/blocks/shared/PublicNavbar.tsx",
-                                    lineNumber: 86,
-                                    columnNumber: 19
-                                }, this)
+                            children: QueryGeneralSettingsData?.com_site_favicon ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                                src: "/images/logo-kilocao.png",
+                                alt: "loco_kilocao",
+                                width: 264,
+                                height: 250,
+                                className: "h-9 w-auto object-contain",
+                                priority: true
                             }, void 0, false, {
                                 fileName: "[project]/src/components/blocks/shared/PublicNavbar.tsx",
-                                lineNumber: 85,
+                                lineNumber: 81,
                                 columnNumber: 17
-                            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "relative w-8 h-8",
-                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                                    src: "/images/no-image.png",
-                                    alt: "quick_ecommerce",
-                                    fill: true,
-                                    sizes: "32px",
-                                    className: "w-full h-full"
-                                }, void 0, false, {
-                                    fileName: "[project]/src/components/blocks/shared/PublicNavbar.tsx",
-                                    lineNumber: 97,
-                                    columnNumber: 19
-                                }, this)
+                            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                                src: "/images/logo-kilocao.png",
+                                alt: "loco_kilocao",
+                                width: 264,
+                                height: 250,
+                                className: "h-9 w-auto object-contain",
+                                priority: true
                             }, void 0, false, {
                                 fileName: "[project]/src/components/blocks/shared/PublicNavbar.tsx",
-                                lineNumber: 96,
+                                lineNumber: 90,
                                 columnNumber: 17
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/blocks/shared/PublicNavbar.tsx",
-                            lineNumber: 83,
+                            lineNumber: 79,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/blocks/shared/PublicNavbar.tsx",
-                    lineNumber: 58,
+                    lineNumber: 57,
                     columnNumber: 11
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -8832,7 +8827,7 @@ function PublicNavbar() {
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$blocks$2f$shared$2f$theme$2d$toggle$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ThemeToggle"], {}, void 0, false, {
                                 fileName: "[project]/src/components/blocks/shared/PublicNavbar.tsx",
-                                lineNumber: 115,
+                                lineNumber: 108,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -8849,7 +8844,7 @@ function PublicNavbar() {
                                             children: "Visit Site"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/blocks/shared/PublicNavbar.tsx",
-                                            lineNumber: 125,
+                                            lineNumber: 118,
                                             columnNumber: 17
                                         }, this),
                                         " ",
@@ -8858,45 +8853,45 @@ function PublicNavbar() {
                                             height: 15
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/blocks/shared/PublicNavbar.tsx",
-                                            lineNumber: 131,
+                                            lineNumber: 124,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/blocks/shared/PublicNavbar.tsx",
-                                    lineNumber: 121,
+                                    lineNumber: 114,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/blocks/shared/PublicNavbar.tsx",
-                                lineNumber: 116,
+                                lineNumber: 109,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$blocks$2f$shared$2f$LocalSwitcher$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                                 fileName: "[project]/src/components/blocks/shared/PublicNavbar.tsx",
-                                lineNumber: 134,
+                                lineNumber: 127,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/blocks/shared/PublicNavbar.tsx",
-                        lineNumber: 114,
+                        lineNumber: 107,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/src/components/blocks/shared/PublicNavbar.tsx",
-                    lineNumber: 109,
+                    lineNumber: 102,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/components/blocks/shared/PublicNavbar.tsx",
-            lineNumber: 54,
+            lineNumber: 53,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/blocks/shared/PublicNavbar.tsx",
-        lineNumber: 49,
+        lineNumber: 48,
         columnNumber: 5
     }, this);
 }
@@ -9331,7 +9326,8 @@ const SignInPage = ()=>{
             const token = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$constants$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AUTH_TOKEN_KEY"]);
             const authUser = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$constants$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AUTH_USER"]);
             if (token && authUser == "system_level") {
-                router.replace((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$localized$2d$path$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["withLocale"])(locale, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$config$2f$routes$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Routes"].dashboard));
+                void router.replace((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$localized$2d$path$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["withLocale"])(locale, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$config$2f$routes$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Routes"].dashboard));
+                setCheckingAuth(false);
             } else if (token && authUser == "store_level") {
                 __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].remove(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$constants$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AUTH_TOKEN_KEY"]);
                 __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].remove(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$constants$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AUTH_USER"]);
@@ -9349,18 +9345,18 @@ const SignInPage = ()=>{
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$molecules$2f$PublicNavbarSkeleton$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PublicNavbarSkeleton"], {}, void 0, false, {
                     fileName: "[project]/src/app/[locale]/(auth)/admin/signin/page.tsx",
-                    lineNumber: 38,
+                    lineNumber: 39,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0)),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$molecules$2f$SignInFormSkeleton$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SignInFormSkeleton"], {}, void 0, false, {
                     fileName: "[project]/src/app/[locale]/(auth)/admin/signin/page.tsx",
-                    lineNumber: 39,
+                    lineNumber: 40,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0))
             ]
         }, void 0, true, {
             fileName: "[project]/src/app/[locale]/(auth)/admin/signin/page.tsx",
-            lineNumber: 37,
+            lineNumber: 38,
             columnNumber: 7
         }, ("TURBOPACK compile-time value", void 0));
     }
@@ -9368,12 +9364,12 @@ const SignInPage = ()=>{
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$blocks$2f$shared$2f$PublicNavbar$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PublicNavbar"], {}, void 0, false, {
                 fileName: "[project]/src/app/[locale]/(auth)/admin/signin/page.tsx",
-                lineNumber: 46,
+                lineNumber: 47,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$molecules$2f$forms$2f$sign$2d$in$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/src/app/[locale]/(auth)/admin/signin/page.tsx",
-                lineNumber: 47,
+                lineNumber: 48,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0))
         ]

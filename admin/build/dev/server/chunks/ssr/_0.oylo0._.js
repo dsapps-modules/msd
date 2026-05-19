@@ -252,8 +252,6 @@ __turbopack_context__.n(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$l
 __turbopack_context__.s([
     "default",
     ()=>RootLayout,
-    "dynamic",
-    ()=>dynamic,
     "generateMetadata",
     ()=>generateMetadata
 ]);
@@ -274,7 +272,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$QueryProvider$
 ;
 ;
 ;
-const dynamic = "force-dynamic";
 async function fetchSiteInfo() {
     const res = await fetch(`${("TURBOPACK compile-time value", "http://127.0.0.1:8000/api")}/v1/site-general-info`, {
         next: {
@@ -283,34 +280,43 @@ async function fetchSiteInfo() {
     });
     if (!res.ok) throw new Error("Failed to fetch site info");
     const data = await res.json();
-    return data.site_settings;
+    const siteSettings = data.site_settings ?? {};
+    return {
+        com_site_title: siteSettings.com_site_title ?? "Quick Ecommerce",
+        com_site_subtitle: siteSettings.com_site_subtitle ?? "Quick Ecommerce",
+        com_site_favicon: siteSettings.com_site_favicon ?? ""
+    };
 }
 async function generateMetadata() {
     try {
         const data = await fetchSiteInfo();
+        const iconEntries = data.com_site_favicon ? [
+            {
+                url: data.com_site_favicon,
+                type: "image/png",
+                sizes: "512x512"
+            },
+            {
+                url: data.com_site_favicon,
+                type: "image/png",
+                sizes: "192x192"
+            },
+            {
+                url: data.com_site_favicon,
+                sizes: "180x180",
+                type: "image/png"
+            }
+        ] : [
+            {
+                url: "/favicon.ico"
+            }
+        ];
         return {
-            title: data.com_site_title,
-            description: data.com_site_subtitle,
+            title: data.com_site_title || "Quick Ecommerce",
+            description: data.com_site_subtitle || "Quick Ecommerce",
             icons: {
-                icon: [
-                    {
-                        url: data.com_site_favicon,
-                        type: "image/png",
-                        sizes: "512x512"
-                    },
-                    {
-                        url: data.com_site_favicon,
-                        type: "image/png",
-                        sizes: "192x192"
-                    }
-                ],
-                apple: [
-                    {
-                        url: data.com_site_favicon,
-                        sizes: "180x180",
-                        type: "image/png"
-                    }
-                ]
+                icon: iconEntries,
+                apple: iconEntries
             }
         };
     } catch  {
@@ -342,43 +348,43 @@ function RootLayout({ children }) {
                                     children,
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$GlobalClientLayer$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["GlobalClientLayer"], {}, void 0, false, {
                                         fileName: "[project]/src/app/layout.tsx",
-                                        lineNumber: 78,
+                                        lineNumber: 93,
                                         columnNumber: 19
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/layout.tsx",
-                                lineNumber: 76,
+                                lineNumber: 91,
                                 columnNumber: 17
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/app/layout.tsx",
-                            lineNumber: 75,
+                            lineNumber: 90,
                             columnNumber: 15
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/layout.tsx",
-                        lineNumber: 69,
+                        lineNumber: 84,
                         columnNumber: 13
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/src/app/layout.tsx",
-                    lineNumber: 68,
+                    lineNumber: 83,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/app/layout.tsx",
-                lineNumber: 67,
+                lineNumber: 82,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/app/layout.tsx",
-            lineNumber: 66,
+            lineNumber: 81,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/app/layout.tsx",
-        lineNumber: 65,
+        lineNumber: 80,
         columnNumber: 5
     }, this);
 }

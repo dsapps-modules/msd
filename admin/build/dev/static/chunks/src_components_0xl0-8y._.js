@@ -4862,7 +4862,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$i
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/ui/input.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/ui/button.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$sheet$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/ui/sheet.tsx [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$imageLoader$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/lib/imageLoader.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$common$2f$com$2f$com$2e$action$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/modules/common/com/com.action.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$redux$2f$hooks$2f$index$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/redux/hooks/index.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$redux$2f$slices$2f$refetchSlice$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/redux/slices/refetchSlice.ts [app-client] (ecmascript)");
@@ -4876,7 +4875,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$blocks$2f$shared$2f$menu$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/blocks/shared/menu.tsx [app-client] (ecmascript)");
 ;
 var _s = __turbopack_context__.k.signature();
-;
 ;
 ;
 ;
@@ -4939,17 +4937,17 @@ function SheetMenu({ getPermissions }) {
                         size: 20
                     }, void 0, false, {
                         fileName: "[project]/src/components/blocks/shared/sheet-menu.tsx",
-                        lineNumber: 59,
+                        lineNumber: 58,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/src/components/blocks/shared/sheet-menu.tsx",
-                    lineNumber: 58,
+                    lineNumber: 57,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/blocks/shared/sheet-menu.tsx",
-                lineNumber: 57,
+                lineNumber: 56,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$sheet$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SheetContent"], {
@@ -4962,35 +4960,34 @@ function SheetMenu({ getPermissions }) {
                             QueryGeneralSettingsData?.com_site_logo ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "relative w-24 h-12",
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                                    loader: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$imageLoader$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"],
-                                    src: QueryGeneralSettingsData?.com_site_logo,
-                                    alt: "quick_ecommerce",
+                                    src: "/images/logo-kilocao.png",
+                                    alt: "loco_kilocao",
                                     layout: "fill",
                                     className: "w-full h-full "
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/blocks/shared/sheet-menu.tsx",
-                                    lineNumber: 69,
+                                    lineNumber: 68,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/blocks/shared/sheet-menu.tsx",
-                                lineNumber: 68,
+                                lineNumber: 67,
                                 columnNumber: 13
                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "relative w-24 h-12",
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                                    src: "/images/no-image.png",
-                                    alt: "quick_ecommerce",
+                                    src: "/images/logo-kilocao.png",
+                                    alt: "loco_kilocao",
                                     layout: "fill",
                                     className: "w-full h-full"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/blocks/shared/sheet-menu.tsx",
-                                    lineNumber: 79,
+                                    lineNumber: 77,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/blocks/shared/sheet-menu.tsx",
-                                lineNumber: 78,
+                                lineNumber: 76,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5000,7 +4997,7 @@ function SheetMenu({ getPermissions }) {
                                         className: `absolute w-5 h-5 mt-2.5 text-slate-400 ${dir == "rtl" ? "left-4" : " right-4"}  `
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/blocks/shared/sheet-menu.tsx",
-                                        lineNumber: 88,
+                                        lineNumber: 86,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -5010,19 +5007,19 @@ function SheetMenu({ getPermissions }) {
                                         className: "border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus-visible:ring-slate-200 ring-offset-0 sidebar-search"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/blocks/shared/sheet-menu.tsx",
-                                        lineNumber: 93,
+                                        lineNumber: 91,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/blocks/shared/sheet-menu.tsx",
-                                lineNumber: 87,
+                                lineNumber: 85,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/blocks/shared/sheet-menu.tsx",
-                        lineNumber: 66,
+                        lineNumber: 65,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$blocks$2f$shared$2f$menu$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Menu"], {
@@ -5032,19 +5029,19 @@ function SheetMenu({ getPermissions }) {
                         search: search
                     }, void 0, false, {
                         fileName: "[project]/src/components/blocks/shared/sheet-menu.tsx",
-                        lineNumber: 101,
+                        lineNumber: 99,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/blocks/shared/sheet-menu.tsx",
-                lineNumber: 62,
+                lineNumber: 61,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/blocks/shared/sheet-menu.tsx",
-        lineNumber: 56,
+        lineNumber: 55,
         columnNumber: 5
     }, this);
 }
@@ -5424,11 +5421,15 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$intl
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/client/app-dir/link.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/navigation.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$use$2d$sidebar$2d$toggle$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/hooks/use-sidebar-toggle.ts [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$use$2d$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/hooks/use-store.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$blocks$2f$shared$2f$sheet$2d$menu$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/blocks/shared/sheet-menu.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$blocks$2f$shared$2f$user$2d$nav$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/blocks/shared/user-nav.tsx [app-client] (ecmascript)");
 ;
 var _s = __turbopack_context__.k.signature();
 "use client";
+;
+;
 ;
 ;
 ;
@@ -5459,6 +5460,12 @@ function Navbar({ MeData, setIsLoading }) {
     const LocaleDir = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$use$2d$intl$2f$dist$2f$esm$2f$development$2f$react$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLocale"])();
     const locale = pathname.split("/")[1];
     const dir = locale === "ar" ? "rtl" : "ltr";
+    const sidebar = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$use$2d$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useStore"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$use$2d$sidebar$2d$toggle$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSidebarToggle"], {
+        "Navbar.useStore": (state)=>state
+    }["Navbar.useStore"]) ?? {
+        isOpen: true,
+        setIsOpen: ()=>{}
+    };
     const localeRoute = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$use$2d$intl$2f$dist$2f$esm$2f$development$2f$react$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLocale"])();
     const pathnameWithoutLocale = pathname.replace(`/${localeRoute}`, "") || "/";
     const selectedStore = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$redux$2f$hooks$2f$index$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useAppSelector"])({
@@ -5634,7 +5641,7 @@ function Navbar({ MeData, setIsLoading }) {
         }
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("header", {
-        className: `p-2 sticky top-0 z-70 w-full border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-white/80 dark:shadow-secondary dark:bg-custom-dark-blue ${data && data.activity_scope === "store_level" ? "md:h-[120px] lg:h-[80px] h-[200px]" : "lg:h-[80px] h-[120px]"}  `,
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("p-2 sticky top-0 z-70 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-white/80 dark:shadow-secondary dark:bg-custom-dark-blue transition-[margin-left,margin-right,width] ease-in-out duration-300", data && data.activity_scope === "store_level" ? "md:h-[120px] lg:h-[80px] h-[200px]" : "lg:h-[80px] h-[120px]", sidebar?.isOpen === false ? dir === "rtl" ? "lg:mr-[90px] lg:w-[calc(100%-90px)]" : "lg:ml-[90px] lg:w-[calc(100%-90px)]" : dir === "rtl" ? "lg:mr-72 lg:w-[calc(100%-18rem)]" : "lg:ml-72 lg:w-[calc(100%-18rem)]"),
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "mx-2 md:mx-4 flex  flex-col md:flex-row h-14 items-start md:items-center ",
             children: [
@@ -5644,12 +5651,12 @@ function Navbar({ MeData, setIsLoading }) {
                         getPermissions: getPermissions
                     }, void 0, false, {
                         fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-                        lineNumber: 217,
+                        lineNumber: 232,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-                    lineNumber: 216,
+                    lineNumber: 231,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5660,7 +5667,7 @@ function Navbar({ MeData, setIsLoading }) {
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$blocks$2f$shared$2f$theme$2d$toggle$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ThemeToggle"], {}, void 0, false, {
                                     fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-                                    lineNumber: 227,
+                                    lineNumber: 242,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -5676,7 +5683,7 @@ function Navbar({ MeData, setIsLoading }) {
                                                 children: t("label.visit_site")
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-                                                lineNumber: 238,
+                                                lineNumber: 253,
                                                 columnNumber: 17
                                             }, this),
                                             " ",
@@ -5685,36 +5692,36 @@ function Navbar({ MeData, setIsLoading }) {
                                                 height: 15
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-                                                lineNumber: 247,
+                                                lineNumber: 262,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-                                        lineNumber: 234,
+                                        lineNumber: 249,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-                                    lineNumber: 229,
+                                    lineNumber: 244,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: "mx-2 md:mx-0",
                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$blocks$2f$shared$2f$LocalSwitcher$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                                         fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-                                        lineNumber: 251,
+                                        lineNumber: 266,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-                                    lineNumber: 250,
+                                    lineNumber: 265,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-                            lineNumber: 226,
+                            lineNumber: 241,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5731,12 +5738,12 @@ function Navbar({ MeData, setIsLoading }) {
                                         hideNone: true
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-                                        lineNumber: 261,
+                                        lineNumber: 276,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-                                    lineNumber: 256,
+                                    lineNumber: 271,
                                     columnNumber: 15
                                 }, this),
                                 data && data.activity_scope === "system_level" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5748,12 +5755,12 @@ function Navbar({ MeData, setIsLoading }) {
                                         height: 24
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-                                        lineNumber: 279,
+                                        lineNumber: 294,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-                                    lineNumber: 273,
+                                    lineNumber: 288,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5765,7 +5772,7 @@ function Navbar({ MeData, setIsLoading }) {
                                             className: "text-gray-600 dark:text-white cursor-pointer "
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-                                            lineNumber: 291,
+                                            lineNumber: 306,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5776,7 +5783,7 @@ function Navbar({ MeData, setIsLoading }) {
                                                     children: unreadCount
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-                                                    lineNumber: 294,
+                                                    lineNumber: 309,
                                                     columnNumber: 17
                                                 }, this),
                                                 isHovering && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5792,7 +5799,7 @@ function Navbar({ MeData, setIsLoading }) {
                                                                     children: t("label.notifications")
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-                                                                    lineNumber: 306,
+                                                                    lineNumber: 321,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5806,7 +5813,7 @@ function Navbar({ MeData, setIsLoading }) {
                                                                                     children: notification.title
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-                                                                                    lineNumber: 320,
+                                                                                    lineNumber: 335,
                                                                                     columnNumber: 35
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -5814,13 +5821,13 @@ function Navbar({ MeData, setIsLoading }) {
                                                                                     children: notification.message
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-                                                                                    lineNumber: 323,
+                                                                                    lineNumber: 338,
                                                                                     columnNumber: 35
                                                                                 }, this)
                                                                             ]
                                                                         }, index, true, {
                                                                             fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-                                                                            lineNumber: 313,
+                                                                            lineNumber: 328,
                                                                             columnNumber: 33
                                                                         }, this)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                         className: "p-2 border-b last:border-b-0 hover:bg-gray-50 cursor-pointer",
@@ -5829,17 +5836,17 @@ function Navbar({ MeData, setIsLoading }) {
                                                                             children: t("common.no_new_notifications_at_the_moment")
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-                                                                            lineNumber: 331,
+                                                                            lineNumber: 346,
                                                                             columnNumber: 31
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-                                                                        lineNumber: 330,
+                                                                        lineNumber: 345,
                                                                         columnNumber: 29
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-                                                                    lineNumber: 309,
+                                                                    lineNumber: 324,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5850,40 +5857,40 @@ function Navbar({ MeData, setIsLoading }) {
                                                                         children: t("common.show_all_notifications")
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-                                                                        lineNumber: 342,
+                                                                        lineNumber: 357,
                                                                         columnNumber: 27
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-                                                                    lineNumber: 338,
+                                                                    lineNumber: 353,
                                                                     columnNumber: 25
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-                                                            lineNumber: 305,
+                                                            lineNumber: 320,
                                                             columnNumber: 23
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-                                                        lineNumber: 300,
+                                                        lineNumber: 315,
                                                         columnNumber: 21
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-                                                    lineNumber: 299,
+                                                    lineNumber: 314,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-                                            lineNumber: 293,
+                                            lineNumber: 308,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-                                    lineNumber: 286,
+                                    lineNumber: 301,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$blocks$2f$shared$2f$user$2d$nav$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["UserNav"], {
@@ -5892,38 +5899,39 @@ function Navbar({ MeData, setIsLoading }) {
                                     setIsLoading: setIsLoading
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-                                    lineNumber: 352,
+                                    lineNumber: 367,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-                            lineNumber: 254,
+                            lineNumber: 269,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-                    lineNumber: 219,
+                    lineNumber: 234,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-            lineNumber: 215,
+            lineNumber: 230,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/blocks/shared/navbar.tsx",
-        lineNumber: 208,
+        lineNumber: 215,
         columnNumber: 5
     }, this);
 }
-_s(Navbar, "krRONFKu2zK6+VqZoq739ltiLR4=", false, function() {
+_s(Navbar, "BiD/lsDp8pLmRoj9I0F7nzOb/Lw=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["usePathname"],
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$intl$2f$dist$2f$esm$2f$development$2f$react$2d$client$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useTranslations"],
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$use$2d$intl$2f$dist$2f$esm$2f$development$2f$react$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLocale"],
+        __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$use$2d$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useStore"],
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$use$2d$intl$2f$dist$2f$esm$2f$development$2f$react$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLocale"],
         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$redux$2f$hooks$2f$index$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useAppSelector"],
         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$users$2f$users$2e$action$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useGetPermissionsQuery"],
@@ -6014,7 +6022,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$i
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/ui/input.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$use$2d$sidebar$2d$toggle$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/hooks/use-sidebar-toggle.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$use$2d$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/hooks/use-store.ts [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$imageLoader$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/lib/imageLoader.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/lib/utils.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$common$2f$com$2f$com$2e$action$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/modules/common/com/com.action.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$seller$2d$section$2f$seller$2d$dashboard$2f$seller$2d$dashboard$2e$action$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/modules/seller-section/seller-dashboard/seller-dashboard.action.ts [app-client] (ecmascript)");
@@ -6024,7 +6031,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$redux$2f$slices$2f$re
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$redux$2f$slices$2f$storeSlice$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/redux/slices/storeSlice.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$search$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Search$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/search.js [app-client] (ecmascript) <export default as Search>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$use$2d$intl$2f$dist$2f$esm$2f$development$2f$react$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/use-intl/dist/esm/development/react.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/image.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/navigation.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$blocks$2f$shared$2f$menu$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/blocks/shared/menu.tsx [app-client] (ecmascript)");
@@ -6032,8 +6038,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$blocks$
 ;
 var _s = __turbopack_context__.k.signature();
 "use client";
-;
-;
 ;
 ;
 ;
@@ -6081,25 +6085,47 @@ const Sidebar = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$
     const pathname = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["usePathname"])();
     const localeDir = pathname.split("/")[1];
     const dir = localeDir === "ar" ? "rtl" : "ltr";
+    const pathnameWithoutLocale = pathname.replace(`/${localeDir}`, "") || "/";
     const MenuItems = getPermissions?.permissions;
     const locale = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$use$2d$intl$2f$dist$2f$esm$2f$development$2f$react$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLocale"])();
     const dispatch = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$redux$2f$hooks$2f$index$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useAppDispatch"])();
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"])();
+    const shouldLoadDashboardStats = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
+        "Sidebar.useMemo[shouldLoadDashboardStats]": ()=>[
+                "/admin/dashboard",
+                "/seller/dashboard",
+                "/seller/store/dashboard"
+            ].includes(pathnameWithoutLocale)
+    }["Sidebar.useMemo[shouldLoadDashboardStats]"], [
+        pathnameWithoutLocale
+    ]);
     const { refetch: isDashboardRefetch } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$seller$2d$section$2f$seller$2d$dashboard$2f$seller$2d$dashboard$2e$action$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSellerDashboardQuery"])({
         language: locale,
         slug: storedSlug
+    }, {
+        enabled: shouldLoadDashboardStats,
+        staleTime: 1000 * 60 * 10
     });
     const { refetch: SalesSummaryRefetch } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$seller$2d$section$2f$seller$2d$dashboard$2f$seller$2d$dashboard$2e$action$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSellerSalesSummaryQuery"])({
         language: locale,
         slug: storedSlug
+    }, {
+        enabled: shouldLoadDashboardStats,
+        staleTime: 1000 * 60 * 10
     });
     const { refetch: SellerGrowthRefetch } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$seller$2d$section$2f$seller$2d$dashboard$2f$seller$2d$dashboard$2e$action$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSellerGrowthOrderQuery"])({
         language: locale,
         slug: storedSlug
+    }, {
+        enabled: shouldLoadDashboardStats,
+        staleTime: 1000 * 60 * 10
     });
     const { refetch: SellerOtherRefetch } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$seller$2d$section$2f$seller$2d$dashboard$2f$seller$2d$dashboard$2e$action$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSellerOtherSummaryQuery"])({
         language: locale,
         slug: storedSlug
+    }, {
+        enabled: shouldLoadDashboardStats,
+        staleTime: 1000 * 60 * 10
     });
     const dashboardLink = getPermissions?.activity_scope == "store_level" ? "/seller/dashboard" : "/admin/dashboard";
     const [search, setSearch] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
@@ -6155,7 +6181,7 @@ const Sidebar = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$
                 setIsOpen: sidebar?.setIsOpen
             }, void 0, false, {
                 fileName: "[project]/src/components/blocks/shared/sidebar.tsx",
-                lineNumber: 141,
+                lineNumber: 173,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6167,108 +6193,32 @@ const Sidebar = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "cursor-pointer",
                                 onClick: handleLogo,
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])(`font-bold text-lg py-0.5 ${dir == "rtl" ? "pr-4" : "px-2"}  whitespace-nowrap transition-[transform,opacity,display] ease-in-out duration-300 text-slate-900 dark:text-white`, sidebar?.isOpen === true ? "-translate-x-96 opacity-0 hidden" : "translate-x-0 opacity-100"),
-                                        children: QueryGeneralSettingsData?.com_site_favicon ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "relative w-8 h-8",
-                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                                                loader: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$imageLoader$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"],
-                                                src: QueryGeneralSettingsData?.com_site_favicon,
-                                                alt: "quick_ecommerce",
-                                                fill: true,
-                                                sizes: "32px",
-                                                className: "w-full h-full ",
-                                                priority: true
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/blocks/shared/sidebar.tsx",
-                                                lineNumber: 166,
-                                                columnNumber: 19
-                                            }, ("TURBOPACK compile-time value", void 0))
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/blocks/shared/sidebar.tsx",
-                                            lineNumber: 165,
-                                            columnNumber: 17
-                                        }, ("TURBOPACK compile-time value", void 0)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "relative w-8 h-8",
-                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                                                src: "/images/no-image.png",
-                                                alt: "quick_ecommerce",
-                                                fill: true,
-                                                sizes: "32px",
-                                                className: "w-full h-full",
-                                                priority: true
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/blocks/shared/sidebar.tsx",
-                                                lineNumber: 178,
-                                                columnNumber: 19
-                                            }, ("TURBOPACK compile-time value", void 0))
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/blocks/shared/sidebar.tsx",
-                                            lineNumber: 177,
-                                            columnNumber: 17
-                                        }, ("TURBOPACK compile-time value", void 0))
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("flex items-center gap-3 whitespace-nowrap transition-[transform,opacity,display] ease-in-out duration-300 text-slate-900 dark:text-white", sidebar?.isOpen === false ? "translate-x-0 opacity-100" : "translate-x-0 opacity-100"),
+                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                        src: "/images/logo-kilocao.png",
+                                        alt: "loco_kilocao",
+                                        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("object-contain", sidebar?.isOpen === false ? "w-12 h-12" : "w-24 h-12 rounded")
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/blocks/shared/sidebar.tsx",
-                                        lineNumber: 154,
-                                        columnNumber: 13
-                                    }, ("TURBOPACK compile-time value", void 0)),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("font-bold text-lg whitespace-nowrap transition-[transform,opacity,display] ease-in-out duration-300 text-slate-900 dark:text-white", sidebar?.isOpen === false ? "-translate-x-96 opacity-0 hidden" : "translate-x-0 opacity-100"),
-                                        children: QueryGeneralSettingsData?.com_site_logo ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "relative w-24 h-12",
-                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                                                loader: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$imageLoader$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"],
-                                                src: QueryGeneralSettingsData?.com_site_logo,
-                                                alt: "quick_ecommerce",
-                                                fill: true,
-                                                sizes: "48px",
-                                                className: "w-full h-full rounded",
-                                                priority: true
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/blocks/shared/sidebar.tsx",
-                                                lineNumber: 199,
-                                                columnNumber: 19
-                                            }, ("TURBOPACK compile-time value", void 0))
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/blocks/shared/sidebar.tsx",
-                                            lineNumber: 198,
-                                            columnNumber: 17
-                                        }, ("TURBOPACK compile-time value", void 0)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "relative w-12 h-12 rounded",
-                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                                                src: "/images/no-image.png",
-                                                alt: "quick_ecommerce",
-                                                fill: true,
-                                                sizes: "48px",
-                                                className: "w-full h-full rounded",
-                                                priority: true
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/blocks/shared/sidebar.tsx",
-                                                lineNumber: 211,
-                                                columnNumber: 19
-                                            }, ("TURBOPACK compile-time value", void 0))
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/blocks/shared/sidebar.tsx",
-                                            lineNumber: 210,
-                                            columnNumber: 17
-                                        }, ("TURBOPACK compile-time value", void 0))
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/components/blocks/shared/sidebar.tsx",
-                                        lineNumber: 189,
-                                        columnNumber: 13
+                                        lineNumber: 194,
+                                        columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0))
-                                ]
-                            }, void 0, true, {
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/blocks/shared/sidebar.tsx",
+                                    lineNumber: 186,
+                                    columnNumber: 13
+                                }, ("TURBOPACK compile-time value", void 0))
+                            }, void 0, false, {
                                 fileName: "[project]/src/components/blocks/shared/sidebar.tsx",
-                                lineNumber: 153,
+                                lineNumber: 185,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "flex items-center my-4 lg:my-0"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/blocks/shared/sidebar.tsx",
-                                lineNumber: 223,
+                                lineNumber: 206,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6278,7 +6228,7 @@ const Sidebar = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$
                                         className: `absolute w-5 h-5 mt-2.5 text-slate-400 dark:text-white ${dir == "rtl" ? "left-4" : " right-4"}  `
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/blocks/shared/sidebar.tsx",
-                                        lineNumber: 231,
+                                        lineNumber: 214,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -6288,19 +6238,19 @@ const Sidebar = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$
                                         className: "border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus-visible:ring-slate-200 ring-offset-0 sidebar-search dark:bg-[#072441] dark:text-white"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/blocks/shared/sidebar.tsx",
-                                        lineNumber: 236,
+                                        lineNumber: 219,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/blocks/shared/sidebar.tsx",
-                                lineNumber: 224,
+                                lineNumber: 207,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/blocks/shared/sidebar.tsx",
-                        lineNumber: 147,
+                        lineNumber: 179,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     isPending || isFetching ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6313,7 +6263,7 @@ const Sidebar = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$
                                         className: "h-10 bg-slate-200 rounded-md animate-pulse dark:bg-gray-500"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/blocks/shared/sidebar.tsx",
-                                        lineNumber: 248,
+                                        lineNumber: 231,
                                         columnNumber: 17
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     [
@@ -6325,20 +6275,20 @@ const Sidebar = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$
                                                     className: "h-8 w-8 bg-slate-200 rounded-full animate-pulse dark:bg-gray-500"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/blocks/shared/sidebar.tsx",
-                                                    lineNumber: 251,
+                                                    lineNumber: 234,
                                                     columnNumber: 21
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                     className: "h-4 bg-slate-200 rounded w-3/4 animate-pulse dark:bg-gray-500"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/blocks/shared/sidebar.tsx",
-                                                    lineNumber: 252,
+                                                    lineNumber: 235,
                                                     columnNumber: 21
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             ]
                                         }, i, true, {
                                             fileName: "[project]/src/components/blocks/shared/sidebar.tsx",
-                                            lineNumber: 250,
+                                            lineNumber: 233,
                                             columnNumber: 19
                                         }, ("TURBOPACK compile-time value", void 0))),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6347,28 +6297,28 @@ const Sidebar = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$
                                             className: "h-4 bg-slate-200 rounded w-1/2 animate-pulse dark:bg-gray-500"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/blocks/shared/sidebar.tsx",
-                                            lineNumber: 256,
+                                            lineNumber: 239,
                                             columnNumber: 19
                                         }, ("TURBOPACK compile-time value", void 0))
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/blocks/shared/sidebar.tsx",
-                                        lineNumber: 255,
+                                        lineNumber: 238,
                                         columnNumber: 17
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/blocks/shared/sidebar.tsx",
-                                lineNumber: 247,
+                                lineNumber: 230,
                                 columnNumber: 15
                             }, ("TURBOPACK compile-time value", void 0))
                         }, void 0, false, {
                             fileName: "[project]/src/components/blocks/shared/sidebar.tsx",
-                            lineNumber: 246,
+                            lineNumber: 229,
                             columnNumber: 13
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/src/components/blocks/shared/sidebar.tsx",
-                        lineNumber: 245,
+                        lineNumber: 228,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$blocks$2f$shared$2f$menu$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Menu"], {
                         isOpen: sidebar.isOpen,
@@ -6378,22 +6328,22 @@ const Sidebar = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$
                         setIsLoading: setIsLoading
                     }, void 0, false, {
                         fileName: "[project]/src/components/blocks/shared/sidebar.tsx",
-                        lineNumber: 262,
+                        lineNumber: 245,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/blocks/shared/sidebar.tsx",
-                lineNumber: 142,
+                lineNumber: 174,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/blocks/shared/sidebar.tsx",
-        lineNumber: 133,
+        lineNumber: 165,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
-}, "rxxKBBDx7gR2fGWUR2mf02v13Es=", false, function() {
+}, "e7sYJ1WY5KccODMR3Ezn92AtkZo=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$use$2d$intl$2f$dist$2f$esm$2f$development$2f$react$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLocale"],
         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$redux$2f$hooks$2f$index$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useAppSelector"],
@@ -6410,7 +6360,7 @@ const Sidebar = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$
         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$seller$2d$section$2f$seller$2d$dashboard$2f$seller$2d$dashboard$2e$action$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSellerGrowthOrderQuery"],
         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$seller$2d$section$2f$seller$2d$dashboard$2f$seller$2d$dashboard$2e$action$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSellerOtherSummaryQuery"]
     ];
-})), "rxxKBBDx7gR2fGWUR2mf02v13Es=", false, function() {
+})), "e7sYJ1WY5KccODMR3Ezn92AtkZo=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$use$2d$intl$2f$dist$2f$esm$2f$development$2f$react$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLocale"],
         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$redux$2f$hooks$2f$index$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useAppSelector"],

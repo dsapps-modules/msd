@@ -1749,7 +1749,7 @@ var _s = __turbopack_context__.k.signature(), _s1 = __turbopack_context__.k.sign
 ;
 ;
 ;
-const useAdminDashboardQuery = (options)=>{
+const useAdminDashboardQuery = (options, queryOptions)=>{
     _s();
     const { findAll } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$admin$2d$section$2f$admin$2d$dashboard$2f$admin$2d$dashboard$2e$service$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useAdminDashboardService"])();
     const errorToastRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
@@ -1761,7 +1761,9 @@ const useAdminDashboardQuery = (options)=>{
             "useAdminDashboardQuery.useQuery": ()=>findAll(options)
         }["useAdminDashboardQuery.useQuery"],
         retry: false,
-        refetchOnWindowFocus: false
+        refetchOnWindowFocus: false,
+        enabled: queryOptions?.skip ? false : queryOptions?.enabled ?? true,
+        staleTime: queryOptions?.staleTime
     });
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "useAdminDashboardQuery.useEffect": ()=>{
@@ -1795,7 +1797,7 @@ _s(useAdminDashboardQuery, "u0N5rhoqRVmL6YK8xwv0rBX9c7s=", false, function() {
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$tanstack$2f$react$2d$query$2f$build$2f$modern$2f$useQuery$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useQuery"]
     ];
 });
-const useAdminSalesSummaryQuery = (options)=>{
+const useAdminSalesSummaryQuery = (options, queryOptions)=>{
     _s1();
     const { findAll } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$admin$2d$section$2f$admin$2d$dashboard$2f$admin$2d$dashboard$2e$service$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useAdminSalesService"])();
     const errorToastRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
@@ -1807,7 +1809,9 @@ const useAdminSalesSummaryQuery = (options)=>{
             "useAdminSalesSummaryQuery.useQuery": ()=>findAll(options)
         }["useAdminSalesSummaryQuery.useQuery"],
         retry: false,
-        refetchOnWindowFocus: false
+        refetchOnWindowFocus: false,
+        enabled: queryOptions?.skip ? false : queryOptions?.enabled ?? true,
+        staleTime: queryOptions?.staleTime
     });
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "useAdminSalesSummaryQuery.useEffect": ()=>{
@@ -1841,7 +1845,7 @@ _s1(useAdminSalesSummaryQuery, "2ATQE4CciIZFuXB/uKLn2HPYYxg=", false, function()
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$tanstack$2f$react$2d$query$2f$build$2f$modern$2f$useQuery$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useQuery"]
     ];
 });
-const useAdminGrowthOrderQuery = (options)=>{
+const useAdminGrowthOrderQuery = (options, queryOptions)=>{
     _s2();
     const { findAll } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$admin$2d$section$2f$admin$2d$dashboard$2f$admin$2d$dashboard$2e$service$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useAdminOrderGrowthService"])();
     const errorToastRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
@@ -1853,7 +1857,9 @@ const useAdminGrowthOrderQuery = (options)=>{
             "useAdminGrowthOrderQuery.useQuery": ()=>findAll(options)
         }["useAdminGrowthOrderQuery.useQuery"],
         retry: false,
-        refetchOnWindowFocus: false
+        refetchOnWindowFocus: false,
+        enabled: queryOptions?.skip ? false : queryOptions?.enabled ?? true,
+        staleTime: queryOptions?.staleTime
     });
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "useAdminGrowthOrderQuery.useEffect": ()=>{
@@ -1887,7 +1893,7 @@ _s2(useAdminGrowthOrderQuery, "Ace7SG+gRXjeQFk0LG8RW13YmvM=", false, function() 
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$tanstack$2f$react$2d$query$2f$build$2f$modern$2f$useQuery$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useQuery"]
     ];
 });
-const useAdminOtherSummaryQuery = (options)=>{
+const useAdminOtherSummaryQuery = (options, queryOptions)=>{
     _s3();
     const { findAll } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$admin$2d$section$2f$admin$2d$dashboard$2f$admin$2d$dashboard$2e$service$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useAdminOtherSummaryService"])();
     const errorToastRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
@@ -1899,7 +1905,9 @@ const useAdminOtherSummaryQuery = (options)=>{
             "useAdminOtherSummaryQuery.useQuery": ()=>findAll(options)
         }["useAdminOtherSummaryQuery.useQuery"],
         retry: false,
-        refetchOnWindowFocus: false
+        refetchOnWindowFocus: false,
+        enabled: queryOptions?.skip ? false : queryOptions?.enabled ?? true,
+        staleTime: queryOptions?.staleTime
     });
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "useAdminOtherSummaryQuery.useEffect": ()=>{

@@ -1566,7 +1566,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$endpoints$2f$AdminApi
 ;
 ;
 ;
-const useAdminDashboardQuery = (options)=>{
+const useAdminDashboardQuery = (options, queryOptions)=>{
     const { findAll } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$admin$2d$section$2f$admin$2d$dashboard$2f$admin$2d$dashboard$2e$service$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useAdminDashboardService"])();
     const errorToastRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(null);
     const { data, isPending, error, refetch, isFetching } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$tanstack$2f$react$2d$query$2f$build$2f$modern$2f$useQuery$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useQuery"])({
@@ -1575,7 +1575,9 @@ const useAdminDashboardQuery = (options)=>{
         ],
         queryFn: ()=>findAll(options),
         retry: false,
-        refetchOnWindowFocus: false
+        refetchOnWindowFocus: false,
+        enabled: queryOptions?.skip ? false : queryOptions?.enabled ?? true,
+        staleTime: queryOptions?.staleTime
     });
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         //@ts-ignore
@@ -1599,7 +1601,7 @@ const useAdminDashboardQuery = (options)=>{
         isFetching
     };
 };
-const useAdminSalesSummaryQuery = (options)=>{
+const useAdminSalesSummaryQuery = (options, queryOptions)=>{
     const { findAll } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$admin$2d$section$2f$admin$2d$dashboard$2f$admin$2d$dashboard$2e$service$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useAdminSalesService"])();
     const errorToastRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(null);
     const { data, isPending, error, refetch, isFetching } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$tanstack$2f$react$2d$query$2f$build$2f$modern$2f$useQuery$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useQuery"])({
@@ -1608,7 +1610,9 @@ const useAdminSalesSummaryQuery = (options)=>{
         ],
         queryFn: ()=>findAll(options),
         retry: false,
-        refetchOnWindowFocus: false
+        refetchOnWindowFocus: false,
+        enabled: queryOptions?.skip ? false : queryOptions?.enabled ?? true,
+        staleTime: queryOptions?.staleTime
     });
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         //@ts-ignore
@@ -1632,7 +1636,7 @@ const useAdminSalesSummaryQuery = (options)=>{
         isFetching
     };
 };
-const useAdminGrowthOrderQuery = (options)=>{
+const useAdminGrowthOrderQuery = (options, queryOptions)=>{
     const { findAll } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$admin$2d$section$2f$admin$2d$dashboard$2f$admin$2d$dashboard$2e$service$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useAdminOrderGrowthService"])();
     const errorToastRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(null);
     const { data, isPending, error, refetch, isFetching } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$tanstack$2f$react$2d$query$2f$build$2f$modern$2f$useQuery$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useQuery"])({
@@ -1641,7 +1645,9 @@ const useAdminGrowthOrderQuery = (options)=>{
         ],
         queryFn: ()=>findAll(options),
         retry: false,
-        refetchOnWindowFocus: false
+        refetchOnWindowFocus: false,
+        enabled: queryOptions?.skip ? false : queryOptions?.enabled ?? true,
+        staleTime: queryOptions?.staleTime
     });
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         //@ts-ignore
@@ -1665,7 +1671,7 @@ const useAdminGrowthOrderQuery = (options)=>{
         isFetching
     };
 };
-const useAdminOtherSummaryQuery = (options)=>{
+const useAdminOtherSummaryQuery = (options, queryOptions)=>{
     const { findAll } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$modules$2f$admin$2d$section$2f$admin$2d$dashboard$2f$admin$2d$dashboard$2e$service$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useAdminOtherSummaryService"])();
     const errorToastRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(null);
     const { data, isPending, error, refetch, isFetching } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$tanstack$2f$react$2d$query$2f$build$2f$modern$2f$useQuery$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useQuery"])({
@@ -1674,7 +1680,9 @@ const useAdminOtherSummaryQuery = (options)=>{
         ],
         queryFn: ()=>findAll(options),
         retry: false,
-        refetchOnWindowFocus: false
+        refetchOnWindowFocus: false,
+        enabled: queryOptions?.skip ? false : queryOptions?.enabled ?? true,
+        staleTime: queryOptions?.staleTime
     });
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         //@ts-ignore
