@@ -2833,6 +2833,7 @@ file:///C:/xampp82/htdocs/kilocao/frontend/lib/l10n/app_localizations.dart
 file:///C:/xampp82/htdocs/kilocao/frontend/lib/l10n/app_localizations_ar.dart
 file:///C:/xampp82/htdocs/kilocao/frontend/lib/l10n/app_localizations_en.dart
 file:///C:/xampp82/htdocs/kilocao/frontend/lib/l10n/app_localizations_es.dart
+file:///C:/xampp82/htdocs/kilocao/frontend/lib/l10n/app_localizations_pt.dart
 file:///C:/xampp82/htdocs/kilocao/frontend/lib/main.dart
 file:///C:/xampp82/htdocs/kilocao/frontend/lib/router/app_routs.dart
 file:///C:/xampp82/htdocs/kilocao/frontend/lib/router/route_name.dart
@@ -2881,13 +2882,9 @@ file:///C:/xampp82/htdocs/kilocao/frontend/lib/screens/desktop_common_widgets/fi
 file:///C:/xampp82/htdocs/kilocao/frontend/lib/screens/desktop_home/all_product_screen.dart
 file:///C:/xampp82/htdocs/kilocao/frontend/lib/screens/desktop_home/best_selling_widget.dart
 file:///C:/xampp82/htdocs/kilocao/frontend/lib/screens/desktop_home/desktop_categories_screen.dart
-file:///C:/xampp82/htdocs/kilocao/frontend/lib/screens/desktop_home/desktop_categories_widget.dart
 file:///C:/xampp82/htdocs/kilocao/frontend/lib/screens/desktop_home/desktop_home.dart
-file:///C:/xampp82/htdocs/kilocao/frontend/lib/screens/desktop_home/desktop_super_deal_widget.dart
-file:///C:/xampp82/htdocs/kilocao/frontend/lib/screens/desktop_home/featured_widget.dart
 file:///C:/xampp82/htdocs/kilocao/frontend/lib/screens/desktop_home/find_location.dart
 file:///C:/xampp82/htdocs/kilocao/frontend/lib/screens/desktop_home/item_card.dart
-file:///C:/xampp82/htdocs/kilocao/frontend/lib/screens/desktop_home/new_arrivals_widget.dart
 file:///C:/xampp82/htdocs/kilocao/frontend/lib/screens/desktop_home/popular_products.dart
 file:///C:/xampp82/htdocs/kilocao/frontend/lib/screens/desktop_home/product_grid.dart
 file:///C:/xampp82/htdocs/kilocao/frontend/lib/screens/desktop_item_details/ask_question_tab.dart
@@ -2898,6 +2895,14 @@ file:///C:/xampp82/htdocs/kilocao/frontend/lib/screens/desktop_item_details/item
 file:///C:/xampp82/htdocs/kilocao/frontend/lib/screens/desktop_item_details/product_rating_tab.dart
 file:///C:/xampp82/htdocs/kilocao/frontend/lib/screens/desktop_settings/support_ticket_screen.dart
 file:///C:/xampp82/htdocs/kilocao/frontend/lib/screens/dev/preview_catalog_screen.dart
+file:///C:/xampp82/htdocs/kilocao/frontend/lib/screens/ecommerce/ecommerce_v2_cart.dart
+file:///C:/xampp82/htdocs/kilocao/frontend/lib/screens/ecommerce/ecommerce_v2_checkout.dart
+file:///C:/xampp82/htdocs/kilocao/frontend/lib/screens/ecommerce/ecommerce_v2_data.dart
+file:///C:/xampp82/htdocs/kilocao/frontend/lib/screens/ecommerce/ecommerce_v2_detail.dart
+file:///C:/xampp82/htdocs/kilocao/frontend/lib/screens/ecommerce/ecommerce_v2_home.dart
+file:///C:/xampp82/htdocs/kilocao/frontend/lib/screens/ecommerce/ecommerce_v2_models.dart
+file:///C:/xampp82/htdocs/kilocao/frontend/lib/screens/ecommerce/ecommerce_v2_success.dart
+file:///C:/xampp82/htdocs/kilocao/frontend/lib/screens/ecommerce/ecommerce_v2_widgets.dart
 file:///C:/xampp82/htdocs/kilocao/frontend/lib/screens/favorites/favorites_list.dart
 file:///C:/xampp82/htdocs/kilocao/frontend/lib/screens/favorites/web_favorites_list.dart
 file:///C:/xampp82/htdocs/kilocao/frontend/lib/screens/home/all_product_screen.dart

@@ -8,7 +8,7 @@ import 'package:intl/intl.dart' as intl;
 import 'app_localizations_ar.dart';
 import 'app_localizations_en.dart';
 import 'app_localizations_es.dart';
-import 'app_localizations_pt_br.dart';
+import 'app_localizations_pt.dart';
 
 // ignore_for_file: type=lint
 
@@ -99,6 +99,7 @@ abstract class AppLocalizations {
     Locale('ar'),
     Locale('en'),
     Locale('es'),
+    Locale('pt'),
     Locale('pt', 'BR')
   ];
 
@@ -2419,6 +2420,18 @@ class _AppLocalizationsDelegate
 }
 
 AppLocalizations lookupAppLocalizations(Locale locale) {
+  // Lookup logic when language+country codes are specified.
+  switch (locale.languageCode) {
+    case 'pt':
+      {
+        switch (locale.countryCode) {
+          case 'BR':
+            return AppLocalizationsPtBr();
+        }
+        break;
+      }
+  }
+
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
     case 'ar':
@@ -2428,7 +2441,7 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
     case 'es':
       return AppLocalizationsEs();
     case 'pt':
-      return AppLocalizationsPtBr();
+      return AppLocalizationsPt();
   }
 
   throw FlutterError(

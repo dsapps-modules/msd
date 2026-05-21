@@ -5,12 +5,11 @@ class PreviewCatalogScreen extends StatelessWidget {
   const PreviewCatalogScreen({super.key});
 
   static const List<Map<String, String>> deepLinkableRoutes = [
-    {'label': 'Splash', 'path': '/'},
+    {'label': 'Vitrine', 'path': '/'},
     {'label': 'Cadastro', 'path': '/registration'},
     {'label': 'Login Mobile', 'path': '/loginPage'},
     {'label': 'Login Web', 'path': '/webLogin'},
     {'label': 'Home Mobile', 'path': '/homeScreen'},
-    {'label': 'Home Web', 'path': '/webHomeScreen'},
     {'label': 'Menu e Paginas', 'path': '/menuAndPage'},
     {'label': 'Favoritos', 'path': '/favoritesListScreen'},
     {'label': 'Carteira', 'path': '/myWallet'},
@@ -23,6 +22,10 @@ class PreviewCatalogScreen extends StatelessWidget {
   ];
 
   static const List<Map<String, String>> contextualRoutes = [
+    {'label': 'Vitrine Ecommerce', 'path': '/'},
+    {'label': 'Carrinho Ecommerce', 'path': '/cart'},
+    {'label': 'Checkout Ecommerce', 'path': '/checkout'},
+    {'label': 'Sucesso Ecommerce', 'path': '/checkout/sucesso?order=KC-123&payment=PIX&total=199.90&items=2'},
     {
       'label': 'Endereco',
       'path': '/addDeliveryAddress?title=Casa&address=Rua+Preview&contactNumber=11999999999',
@@ -58,6 +61,10 @@ class PreviewCatalogScreen extends StatelessWidget {
     {
       'label': 'Produto Desktop',
       'path': '/desktopProductDisplay?slug=preview-product',
+    },
+    {
+      'label': 'Detalhe Ecommerce',
+      'path': '/produto/kit-clareador-dental-premium',
     },
     {
       'label': 'Deposito',
@@ -181,12 +188,11 @@ class PreviewCatalogScreen extends StatelessWidget {
               const SizedBox(height: 12),
               _RouteGrid(
                 routes: const [
-                  {'label': 'Splash', 'path': '/'},
+                  {'label': 'Vitrine Ecommerce', 'path': '/'},
                   {'label': 'Cadastro', 'path': '/registration'},
                   {'label': 'Login Mobile', 'path': '/loginPage'},
                   {'label': 'Login Web', 'path': '/webLogin'},
                   {'label': 'Home Mobile', 'path': '/homeScreen'},
-                  {'label': 'Home Web', 'path': '/webHomeScreen'},
                 ],
               ),
               const SizedBox(height: 18),

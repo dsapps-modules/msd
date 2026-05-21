@@ -31,7 +31,17 @@ class CartProvider with ChangeNotifier {
 
     if (existingItem != null) {
       // If the product exists, update its quantity
+      final maxQuantity =
+          existingItem.cartMaxQuantity > 0 ? existingItem.cartMaxQuantity : 9999;
       final newQuantity = existingItem.quantity + 1;
+      if (newQuantity > maxQuantity) {
+        if (!context.mounted) return;
+        CommonFunctions.showUpSnack(
+          message: 'Quantidade máxima atingida',
+          context: context,
+        );
+        return;
+      }
       await _cartHelper.updateItemQuantity(existingItem.id, newQuantity);
       //existingItem.quantity = newQuantity; // Update in-memory state
       notifyListeners();
@@ -55,6 +65,18 @@ class CartProvider with ChangeNotifier {
   //Update quantity in the database and state
   Future<void> updateQuantity(int productId, int quantity) async {
     if (quantity < 1) return; // Prevent decreasing below 1
+    CartItem? existingItem;
+    for (final item in _cartItems) {
+      if (item.productId == productId) {
+        existingItem = item;
+        break;
+      }
+    }
+    if (existingItem != null &&
+        existingItem.cartMaxQuantity > 0 &&
+        quantity > existingItem.cartMaxQuantity) {
+      quantity = existingItem.cartMaxQuantity;
+    }
      await _cartHelper.updateItemQuantity(productId, quantity);
     loadCartItems();
     notifyListeners();

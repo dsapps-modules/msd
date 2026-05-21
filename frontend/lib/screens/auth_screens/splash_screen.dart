@@ -41,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
         if (!mounted) {
           return;
         }
-        context.go('/previewCatalog');
+        context.go('/');
       });
       super.initState();
       return;

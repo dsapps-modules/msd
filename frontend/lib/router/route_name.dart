@@ -1,4 +1,9 @@
 class RouteNames{
+  static const String ecommerceHome = 'ecommerceHome';
+  static const String ecommerceProductDetail = 'ecommerceProductDetail';
+  static const String ecommerceCart = 'ecommerceCart';
+  static const String ecommerceCheckout = 'ecommerceCheckout';
+  static const String ecommerceSuccess = 'ecommerceSuccess';
   static const String splashPage = 'splashPage';
   static const String onboardingScreen = 'onboardingScreen';
   static const String registration = 'registration';
