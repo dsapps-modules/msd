@@ -42,9 +42,13 @@ class FornecedorAuthTest extends TestCase
             'password' => 'password',
             'remember' => 1,
         ])
-            ->assertRedirect(route('fornecedor.produtos.importar'));
+            ->assertRedirect(route('fornecedor.dashboard'));
 
         $this->assertAuthenticatedAs($user, 'web');
+
+        $this->get('/fornecedor/dashboard')
+            ->assertOk()
+            ->assertSee('Dashboard do fornecedor');
 
         $this->get('/fornecedor/produtos/importar')
             ->assertOk()

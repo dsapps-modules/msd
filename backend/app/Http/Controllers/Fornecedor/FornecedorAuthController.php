@@ -17,11 +17,11 @@ class FornecedorAuthController extends Controller
         $user = Auth::guard('web')->user();
 
         if ($user && $user->isFornecedorAccount()) {
-            return redirect()->route('fornecedor.produtos.importar');
+            return redirect()->route('fornecedor.dashboard');
         }
 
         return view('fornecedor.auth.login', [
-            'importUrl' => route('fornecedor.produtos.importar'),
+            'dashboardUrl' => route('fornecedor.dashboard'),
         ]);
     }
 
@@ -55,7 +55,7 @@ class FornecedorAuthController extends Controller
         Auth::guard('web')->login($user, (bool) ($credentials['remember'] ?? false));
         $request->session()->regenerate();
 
-        return redirect()->intended(route('fornecedor.produtos.importar'));
+        return redirect()->intended(route('fornecedor.dashboard'));
     }
 
     public function destroy(Request $request): RedirectResponse

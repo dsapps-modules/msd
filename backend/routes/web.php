@@ -56,9 +56,17 @@ Route::prefix('fornecedor')->group(function () {
     Route::post('logout', [FornecedorAuthController::class, 'destroy'])->name('fornecedor.logout');
 });
 
-Route::middleware(['auth:web', 'ensure.fornecedor.access'])->prefix('fornecedor/produtos')->group(function () {
+Route::middleware(['auth:web', 'ensure.fornecedor.access'])->prefix('fornecedor')->group(function () {
+    Route::get('dashboard', function () {
+        return view('fornecedor.dashboard', [
+            'user' => auth('web')->user(),
+        ]);
+    })->name('fornecedor.dashboard');
+
+    Route::prefix('produtos')->group(function () {
     Route::get('importar', [FornecedorProductManageController::class, 'index'])->name('fornecedor.produtos.importar');
     Route::post('importar', [FornecedorProductManageController::class, 'validateImport'])->name('fornecedor.produtos.validar');
     Route::post('importar/confirmar', [FornecedorProductManageController::class, 'confirmImport'])->name('fornecedor.produtos.confirmar');
     Route::get('modelo', [FornecedorProductManageController::class, 'template'])->name('fornecedor.produtos.modelo');
+    });
 });
