@@ -12,6 +12,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 use Illuminate\Support\Str;
+use ZipArchive;
 
 class FornecedorProductImportTest extends TestCase
 {
@@ -80,6 +81,75 @@ class FornecedorProductImportTest extends TestCase
         $this->assertDatabaseHas('product_images', [
             'product_id' => $product->id,
             'filename' => 'PROD-001-2.jpg',
+            'is_primary' => 0,
+            'sort_order' => 2,
+        ]);
+    }
+
+    public function test_fornecedor_can_use_code_prefix_to_discover_images_from_zip(): void
+    {
+        Storage::fake('public');
+
+        $user = $this->makeFornecedorUser('fornecedor-zip-prefix');
+        $spreadsheet = $this->makeSpreadsheet([
+            [
+                'PROD-010',
+                'Kit Clareador Dental Compacto',
+                12,
+                18,
+                25,
+                0.500,
+                'Caixa',
+                'R$ 199,90',
+                'PROD-010',
+                9,
+            ],
+        ]);
+
+        $zipFile = $this->makeZipArchive([
+            'PROD-010-1.jpg' => UploadedFile::fake()->image('source-1.jpg'),
+            'PROD-010-2.png' => UploadedFile::fake()->image('source-2.png'),
+        ]);
+
+        $validate = $this->withHeaders(['Accept' => 'application/json'])
+            ->actingAs($user, 'sanctum')
+            ->post('/api/v1/fornecedor/produtos/importar', [
+                'planilha' => $spreadsheet,
+                'imagens_zip' => $zipFile,
+            ]);
+
+        $validate->assertOk();
+        $validate->assertJsonPath('ok', true);
+
+        $previewToken = $validate->json('preview_token');
+        $this->assertNotEmpty($previewToken);
+
+        $confirm = $this->actingAs($user, 'sanctum')->postJson('/api/v1/fornecedor/produtos/importar/confirmar', [
+            'preview_token' => $previewToken,
+        ]);
+
+        $confirm->assertOk();
+        $confirm->assertJsonPath('ok', true);
+        $confirm->assertJsonPath('summary.imported_products', 1);
+        $confirm->assertJsonPath('summary.images_linked', 2);
+
+        $product = Product::withoutGlobalScopes()
+            ->where('account_id', $user->id)
+            ->where('codigo', 'PROD-010')
+            ->firstOrFail();
+
+        $this->assertCount(2, $product->images);
+
+        $this->assertDatabaseHas('product_images', [
+            'product_id' => $product->id,
+            'filename' => 'PROD-010-1.jpg',
+            'is_primary' => 1,
+            'sort_order' => 1,
+        ]);
+
+        $this->assertDatabaseHas('product_images', [
+            'product_id' => $product->id,
+            'filename' => 'PROD-010-2.png',
             'is_primary' => 0,
             'sort_order' => 2,
         ]);
@@ -184,5 +254,33 @@ class FornecedorProductImportTest extends TestCase
         $writer->save($path);
 
         return new UploadedFile($path, 'produtos.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', null, true);
+    }
+
+    /**
+     * @param array<string, UploadedFile> $files
+     */
+    private function makeZipArchive(array $files): UploadedFile
+    {
+        $tempPath = tempnam(sys_get_temp_dir(), 'fornecedor-import-zip-');
+        if ($tempPath === false) {
+            $this->fail('Não foi possível criar arquivo temporário para o ZIP.');
+        }
+
+        $zipPath = $tempPath . '.zip';
+        @unlink($tempPath);
+
+        $zip = new ZipArchive();
+        $result = $zip->open($zipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE);
+        if ($result !== true) {
+            $this->fail('Não foi possível abrir o ZIP temporário.');
+        }
+
+        foreach ($files as $entryName => $file) {
+            $zip->addFile($file->getRealPath(), $entryName);
+        }
+
+        $zip->close();
+
+        return new UploadedFile($zipPath, 'imagens.zip', 'application/zip', null, true);
     }
 }

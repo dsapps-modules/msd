@@ -316,7 +316,7 @@
             <div class="panel">
                 <div class="panel-head">
                     <h2 class="section-title">Upload da planilha e imagens</h2>
-                    <p class="section-desc">Use os nomes exatos das imagens na coluna IMAGENS. O primeiro arquivo vira a imagem principal.</p>
+                    <p class="section-desc">Você pode informar nomes exatos separados por ponto e vírgula, ou apenas o código do produto para o sistema localizar automaticamente as imagens no ZIP ou nos uploads individuais. O primeiro arquivo vira a imagem principal.</p>
                 </div>
                 <div class="panel-body">
                     <div class="stats">

@@ -366,18 +366,11 @@ class FornecedorProductImportService
             }
         }
 
-        if (empty($imagens)) {
+        [$imagens, $imageErrors] = $this->resolveRowImages($codigo, (string) ($row['imagens'] ?? ''), $imageLookup);
+        if (empty($imagens) && empty($imageErrors)) {
             $errors[] = 'IMAGENS é obrigatória.';
-        }
-
-        foreach ($imagens as $index => $imageName) {
-            if (!$this->matchesImagePattern($codigo, $imageName, $index + 1)) {
-                $errors[] = "A imagem {$imageName} não segue o padrão obrigatório para o código {$codigo}.";
-            }
-
-            if (!isset($imageLookup[$imageName])) {
-                $errors[] = "A imagem {$imageName} não foi enviada no upload.";
-            }
+        } else {
+            $errors = array_merge($errors, $imageErrors);
         }
 
         $status = empty($errors) ? 'valid' : 'error';
@@ -399,6 +392,101 @@ class FornecedorProductImportService
             'errors' => $errors,
             'warnings' => [],
             'row_number' => $rowNumber,
+        ];
+    }
+
+    /**
+     * @return array{0: array<int, string>, 1: array<int, string>}
+     */
+    private function resolveRowImages(string $codigo, string $rawValue, array $imageLookup): array
+    {
+        $rawValue = trim($rawValue);
+        if ($rawValue === '') {
+            return [[], []];
+        }
+
+        $normalizedCodigo = $this->normalizeText($codigo);
+        $normalizedValue = $this->normalizeText($rawValue);
+
+        if ($normalizedCodigo !== '' && $normalizedValue === $normalizedCodigo) {
+            return $this->resolveImagesByCodePrefix($codigo, $imageLookup);
+        }
+
+        $items = array_values(array_filter(array_map('trim', explode(';', $rawValue))));
+        $normalized = [];
+        $errors = [];
+
+        foreach ($items as $index => $item) {
+            $item = basename($item);
+            $normalized[] = $item;
+
+            if ($codigo !== '' && !$this->matchesImagePattern($codigo, $item, $index + 1)) {
+                $errors[] = "A imagem {$item} não segue o padrão obrigatório para o código {$codigo}.";
+            }
+
+            if (!isset($imageLookup[$item])) {
+                $errors[] = "A imagem {$item} não foi enviada no upload.";
+            }
+        }
+
+        return [$normalized, array_values(array_unique($errors))];
+    }
+
+    /**
+     * @return array{0: array<int, string>, 1: array<int, string>}
+     */
+    private function resolveImagesByCodePrefix(string $codigo, array $imageLookup): array
+    {
+        $codigo = $this->normalizeText($codigo);
+        if ($codigo === '') {
+            return [[], ['IMAGENS é obrigatória.']];
+        }
+
+        $pattern = '/^' . preg_quote($codigo, '/') . '-(\d+)\.(jpg|jpeg|png|webp)$/i';
+        $matched = [];
+        $errors = [];
+
+        foreach (array_keys($imageLookup) as $filename) {
+            if (!preg_match($pattern, $filename, $matches)) {
+                continue;
+            }
+
+            $matched[] = [
+                'filename' => $filename,
+                'order' => (int) $matches[1],
+            ];
+        }
+
+        if (empty($matched)) {
+            return [[], ["Nenhuma imagem foi encontrada para o código {$codigo}."]];
+        }
+
+        usort($matched, static function (array $left, array $right): int {
+            return $left['order'] <=> $right['order'] ?: strcasecmp($left['filename'], $right['filename']);
+        });
+
+        $orders = array_column($matched, 'order');
+        $uniqueOrders = array_values(array_unique($orders));
+        sort($uniqueOrders);
+
+        if ($uniqueOrders !== range(1, max($uniqueOrders))) {
+            $missing = array_values(array_diff(range(1, max($uniqueOrders)), $uniqueOrders));
+            if (!empty($missing)) {
+                $errors[] = "As imagens do código {$codigo} devem começar em 1 sem lacunas. Faltam os números: " . implode(', ', $missing) . '.';
+            }
+        }
+
+        $counts = array_count_values($orders);
+        $duplicateOrders = array_values(array_filter(array_keys($counts), static function (int $order) use ($counts): bool {
+            return ($counts[$order] ?? 0) > 1;
+        }));
+        if (!empty($duplicateOrders)) {
+            $errors[] = "Há mais de uma imagem para o mesmo número do código {$codigo}: " . implode(', ', $duplicateOrders) . '.';
+        }
+
+        return [
+            array_column($matched, 'filename'),
+            array_values(array_unique($errors)),
         ];
     }
 
@@ -502,6 +590,7 @@ class FornecedorProductImportService
     {
         $images = [];
         $warnings = [];
+        $extraImageNames = [];
         foreach ($uploadedImages as $file) {
             if (!$file instanceof UploadedFile || !$file->isValid()) {
                 continue;
@@ -528,7 +617,7 @@ class FornecedorProductImportService
         return [
             'images' => $images,
             'warnings' => array_values(array_unique($warnings)),
-            'extra_image_names' => [],
+            'extra_image_names' => array_values(array_unique($extraImageNames)),
         ];
     }
 
