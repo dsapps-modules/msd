@@ -17,6 +17,7 @@ use App\Http\Controllers\Api\V1\DeliveryChargeCalculateController;
 use App\Http\Controllers\Api\V1\Divulgador\DivulgadorDashboardController;
 use App\Http\Controllers\Api\V1\Divulgador\DivulgadorCampaignController;
 use App\Http\Controllers\Api\V1\Fornecedor\FornecedorDashboardController;
+use App\Http\Controllers\Api\V1\Fornecedor\FornecedorProductManageController;
 use App\Http\Controllers\Api\V1\FrontendController;
 use App\Http\Controllers\Api\V1\MenuManageController;
 use App\Http\Controllers\Api\V1\OtherChargeInfoController;
@@ -89,6 +90,12 @@ Route::group(['prefix' => 'v1/'], function () {
 
             Route::middleware(['auth:sanctum', ApiAuthMiddleware::class, 'ensure.fornecedor.access'])->group(function () {
                 Route::get('dashboard', [FornecedorDashboardController::class, 'dashboard']);
+                Route::prefix('produtos/')->group(function () {
+                    Route::get('importar', [FornecedorProductManageController::class, 'index']);
+                    Route::post('importar', [FornecedorProductManageController::class, 'validateImport']);
+                    Route::post('importar/confirmar', [FornecedorProductManageController::class, 'confirmImport']);
+                    Route::get('modelo', [FornecedorProductManageController::class, 'template']);
+                });
             });
         });
 

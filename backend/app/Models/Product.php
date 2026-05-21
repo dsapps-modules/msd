@@ -18,9 +18,18 @@ class Product extends Model
     protected $table = "products";
     protected $fillable = [
         "store_id",
+        "account_id",
         "category_id",
         "brand_id",
         "unit_id",
+        "codigo",
+        "altura",
+        "largura",
+        "comprimento",
+        "peso",
+        "embalagem",
+        "valor_venda",
+        "estoque_reservado",
         "type",
         "behaviour",
         "name",
@@ -121,6 +130,16 @@ class Product extends Model
     public function variants()
     {
         return $this->hasMany(ProductVariant::class, "product_id");
+    }
+
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class, 'product_id')->orderBy('sort_order');
+    }
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'account_id');
     }
 
     public function relatedProductsWithCategoryFallback($limit = 10)

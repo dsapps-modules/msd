@@ -20,7 +20,8 @@ class Media extends Model
         'file_size',
         'alt_text',
         'path',
-        'dimensions'
+        'dimensions',
+        'usage_type',
     ];
 
     public function fileable(): MorphTo

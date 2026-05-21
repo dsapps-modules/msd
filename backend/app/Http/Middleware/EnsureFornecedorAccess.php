@@ -10,7 +10,9 @@ class EnsureFornecedorAccess
 {
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
-        $user = auth('sanctum')->user();
+        $user = auth('sanctum')->user()
+            ?? auth('web')->user()
+            ?? $request->user();
 
         if (!$user || $user->account_type !== 'fornecedor' || $user->activity_scope !== 'fornecedor_level') {
             return response()->json([

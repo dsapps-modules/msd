@@ -4,8 +4,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:quick_ecommerce/screens/web_ui/web_auth/web_sign_up.dart';
 import '../../../config/colors.dart';
+import '../../../config/api_urls.dart';
 import '../../../config/icons.dart';
 import '../../../config/images.dart';
 import '../../../config/shared_preference_helper.dart';
@@ -409,6 +411,17 @@ class _WebLoginState extends State<WebLogin> {
                               });
                         }),
                     const SocialButton(),
+                    const SizedBox(height: 16),
+                    TextButton(
+                      onPressed: _openFornecedorLogin,
+                      child: const Text(
+                        'Acesso do fornecedor',
+                        style: TextStyle(
+                          color: CustomColors.baseColor,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -431,6 +444,19 @@ class _WebLoginState extends State<WebLogin> {
     await UserSharedPreference.putValue(
       SharedPreferenceHelper.email,
       emailCon.text.trim(),
+    );
+  }
+
+  Future<void> _openFornecedorLogin() async {
+    final uri = Uri.parse('${ApiUrls.baseUrlMart}/fornecedor/login');
+
+    if (!await canLaunchUrl(uri)) {
+      return;
+    }
+
+    await launchUrl(
+      uri,
+      mode: LaunchMode.externalApplication,
     );
   }
 }
