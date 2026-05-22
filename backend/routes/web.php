@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\Fornecedor\FornecedorProductManageController;
+use App\Http\Controllers\Fornecedor\FornecedorDashboardController;
 use App\Http\Controllers\Fornecedor\FornecedorAuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -57,11 +58,7 @@ Route::prefix('fornecedor')->group(function () {
 });
 
 Route::middleware(['auth:web', 'ensure.fornecedor.access'])->prefix('fornecedor')->group(function () {
-    Route::get('dashboard', function () {
-        return view('fornecedor.dashboard', [
-            'user' => auth('web')->user(),
-        ]);
-    })->name('fornecedor.dashboard');
+    Route::get('dashboard', [FornecedorDashboardController::class, 'dashboard'])->name('fornecedor.dashboard');
 
     Route::prefix('produtos')->group(function () {
     Route::get('importar', [FornecedorProductManageController::class, 'index'])->name('fornecedor.produtos.importar');
