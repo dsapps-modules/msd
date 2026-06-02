@@ -37,14 +37,34 @@ export interface DivulgadorLink {
 
 export interface DivulgadorCampaign {
   id: number;
-  nome_campanha: string;
-  produto_nome: string;
-  fornecedor_nome: string;
+  titulo: string;
+  objetivo: string;
+  meta_financeira: number;
+  banner: string | null;
+  banner_url: string | null;
+  data_inicio: string | null;
+  data_inicio_formatada?: string | null;
+  data_fim: string | null;
+  data_fim_formatada?: string | null;
+  status: string;
+  link_divulgacao: string | null;
   meta_total: number;
   progresso_atual: number;
-  link_divulgacao: string;
-  data_inicio: string;
-  status: string;
+  nome_campanha?: string;
+  produto_nome?: string;
+  fornecedor_nome?: string;
+  created_at?: string | null;
+  updated_at?: string | null;
+}
+
+export interface DivulgadorCampaignMutationResponse {
+  success: boolean;
+  message: string;
+  campaign: DivulgadorCampaign;
+}
+
+export interface DivulgadorCampaignResponse {
+  campaign: DivulgadorCampaign;
 }
 
 export interface DivulgadorDashboardResponse {

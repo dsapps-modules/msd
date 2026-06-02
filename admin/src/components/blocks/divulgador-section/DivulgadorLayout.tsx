@@ -8,6 +8,7 @@ import {
   Package,
   Users,
   Link2,
+  Megaphone,
   Wallet,
   LogOut,
   Menu,
@@ -26,11 +27,22 @@ type DivulgadorLayoutProps = {
 
 const navItems = [
   { label: "Dashboard", href: DivulgadorRoutes.dashboard, icon: LayoutDashboard },
+  { label: "Campanhas", href: DivulgadorRoutes.campanhas, icon: Megaphone },
   { label: "Produtos Disponiveis", href: DivulgadorRoutes.produtos, icon: Package },
   { label: "Compradores", href: DivulgadorRoutes.compradores, icon: Users },
   { label: "Links de Divulgacao", href: DivulgadorRoutes.links, icon: Link2 },
   { label: "Financeiro", href: DivulgadorRoutes.financeiro, icon: Wallet, adminOnly: true },
 ];
+
+const stripLocalePrefix = (pathname: string) => {
+  const segments = pathname.split("/").filter(Boolean);
+
+  if (segments.length > 1 && /^[a-z]{2}(?:-[A-Z]{2})?$/.test(segments[0])) {
+    return `/${segments.slice(1).join("/")}`;
+  }
+
+  return pathname;
+};
 
 export function DivulgadorLayout({
   children,
@@ -40,6 +52,7 @@ export function DivulgadorLayout({
   onLogout,
 }: DivulgadorLayoutProps) {
   const pathname = usePathname();
+  const normalizedPathname = stripLocalePrefix(pathname);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const visibleItems = useMemo(
@@ -76,7 +89,9 @@ export function DivulgadorLayout({
 
             <nav className="flex-1 space-y-2">
               {visibleItems.map((item) => {
-                const active = pathname.endsWith(item.href);
+                const active =
+                  normalizedPathname === item.href ||
+                  normalizedPathname.startsWith(`${item.href}/`);
                 const Icon = item.icon;
 
                 return (

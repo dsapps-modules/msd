@@ -25,5 +25,3 @@ function generateLocales() {
 
 export const locales = generateLocales as any;
 export const defaultLocale: Locale = process.env.NEXT_PUBLIC_DEFAULT_LANGUAGE as any;
-
-export const stripeValue: any = process.env.STRIPE_SECRET_KEY as any;

@@ -30,7 +30,11 @@ export function DivulgadorCampaignDetails({ item }: { item: DivulgadorCampaign }
         </div>
 
         <div className="flex gap-2">
-          <Button asChild variant="outline" className="rounded-full border-slate-200 bg-white text-slate-700 hover:bg-slate-50">
+          <Button
+            asChild
+            variant="outline"
+            className="rounded-full border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
+          >
             <Link href={DivulgadorRoutes.campanhas}>
               <ArrowLeft className="mr-2 h-4 w-4" />
               Voltar
@@ -50,7 +54,9 @@ export function DivulgadorCampaignDetails({ item }: { item: DivulgadorCampaign }
           <div className="p-6">
             <div className="grid gap-4 md:grid-cols-2">
               <div className="rounded-2xl bg-slate-50 px-4 py-3">
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Meta Financeira</p>
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-500">
+                  Meta Financeira
+                </p>
                 <p className="mt-1 text-lg font-semibold text-slate-900">
                   {formatMoney(item.meta_financeira)}
                 </p>
@@ -58,7 +64,8 @@ export function DivulgadorCampaignDetails({ item }: { item: DivulgadorCampaign }
               <div className="rounded-2xl bg-slate-50 px-4 py-3">
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Período</p>
                 <p className="mt-1 text-sm font-medium text-slate-900">
-                  {item.data_inicio_formatada ?? item.data_inicio} até {item.data_fim_formatada ?? item.data_fim}
+                  {item.data_inicio_formatada ?? item.data_inicio} até{" "}
+                  {item.data_fim_formatada ?? item.data_fim}
                 </p>
               </div>
             </div>

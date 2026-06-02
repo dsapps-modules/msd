@@ -15,6 +15,7 @@ import { useAtom } from "jotai";
 import { toast } from "react-toastify";
 import {
   useDivulgadorDashboardService,
+  useDivulgadorCampaignService,
   useDivulgadorProductsService,
   useDivulgadorBuyersService,
   useDivulgadorLinksService,
@@ -22,6 +23,7 @@ import {
 } from "./divulgador.service";
 import type {
   DivulgadorBuyersResponse,
+  DivulgadorCampaignResponse,
   DivulgadorDashboardResponse,
   DivulgadorFinancialResponse,
   DivulgadorLinksResponse,
@@ -123,6 +125,24 @@ export const useDivulgadorFinancialQuery = (options?: any) => {
   };
 };
 
+export const useDivulgadorCampaignQuery = (id?: string) => {
+  const { find } = useDivulgadorCampaignService();
+  const [isAuthorized] = useAtom(authorizationAtom);
+  const query = useQuery<AxiosResponse<DivulgadorCampaignResponse>>({
+    queryKey: [DIVULGADOR_API_ENDPOINTS.CAMPAIGNS, id],
+    queryFn: () => find(String(id)),
+    retry: false,
+    enabled: isAuthorized && Boolean(id),
+  });
+
+  return {
+    divulgadorCampaign: query.data?.data?.campaign,
+    isPending: isAuthorized ? query.isPending : false,
+    error: query.error,
+    refetch: query.refetch,
+  };
+};
+
 export const useDivulgadorLogoutMutation = () => {
   const router = useRouter();
   const locale = useLocale();
@@ -146,6 +166,91 @@ export const useDivulgadorLogoutMutation = () => {
     },
     onError: () => {
       toast.error("Logout failed");
+    },
+  });
+};
+
+export const useDivulgadorCampaignStoreMutation = () => {
+  const { create } = useDivulgadorCampaignService();
+  const router = useRouter();
+  const locale = useLocale();
+
+  return useMutation({
+    mutationFn: (values: FormData) => {
+      (values as FormData & { multipart?: boolean }).multipart = true;
+      return create(values as any);
+    },
+    mutationKey: [DIVULGADOR_API_ENDPOINTS.CAMPAIGNS, "store"],
+    onSuccess: async (data) => {
+      if (Boolean(data?.data)) {
+        toast.success(data?.data?.message ?? "Campanha criada com sucesso.");
+        router.push(`/${locale}${DivulgadorRoutes.dashboard}`);
+      } else {
+        toast.error(data?.data?.message ?? "Falha ao criar campanha.");
+      }
+    },
+    onError: async (error) => {
+      const errorText = (error as any)?.response?.data;
+      if (errorText && typeof errorText === "object") {
+        Object.entries(errorText).forEach(([, messages]) => {
+          if (Array.isArray(messages)) {
+            messages.forEach((msg) => toast.error(msg));
+          } else if (typeof messages === "string") {
+            toast.error(messages);
+          }
+        });
+      } else {
+        toast.error(errorText?.message ?? "Falha ao criar campanha.");
+      }
+    },
+  });
+};
+
+export const useDivulgadorCampaignUpdateMutation = () => {
+  const { getAxiosInstance } = useDivulgadorCampaignService();
+  const router = useRouter();
+  const locale = useLocale();
+
+  return useMutation({
+    mutationFn: async (values: FormData) => {
+      const payload = values as FormData & { multipart?: boolean };
+      payload.multipart = true;
+
+      const id = payload.get("id");
+      if (!id) {
+        throw new Error("Campaign id is required.");
+      }
+
+      payload.delete("id");
+      payload.set("_method", "PUT");
+
+      return getAxiosInstance().post(
+        `${DIVULGADOR_API_ENDPOINTS.CAMPAIGNS}/${String(id)}`,
+        payload as any
+      );
+    },
+    mutationKey: [DIVULGADOR_API_ENDPOINTS.CAMPAIGNS, "update"],
+    onSuccess: async (data) => {
+      if (Boolean(data?.data)) {
+        toast.success(data?.data?.message ?? "Campanha atualizada com sucesso.");
+        router.push(`/${locale}${DivulgadorRoutes.dashboard}`);
+      } else {
+        toast.error(data?.data?.message ?? "Falha ao atualizar campanha.");
+      }
+    },
+    onError: async (error) => {
+      const errorText = (error as any)?.response?.data;
+      if (errorText && typeof errorText === "object") {
+        Object.entries(errorText).forEach(([, messages]) => {
+          if (Array.isArray(messages)) {
+            messages.forEach((msg) => toast.error(msg));
+          } else if (typeof messages === "string") {
+            toast.error(messages);
+          }
+        });
+      } else {
+        toast.error(errorText?.message ?? "Falha ao atualizar campanha.");
+      }
     },
   });
 };

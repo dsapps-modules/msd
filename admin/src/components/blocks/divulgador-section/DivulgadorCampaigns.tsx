@@ -74,6 +74,7 @@ export function CampaignsSection({ items }: { items: DivulgadorCampaign[] }) {
 
   const handleCopy = async (campaign: DivulgadorCampaign) => {
     try {
+      if (!campaign.link_divulgacao) return;
       await navigator.clipboard.writeText(campaign.link_divulgacao);
       setCopiedId(campaign.id);
       window.setTimeout(() => setCopiedId(null), 1800);

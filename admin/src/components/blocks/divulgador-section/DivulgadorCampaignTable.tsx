@@ -1,6 +1,6 @@
 "use client";
 
-import { Badge, Button, Card, CardContent } from "@/components/ui";
+import { Badge, Button } from "@/components/ui";
 import { DivulgadorRoutes } from "@/config/divulgadorRoutes";
 import type { DivulgadorCampaign } from "@/modules/divulgador-section/divulgador.type";
 import { cn } from "@/lib/utils";
@@ -84,9 +84,7 @@ export function DivulgadorCampaignTable({
                 <td className="px-6 py-4 text-slate-600">
                   <p className="max-w-[360px] truncate">{item.objetivo}</p>
                 </td>
-                <td className="px-6 py-4 text-slate-600">
-                  {formatMoney(item.meta_financeira)}
-                </td>
+                <td className="px-6 py-4 text-slate-600">{formatMoney(item.meta_financeira)}</td>
                 <td className="px-6 py-4 text-slate-600">
                   <p>{item.data_inicio_formatada ?? item.data_inicio}</p>
                   <p className="text-xs text-slate-400">
@@ -124,14 +122,23 @@ export function DivulgadorCampaignTable({
                         </Button>
                       ) : null}
 
-                      <Button asChild size="sm" className="rounded-full bg-slate-900 text-white hover:bg-slate-800">
+                      <Button
+                        asChild
+                        size="sm"
+                        className="rounded-full bg-slate-900 text-white hover:bg-slate-800"
+                      >
                         <Link href={`${DivulgadorRoutes.campanhas}/${item.id}`}>
                           <ArrowUpRight className="mr-2 h-4 w-4" />
                           Visualizar
                         </Link>
                       </Button>
 
-                      <Button asChild size="sm" variant="outline" className="rounded-full border-slate-200 bg-white text-slate-700 hover:bg-slate-50">
+                      <Button
+                        asChild
+                        size="sm"
+                        variant="outline"
+                        className="rounded-full border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
+                      >
                         <Link href={`${DivulgadorRoutes.campanhas}/${item.id}/edit`}>
                           <PencilLine className="mr-2 h-4 w-4" />
                           Editar

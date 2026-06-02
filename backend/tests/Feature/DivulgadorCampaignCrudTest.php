@@ -27,8 +27,8 @@ class DivulgadorCampaignCrudTest extends TestCase
             'titulo' => 'Campanha Teste',
             'objetivo' => 'Objetivo da campanha teste.',
             'meta_financeira' => 1500.00,
-            'data_inicio' => '2026-05-01',
-            'data_fim' => '2026-05-31',
+            'data_inicio' => now()->subDay()->format('Y-m-d'),
+            'data_fim' => now()->addDays(2)->format('Y-m-d'),
             'banner' => UploadedFile::fake()->image('banner.jpg'),
         ]);
 
@@ -42,8 +42,8 @@ class DivulgadorCampaignCrudTest extends TestCase
             'account_code' => $user->divulgador_account_code,
             'divulgador_id' => $user->id,
             'titulo' => 'Campanha Teste',
-            'status' => 'ativa',
         ]);
+        $this->assertSame('ativa', DivulgadorCampaign::query()->findOrFail($campaignId)->status);
 
         $this->actingAs($user, 'sanctum')
             ->getJson('/api/v1/divulgador/campanhas')
@@ -62,8 +62,8 @@ class DivulgadorCampaignCrudTest extends TestCase
             'titulo' => 'Campanha Atualizada',
             'objetivo' => 'Objetivo atualizado.',
             'meta_financeira' => 2500.00,
-            'data_inicio' => '2026-05-01',
-            'data_fim' => '2026-06-30',
+            'data_inicio' => now()->subDays(2)->format('Y-m-d'),
+            'data_fim' => now()->addDays(5)->format('Y-m-d'),
         ])->assertOk();
 
         $this->assertDatabaseHas('divulgador_campaigns', [

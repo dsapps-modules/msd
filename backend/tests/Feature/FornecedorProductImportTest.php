@@ -4,8 +4,10 @@ namespace Tests\Feature;
 
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Models\Store;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -16,6 +18,8 @@ use ZipArchive;
 
 class FornecedorProductImportTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_fornecedor_can_preview_and_import_products_with_images(): void
     {
         Storage::fake('public');
@@ -218,6 +222,26 @@ class FornecedorProductImportTest extends TestCase
         ]);
 
         $user->assignRole($role);
+
+        Store::query()->create([
+            'store_seller_id' => $user->id,
+            'store_type' => 'grocery',
+            'tax' => 0,
+            'subscription_type' => 'commission',
+            'admin_commission_type' => 'percent',
+            'admin_commission_amount' => 10,
+            'name' => 'Loja do Fornecedor',
+            'slug' => Str::slug($emailPrefix . '-store'),
+            'phone' => '11999990000',
+            'address' => 'Rua Teste, 100',
+            'delivery_self_system' => true,
+            'delivery_take_away' => true,
+            'order_minimum' => 0,
+            'enable_saling' => 1,
+            'status' => 1,
+            'created_by' => $user->id,
+            'updated_by' => $user->id,
+        ]);
 
         return $user;
     }

@@ -6,6 +6,7 @@ use App\Helpers\MultilangSlug;
 use App\Models\Media;
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Models\Store;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
@@ -167,6 +168,7 @@ class FornecedorProductImportService
 
             foreach ($rows as $row) {
                 $product = Product::withoutGlobalScopes()->create([
+                    'store_id' => $this->resolveStoreId($user),
                     'account_id' => $user->id,
                     'codigo' => $row['codigo'],
                     'name' => $row['descricao'],
@@ -734,6 +736,20 @@ class FornecedorProductImportService
             'user_type' => User::class,
             'usage_type' => 'product_main',
         ]);
+    }
+
+    private function resolveStoreId(User $user): int
+    {
+        $storeId = (int) Store::query()
+            ->where('store_seller_id', $user->id)
+            ->orderBy('id')
+            ->value('id');
+
+        if ($storeId <= 0) {
+            throw new \RuntimeException('Fornecedor sem loja vinculada para importação de produtos.');
+        }
+
+        return $storeId;
     }
 
     private function tempRoot(string $token): string

@@ -46,8 +46,8 @@ class FornecedorDashboardController extends Controller
 
         return view('fornecedor.dashboard', [
             'user' => $user,
-            'roleLabel' => $user->accountPrimaryRoleName() === 'fornecedor_admin' ? 'Admin' : 'Colaborador',
-            'isAdmin' => $user->accountPrimaryRoleName() === 'fornecedor_admin',
+            'roleLabel' => $user->accountHasRole('fornecedor_admin') ? 'Admin' : 'Colaborador',
+            'isAdmin' => $user->accountHasRole('fornecedor_admin'),
             'summaryCards' => $summaryCards,
             'featuredCampaigns' => $featuredCampaigns,
             'stockSummary' => $stockSummary,
@@ -101,7 +101,7 @@ class FornecedorDashboardController extends Controller
             ],
         ];
 
-        if ($user->accountPrimaryRoleName() === 'fornecedor_admin') {
+        if ($user->accountHasRole('fornecedor_admin')) {
             $cards[] = [
                 'label' => 'Valor total vendido',
                 'value' => $this->money($metrics['total_sold']),
@@ -307,7 +307,7 @@ class FornecedorDashboardController extends Controller
             ['label' => 'Vendas', 'href' => '#vendas', 'active' => false],
         ];
 
-        if ($user->accountPrimaryRoleName() === 'fornecedor_admin') {
+        if ($user->accountHasRole('fornecedor_admin')) {
             $items[] = ['label' => 'Financeiro', 'href' => '#financeiro', 'active' => false];
         }
 
