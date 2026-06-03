@@ -323,6 +323,7 @@
                 <div class="actions">
                     <button class="btn btn-primary" type="submit">Entrar</button>
                     <a class="btn btn-secondary" href="{{ $dashboardUrl }}">Ir para dashboard</a>
+                    <a class="btn btn-secondary" href="{{ $registrationUrl }}">Quero me cadastrar</a>
                 </div>
 
                 <p class="footnote">

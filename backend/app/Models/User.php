@@ -25,6 +25,8 @@ class User extends Authenticatable
     protected $fillable = [
         'first_name',
         'last_name',
+        'birth_day',
+        'cpf',
         'slug',
         'phone',
         'email',
@@ -58,6 +60,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified' => 'boolean',
         'email_verified_at' => 'datetime',
+        'birth_day' => 'date',
         'password' => 'hashed',
         'stores' => 'array',
         'online_at' => 'datetime',

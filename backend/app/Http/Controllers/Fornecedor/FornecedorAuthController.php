@@ -22,6 +22,7 @@ class FornecedorAuthController extends Controller
 
         return view('fornecedor.auth.login', [
             'dashboardUrl' => route('fornecedor.dashboard'),
+            'registrationUrl' => route('fornecedor.cadastro.create'),
         ]);
     }
 
@@ -37,11 +38,22 @@ class FornecedorAuthController extends Controller
 
         $user = User::query()
             ->whereRaw('LOWER(email) = ?', [$email])
-            ->where('status', 1)
             ->first();
+
+        $store = $user?->stores()->latest('id')->first();
+
+        if ($user && $user->isFornecedorAccount() && $store?->supplier_status === 'pending') {
+            return redirect()
+                ->route('fornecedor.cadastro.analisando')
+                ->with([
+                    'supplier_name' => $store->name,
+                    'supplier_email' => $user->email,
+                ]);
+        }
 
         if (
             !$user ||
+            (int) $user->status !== 1 ||
             !$user->isFornecedorAccount() ||
             !Hash::check($credentials['password'], $user->password)
         ) {

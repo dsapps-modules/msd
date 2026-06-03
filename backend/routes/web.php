@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\Fornecedor\FornecedorProductManageController;
 use App\Http\Controllers\Fornecedor\FornecedorDashboardController;
+use App\Http\Controllers\Fornecedor\FornecedorCadastroController;
 use App\Http\Controllers\Fornecedor\FornecedorProductController;
 use App\Http\Controllers\Fornecedor\FornecedorAuthController;
 use Illuminate\Support\Facades\Route;
@@ -53,6 +54,9 @@ Route::get('/login', function () {
 })->name('login');
 
 Route::prefix('fornecedor')->group(function () {
+    Route::get('cadastro', [FornecedorCadastroController::class, 'create'])->name('fornecedor.cadastro.create');
+    Route::post('cadastro', [FornecedorCadastroController::class, 'store'])->name('fornecedor.cadastro.store');
+    Route::get('cadastro/analisando', [FornecedorCadastroController::class, 'analysing'])->name('fornecedor.cadastro.analisando');
     Route::get('login', [FornecedorAuthController::class, 'create'])->name('fornecedor.login.form');
     Route::post('login', [FornecedorAuthController::class, 'store'])->name('fornecedor.login.submit');
     Route::post('logout', [FornecedorAuthController::class, 'destroy'])->name('fornecedor.logout');

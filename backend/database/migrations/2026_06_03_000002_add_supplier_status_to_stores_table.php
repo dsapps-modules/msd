@@ -1,0 +1,28 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::table('stores', function (Blueprint $table) {
+            if (!Schema::hasColumn('stores', 'supplier_status')) {
+                $table->enum('supplier_status', ['pending', 'rejected', 'approved'])
+                    ->default('pending')
+                    ->after('status');
+            }
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::table('stores', function (Blueprint $table) {
+            if (Schema::hasColumn('stores', 'supplier_status')) {
+                $table->dropColumn('supplier_status');
+            }
+        });
+    }
+};
