@@ -45,6 +45,6 @@ Se preferir executar manualmente:
 
 ```powershell
 cd frontend
-& 'C:\Users\User\AppData\Local\Microsoft\WinGet\Packages\pingbird.Puro_Microsoft.Winget.Source_8wekyb3d8bbwe\puro.exe' -e stable flutter pub get
-& 'C:\Users\User\AppData\Local\Microsoft\WinGet\Packages\pingbird.Puro_Microsoft.Winget.Source_8wekyb3d8bbwe\puro.exe' -e stable flutter run -d chrome --web-hostname 127.0.0.1 --web-port 3001 --dart-define=APP_BASE_URL=http://127.0.0.1:8000
+& 'C:\src\flutter\bin\flutter.bat' pub get
+& 'C:\src\flutter\bin\flutter.bat' run -d chrome --web-hostname 127.0.0.1 --web-port 3001 --dart-define=APP_BASE_URL=http://127.0.0.1:8000
 ```

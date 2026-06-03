@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quick_ecommerce/router/route_name.dart';
@@ -182,7 +183,9 @@ class AppRoutes {
       pageBuilder: (context, state) {
         return MaterialPage(
           key: state.pageKey,
-          child: const EcommerceHomePage(),
+          child: kIsWeb
+              ? const DesktopTabsHome(initialTab: 'Products')
+              : const EcommerceHomePage(),
         );
       },
     ),
@@ -192,17 +195,9 @@ class AppRoutes {
       pageBuilder: (context, state) {
         return MaterialPage(
           key: state.pageKey,
-          child: const EcommerceHomePage(),
-        );
-      },
-    ),
-    GoRoute(
-      name: 'ecommerceProductsAlias',
-      path: '/produtos/',
-      pageBuilder: (context, state) {
-        return MaterialPage(
-          key: state.pageKey,
-          child: const EcommerceHomePage(),
+          child: kIsWeb
+              ? const DesktopTabsHome(initialTab: 'Products')
+              : const EcommerceHomePage(),
         );
       },
     ),
@@ -531,7 +526,7 @@ class AppRoutes {
       pageBuilder: (context, state) {
         return MaterialPage(
           key: state.pageKey,
-          child: const DesktopTabsHome(),
+          child: const DesktopTabsHome(initialTab: 'Products'),
         );
       },
     ),

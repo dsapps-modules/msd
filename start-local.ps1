@@ -14,7 +14,11 @@ $backendPath = Join-Path $projectRoot "backend"
 $adminPath = Join-Path $projectRoot "admin"
 $adminDeployPath = Join-Path $adminPath "deploy"
 $frontendPath = Join-Path $projectRoot "frontend"
-$puroPath = "C:\Users\User\AppData\Local\Microsoft\WinGet\Packages\pingbird.Puro_Microsoft.Winget.Source_8wekyb3d8bbwe\puro.exe"
+$flutterBinaries = @(
+    "C:\src\flutter\bin\flutter.bat"
+    "C:\Users\User\AppData\Local\Microsoft\WinGet\Packages\pingbird.Puro_Microsoft.Winget.Source_8wekyb3d8bbwe\puro.exe"
+)
+$flutterPath = $flutterBinaries | Where-Object { Test-Path $_ } | Select-Object -First 1
 $phpPath = "C:\xampp82\php\php.exe"
 $mysqlBat = "C:\xampp82\mysql_start.bat"
 $nodePath = "C:\Program Files\nodejs\node.exe"
@@ -57,6 +61,24 @@ function Start-IfNotRunning {
     }
 
     throw "$Name nao respondeu dentro de $WaitSeconds segundos."
+}
+
+function Stop-FrontendFlutter {
+    $flutterProcesses = Get-CimInstance Win32_Process |
+        Where-Object {
+            $_.CommandLine -and (
+                $_.CommandLine -like '*flutter run -d chrome*' -or
+                $_.CommandLine -like '*--web-port 3001*'
+            )
+        }
+
+    foreach ($process in $flutterProcesses) {
+        try {
+            Stop-Process -Id $process.ProcessId -Force -ErrorAction SilentlyContinue
+        } catch {
+            Write-Host "Nao foi possivel encerrar o processo Flutter $($process.ProcessId): $($_.Exception.Message)"
+        }
+    }
 }
 
 Start-IfNotRunning -Name "MySQL" `
@@ -107,24 +129,35 @@ Start-IfNotRunning -Name "Admin Panel" `
     }
 
 if ($StartFrontendFlutter) {
-    if (Test-Path $puroPath) {
+    if ($flutterPath) {
         try {
+            Stop-FrontendFlutter
             Start-IfNotRunning -Name "Frontend Flutter" `
                 -Check { Test-HttpOk "http://127.0.0.1:3001" } `
                 -Start {
                     $packageConfig = Join-Path $frontendPath ".dart_tool\package_config.json"
                     if (-not (Test-Path $packageConfig)) {
-                        & $puroPath -e stable flutter pub get
+                        if ($flutterPath -like "*.bat") {
+                            & $flutterPath pub get
+                        } else {
+                            & $flutterPath -e stable flutter pub get
+                        }
                         if ($LASTEXITCODE -ne 0) {
                             throw "flutter pub get failed."
                         }
+                    }
+
+                    if ($flutterPath -like "*.bat") {
+                        $flutterRunCommand = "`"$flutterPath`" run -d chrome --web-hostname 127.0.0.1 --web-port 3001 --dart-define=APP_BASE_URL=http://127.0.0.1:8000"
+                    } else {
+                        $flutterRunCommand = "`"$flutterPath`" -e stable flutter run -d chrome --web-hostname 127.0.0.1 --web-port 3001 --dart-define=APP_BASE_URL=http://127.0.0.1:8000"
                     }
 
                     $processParams = @{
                         FilePath = "cmd.exe"
                         ArgumentList = @(
                             "/k",
-                            "cd /d `"$frontendPath`" && `"$puroPath`" -e stable flutter run -d chrome --web-hostname 127.0.0.1 --web-port 3001 --dart-define=APP_BASE_URL=http://127.0.0.1:8000"
+                            "cd /d `"$frontendPath`" && $flutterRunCommand"
                         )
                     }
                     if (-not $VisibleProcesses) {
@@ -136,7 +169,7 @@ if ($StartFrontendFlutter) {
             Write-Host "Frontend Flutter nao iniciado: $($_.Exception.Message)"
         }
     } else {
-        Write-Host "Puro/Flutter nao encontrado neste ambiente."
+        Write-Host "Flutter nao encontrado neste ambiente."
     }
 } else {
     Write-Host "Frontend Flutter pulado. Use -StartFrontendFlutter para tentar inicia-lo."

@@ -42,7 +42,12 @@ import '../desktop_home/desktop_categories_screen.dart';
 import '../desktop_home/desktop_home.dart';
 
 class DesktopTabsHome extends StatefulWidget {
-  const DesktopTabsHome({super.key});
+  const DesktopTabsHome({
+    super.key,
+    this.initialTab = 'Home',
+  });
+
+  final String initialTab;
 
   @override
   State<DesktopTabsHome> createState() => _DesktopTabsHomeState();
@@ -66,6 +71,15 @@ class _DesktopTabsHomeState extends State<DesktopTabsHome> {
     _currencyListBloc = context.read<CurrencyListBloc>();
     _profileBloc = context.read<ProfileBloc>();
     getUserRout();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) {
+        return;
+      }
+      final homeCon = Provider.of<HomeScreenProvider>(context, listen: false);
+      if (homeCon.tabType != widget.initialTab) {
+        homeCon.setTabType(widget.initialTab);
+      }
+    });
     super.initState();
   }
 
