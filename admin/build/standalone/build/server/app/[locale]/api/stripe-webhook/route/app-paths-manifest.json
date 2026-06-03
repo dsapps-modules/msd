@@ -1,3 +1,0 @@
-{
-  "/[locale]/api/stripe-webhook/route": "app/[locale]/api/stripe-webhook/route.js"
-}
