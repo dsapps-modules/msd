@@ -66,6 +66,12 @@ export default withBundleAnalyzer(
     distDir: "build",
 
     webpack: (config) => {
+      config.resolve ??= {};
+      config.resolve.alias ??= {};
+      config.resolve.alias["@hookform/resolvers/zod"] = path.resolve(
+        "./src/lib/zod-resolver.js",
+      );
+
       const swEnvFile = path.resolve("./public/firebase-env.js");
 
       const envConfig = `
