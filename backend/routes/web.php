@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\Fornecedor\FornecedorProductManageController;
 use App\Http\Controllers\Fornecedor\FornecedorDashboardController;
+use App\Http\Controllers\Fornecedor\FornecedorProductController;
 use App\Http\Controllers\Fornecedor\FornecedorAuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -61,9 +62,16 @@ Route::middleware(['auth:web', 'ensure.fornecedor.access'])->prefix('fornecedor'
     Route::get('dashboard', [FornecedorDashboardController::class, 'dashboard'])->name('fornecedor.dashboard');
 
     Route::prefix('produtos')->group(function () {
-    Route::get('importar', [FornecedorProductManageController::class, 'index'])->name('fornecedor.produtos.importar');
-    Route::post('importar', [FornecedorProductManageController::class, 'validateImport'])->name('fornecedor.produtos.validar');
-    Route::post('importar/confirmar', [FornecedorProductManageController::class, 'confirmImport'])->name('fornecedor.produtos.confirmar');
-    Route::get('modelo', [FornecedorProductManageController::class, 'template'])->name('fornecedor.produtos.modelo');
+        Route::get('/', [FornecedorProductController::class, 'index'])->name('fornecedor.produtos.index');
+        Route::get('create', [FornecedorProductController::class, 'create'])->name('fornecedor.produtos.create');
+        Route::post('/', [FornecedorProductController::class, 'store'])->name('fornecedor.produtos.store');
+        Route::get('{product}', [FornecedorProductController::class, 'show'])->whereNumber('product')->name('fornecedor.produtos.show');
+        Route::get('{product}/edit', [FornecedorProductController::class, 'edit'])->whereNumber('product')->name('fornecedor.produtos.edit');
+        Route::match(['put', 'patch'], '{product}', [FornecedorProductController::class, 'update'])->whereNumber('product')->name('fornecedor.produtos.update');
+        Route::delete('{product}', [FornecedorProductController::class, 'destroy'])->whereNumber('product')->name('fornecedor.produtos.destroy');
+        Route::get('importar', [FornecedorProductManageController::class, 'index'])->name('fornecedor.produtos.importar');
+        Route::post('importar', [FornecedorProductManageController::class, 'validateImport'])->name('fornecedor.produtos.validar');
+        Route::post('importar/confirmar', [FornecedorProductManageController::class, 'confirmImport'])->name('fornecedor.produtos.confirmar');
+        Route::get('modelo', [FornecedorProductManageController::class, 'template'])->name('fornecedor.produtos.modelo');
     });
 });

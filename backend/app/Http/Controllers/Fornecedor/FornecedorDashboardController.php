@@ -300,7 +300,8 @@ class FornecedorDashboardController extends Controller
     {
         $items = [
             ['label' => 'Dashboard', 'href' => route('fornecedor.dashboard'), 'active' => true],
-            ['label' => 'Produtos', 'href' => '#produtos', 'active' => false],
+            ['label' => 'Produtos', 'href' => route('fornecedor.produtos.index'), 'active' => false],
+            ['label' => 'Novo Produto', 'href' => route('fornecedor.produtos.create'), 'active' => false],
             ['label' => 'Importar Produtos', 'href' => route('fornecedor.produtos.importar'), 'active' => false],
             ['label' => 'Campanhas', 'href' => '#campanhas', 'active' => false],
             ['label' => 'Estoque', 'href' => '#estoque', 'active' => false],

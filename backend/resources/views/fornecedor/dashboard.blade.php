@@ -814,6 +814,8 @@
                         </p>
 
                         <div class="hero-actions">
+                            <a class="btn btn-primary" href="{{ route('fornecedor.produtos.index') }}">Ver produtos</a>
+                            <a class="btn btn-secondary" href="{{ route('fornecedor.produtos.create') }}">Novo produto</a>
                             <a class="btn btn-primary" href="{{ route('fornecedor.produtos.importar') }}">Importar produtos por Excel</a>
                             <a class="btn btn-secondary" href="{{ route('fornecedor.produtos.modelo') }}">Baixar modelo</a>
                             <a class="btn btn-secondary" href="#campanhas">Ver campanhas</a>
@@ -965,7 +967,7 @@
                                                     <td>
                                                         <div class="table-actions">
                                                             <a class="table-chip primary" href="#produtos">Ver</a>
-                                                            <a class="table-chip" href="{{ route('fornecedor.produtos.importar') }}">Editar</a>
+                                                            <a class="table-chip" href="{{ route('fornecedor.produtos.index') }}">Abrir lista</a>
                                                         </div>
                                                     </td>
                                                 </tr>
