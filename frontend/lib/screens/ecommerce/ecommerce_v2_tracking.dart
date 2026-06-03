@@ -5,19 +5,16 @@ import 'package:provider/provider.dart';
 import '../../controller/provider/cliente_ecommerce_controller.dart';
 import 'cliente_ecommerce_widgets.dart';
 
-class EcommerceSuccessPage extends StatefulWidget {
-  const EcommerceSuccessPage({
-    super.key,
-    this.orderId,
-  });
+class ClienteOrderTrackingPage extends StatefulWidget {
+  const ClienteOrderTrackingPage({super.key, required this.orderId});
 
-  final String? orderId;
+  final String orderId;
 
   @override
-  State<EcommerceSuccessPage> createState() => _EcommerceSuccessPageState();
+  State<ClienteOrderTrackingPage> createState() => _ClienteOrderTrackingPageState();
 }
 
-class _EcommerceSuccessPageState extends State<EcommerceSuccessPage> {
+class _ClienteOrderTrackingPageState extends State<ClienteOrderTrackingPage> {
   bool _loaded = false;
 
   @override
@@ -34,7 +31,7 @@ class _EcommerceSuccessPageState extends State<EcommerceSuccessPage> {
   @override
   Widget build(BuildContext context) {
     final controller = context.watch<ClienteEcommerceController>();
-    final order = widget.orderId == null ? null : controller.orderById(widget.orderId!);
+    final order = controller.orderById(widget.orderId);
 
     if (!_loaded) {
       return const Scaffold(
@@ -44,54 +41,22 @@ class _EcommerceSuccessPageState extends State<EcommerceSuccessPage> {
 
     if (order == null) {
       return ClientePageShell(
-        title: 'Pedido recebido',
-        subtitle: 'Resumo do pedido indisponível.',
+        title: 'Acompanhar pedido',
+        subtitle: 'Pedido não encontrado.',
         child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 680),
-            child: Container(
-              margin: const EdgeInsets.all(18),
-              padding: const EdgeInsets.all(22),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(24),
-                border: Border.all(color: const Color(0xFFE2E8F0)),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(Icons.receipt_long_rounded, size: 64, color: Color(0xFF1D4ED8)),
-                  const SizedBox(height: 12),
-                  Text(
-                    'Recebemos seu pedido',
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.w900,
-                        ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Não foi possível localizar o pedido nesta sessão, mas o fluxo de confirmação continua disponível.',
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: const Color(0xFF64748B),
-                        ),
-                  ),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () => context.go('/produtos'),
-                    child: const Text('Voltar para a vitrine'),
-                  ),
-                ],
-              ),
-            ),
+          child: ElevatedButton(
+            onPressed: () => context.go('/produtos'),
+            child: const Text('Voltar para a vitrine'),
           ),
         ),
       );
     }
 
+    final isWide = MediaQuery.of(context).size.width >= 820;
+
     return ClientePageShell(
-      title: 'Recebemos seu pedido',
-      subtitle: 'Seu pedido foi registrado e já está pronto para acompanhamento.',
+      title: 'Acompanhar pedido',
+      subtitle: 'Visualização simulada do status da compra.',
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(18),
         child: Center(
@@ -114,10 +79,10 @@ class _EcommerceSuccessPageState extends State<EcommerceSuccessPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const _Pill(text: 'Pedido recebido'),
+                      const _Pill(text: 'Pedido em acompanhamento'),
                       const SizedBox(height: 14),
                       Text(
-                        'Seu pedido foi registrado com sucesso.',
+                        'Número do pedido ${order.id}',
                         style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.w900,
@@ -125,7 +90,7 @@ class _EcommerceSuccessPageState extends State<EcommerceSuccessPage> {
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        'Em breve você poderá acompanhar o andamento da compra.',
+                        'A timeline abaixo mostra o andamento simulado do pedido. Inicialmente apenas o status recebido fica ativo.',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                               color: Colors.white70,
                               height: 1.45,
@@ -144,11 +109,11 @@ class _EcommerceSuccessPageState extends State<EcommerceSuccessPage> {
                   ),
                   child: Column(
                     children: [
-                      _SummaryLine(label: 'Número do pedido', value: order.id),
-                      _SummaryLine(label: 'Data', value: _formatDate(order.createdAt)),
-                      _SummaryLine(label: 'Campanha', value: order.campaignTitle),
-                      _SummaryLine(label: 'Status', value: 'pedido_recebido'),
-                      _SummaryLine(label: 'Valor total', value: clienteMoney(order.totalAmount), strong: true),
+                      _TrackLine(label: 'Número do pedido', value: order.id),
+                      _TrackLine(label: 'Status atual', value: order.status),
+                      _TrackLine(label: 'Campanha beneficiada', value: order.campaignTitle),
+                      _TrackLine(label: 'Data do pedido', value: _formatDate(order.createdAt)),
+                      _TrackLine(label: 'Valor total', value: clienteMoney(order.totalAmount), strong: true),
                     ],
                   ),
                 ),
@@ -164,7 +129,32 @@ class _EcommerceSuccessPageState extends State<EcommerceSuccessPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Produtos comprados',
+                        'Timeline do pedido',
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.w900,
+                            ),
+                      ),
+                      const SizedBox(height: 14),
+                      ClienteTimeline(
+                        currentStatus: order.status,
+                        horizontal: isWide,
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 18),
+                Container(
+                  padding: const EdgeInsets.all(18),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(24),
+                    border: Border.all(color: const Color(0xFFE2E8F0)),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Produtos',
                         style: Theme.of(context).textTheme.titleMedium?.copyWith(
                               fontWeight: FontWeight.w900,
                             ),
@@ -193,21 +183,6 @@ class _EcommerceSuccessPageState extends State<EcommerceSuccessPage> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 18),
-                Wrap(
-                  spacing: 12,
-                  runSpacing: 12,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () => context.go('/pedido/acompanhar/${order.id}'),
-                      child: const Text('Acompanhar pedido'),
-                    ),
-                    OutlinedButton(
-                      onPressed: () => context.go('/produtos'),
-                      child: const Text('Voltar para a vitrine'),
-                    ),
-                  ],
-                ),
               ],
             ),
           ),
@@ -226,8 +201,8 @@ class _EcommerceSuccessPageState extends State<EcommerceSuccessPage> {
   }
 }
 
-class _SummaryLine extends StatelessWidget {
-  const _SummaryLine({required this.label, required this.value, this.strong = false});
+class _TrackLine extends StatelessWidget {
+  const _TrackLine({required this.label, required this.value, this.strong = false});
 
   final String label;
   final String value;

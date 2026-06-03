@@ -1865,6 +1865,42 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
   type __Unused = __Check
 }
 
+// Validate ../../../src/app/[locale]/divulgador/campanhas/[id]/edit/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/[locale]/divulgador/campanhas/[id]/edit">> = Specific
+  const handler = {} as typeof import("../../../src/app/[locale]/divulgador/campanhas/[id]/edit/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../../src/app/[locale]/divulgador/campanhas/[id]/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/[locale]/divulgador/campanhas/[id]">> = Specific
+  const handler = {} as typeof import("../../../src/app/[locale]/divulgador/campanhas/[id]/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../../src/app/[locale]/divulgador/campanhas/nova/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/[locale]/divulgador/campanhas/nova">> = Specific
+  const handler = {} as typeof import("../../../src/app/[locale]/divulgador/campanhas/nova/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../../src/app/[locale]/divulgador/campanhas/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/[locale]/divulgador/campanhas">> = Specific
+  const handler = {} as typeof import("../../../src/app/[locale]/divulgador/campanhas/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
 // Validate ../../../src/app/[locale]/divulgador/compradores/page.tsx
 {
   type __IsExpected<Specific extends AppPageConfig<"/[locale]/divulgador/compradores">> = Specific

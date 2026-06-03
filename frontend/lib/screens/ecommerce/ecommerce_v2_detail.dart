@@ -1,14 +1,11 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:quick_ecommerce/router/route_name.dart';
-import 'package:quick_ecommerce/config/colors.dart';
 
 import '../../controller/provider/cart_controler.dart';
-import 'ecommerce_v2_data.dart';
-import 'ecommerce_v2_models.dart';
-import 'ecommerce_v2_widgets.dart';
+import '../../controller/provider/cliente_ecommerce_controller.dart';
+import 'cliente_ecommerce_models.dart';
+import 'cliente_ecommerce_widgets.dart';
 
 class EcommerceDetailPage extends StatefulWidget {
   const EcommerceDetailPage({
@@ -26,395 +23,315 @@ class EcommerceDetailPage extends StatefulWidget {
 
 class _EcommerceDetailPageState extends State<EcommerceDetailPage> {
   int _quantity = 1;
+  int _selectedImageIndex = 0;
 
-  bool get _isCampaign => widget.kind == 'campaign';
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      context.read<ClienteEcommerceController>().ensureInitialized();
+      context.read<CartProvider>().loadCartItems();
+    });
+  }
 
-  EcommerceProduct? get _product => EcommerceData.productBySlug(widget.slug);
-
-  EcommerceCampaign? get _campaign => EcommerceData.campaignBySlug(widget.slug);
-
-  Future<void> _addToCart(EcommerceProduct product) async {
+  Future<void> _addToCart(ClienteProduct product) async {
     await context.read<CartProvider>().addToCart(
-          EcommerceData.buildCartItem(product, quantity: _quantity),
+          context.read<ClienteEcommerceController>().buildCartItem(product, quantity: _quantity),
           context,
         );
-    if (mounted) setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final controller = context.watch<ClienteEcommerceController>();
     final cartCount = context.watch<CartProvider>().cartItems.length;
-    final product = _product;
-    final campaign = _campaign;
+    final product = controller.productBySlug(widget.slug);
 
-    if (product == null && campaign == null) {
-      return Scaffold(
-        backgroundColor: const Color(0xFFF4F7FB),
-        body: Center(
-          child: EmptyStateCard(
-            title: 'Detalhe indisponivel.',
-            subtitle: 'Nao foi possivel localizar este item mockado.',
-            actionLabel: 'Voltar para vitrine',
-            onAction: () => context.go('/'),
+    if (controller.loading && product == null) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator.adaptive()),
+      );
+    }
+
+    if (product == null) {
+      return ClientePageShell(
+        title: 'Detalhes do produto',
+        subtitle: 'Produto não localizado ou indisponível.',
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 680),
+            child: Container(
+              margin: const EdgeInsets.all(18),
+              padding: const EdgeInsets.all(22),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(24),
+                border: Border.all(color: const Color(0xFFE2E8F0)),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.search_off_rounded, size: 64, color: Color(0xFF1D4ED8)),
+                  const SizedBox(height: 12),
+                  Text(
+                    'Não encontramos este produto.',
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.w900,
+                          color: const Color(0xFF0F172A),
+                        ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'A URL pode estar desatualizada ou o item pode ter sido removido da vitrine.',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: const Color(0xFF64748B),
+                          height: 1.4,
+                        ),
+                  ),
+                  const SizedBox(height: 16),
+                  Wrap(
+                    spacing: 12,
+                    runSpacing: 12,
+                    alignment: WrapAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () => context.go('/produtos'),
+                        child: const Text('Voltar para produtos'),
+                      ),
+                      OutlinedButton(
+                        onPressed: () => context.go('/carrinho'),
+                        child: const Text('Ir para carrinho'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       );
     }
 
-    final title = campaign?.title ?? product!.title;
-    final subtitle = campaign?.subtitle ?? product!.campaignTitle;
-    final heroImage = campaign?.bannerImage ?? product!.bannerImage;
-    final gradient = campaign?.gradient ?? product!.gradient;
-    final campaignProducts = _isCampaign
-        ? EcommerceData.productsForCampaign(campaign!)
-        : <EcommerceProduct>[];
-    final productList = _isCampaign ? campaignProducts : EcommerceData.relatedProducts(product!);
-    final campaigns = _isCampaign
-        ? (campaignProducts.isNotEmpty
-            ? EcommerceData.relatedCampaigns(campaignProducts.first)
-            : EcommerceData.campaigns.where((item) => item.slug != campaign!.slug).toList())
-        : EcommerceData.relatedCampaigns(product!);
+    final mainImage = product.galleryImages.isNotEmpty
+        ? product.galleryImages[_selectedImageIndex.clamp(0, product.galleryImages.length - 1).toInt()]
+        : product.displayImage;
 
-    return Scaffold(
-      backgroundColor: const Color(0xFFF4F7FB),
-      body: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: EcommerceHeader(
-              cartCount: cartCount,
-              currentSection: _isCampaign ? 'campanhas' : 'produtos',
-              onSectionSelected: (section) {
-                if (section == 'inicio') {
-                  context.go('/');
-                } else {
-                  context.go('/');
-                }
-              },
-              onMenuTap: () => context.go('/'),
-              onUserTap: () {
-                if (kIsWeb) {
-                  context.goNamed(RouteNames.webLogin);
-                } else {
-                  context.goNamed(RouteNames.loginScreen);
-                }
-              },
-              onCartTap: () => context.go('/cart'),
-              onSearchChanged: (_) {},
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 18, 16, 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(24),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      gradient: LinearGradient(colors: gradient, begin: Alignment.topLeft, end: Alignment.bottomRight),
-                    ),
-                    child: LayoutBuilder(
-                      builder: (context, constraints) {
-                        final wide = constraints.maxWidth >= 900;
-                        final body = [
-                          Expanded(
+    return ClientePageShell(
+      title: product.name,
+      subtitle: product.supplierName,
+      trailing: IconButton(
+        onPressed: () => context.go('/carrinho'),
+        icon: Badge(
+          isLabelVisible: cartCount > 0,
+          label: Text('$cartCount'),
+          child: const Icon(Icons.shopping_cart_outlined),
+        ),
+      ),
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(18),
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 1240),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                                _StatusBadge(text: _isCampaign ? 'Campanha' : 'Produto'),
-                                const SizedBox(height: 14),
-                                Text(
-                                  title,
-                                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w900,
-                                        fontSize: 32,
-                                        height: 1.05,
-                                      ),
-                                ),
-                                const SizedBox(height: 10),
-                                Text(
-                                  subtitle,
-                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                        color: Colors.white70,
-                                        height: 1.4,
-                                      ),
-                                ),
-                                const SizedBox(height: 14),
-                                Wrap(
-                                  spacing: 10,
-                                  runSpacing: 10,
-                                  children: [
-                                    _TinyPill(text: _isCampaign ? campaign!.supplier : product!.supplier),
-                                    _TinyPill(text: _isCampaign ? money(campaign!.goal) : money(product!.finalPrice)),
-                                    _TinyPill(text: _isCampaign ? campaign!.period : product!.category),
-                                  ],
-                                ),
-                              ],
-                            ),
+                Wrap(
+                  spacing: 10,
+                  runSpacing: 10,
+                  children: [
+                    _InfoPill(text: product.supplierName),
+                    _InfoPill(text: product.packaging),
+                    _InfoPill(text: product.categoryName),
+                    _InfoPill(text: product.availableStock > 0 ? 'Estoque ${product.availableStock}' : 'Sem estoque'),
+                  ],
+                ),
+                const SizedBox(height: 18),
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    final wide = constraints.maxWidth >= 980;
+                    final gallery = Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(28),
+                          child: AspectRatio(
+                            aspectRatio: 1.05,
+                            child: _ProductImage(url: mainImage),
                           ),
-                          const SizedBox(width: 18),
-                          Expanded(
-                            child: Column(
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(24),
-                                  child: Image.asset(heroImage, height: 270, width: double.infinity, fit: BoxFit.cover),
-                                ),
-                                const SizedBox(height: 12),
-                                SizedBox(
-                                  height: 80,
-                                  child: ListView.separated(
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: _isCampaign ? productList.length : product!.galleryImages.length,
-                                    separatorBuilder: (_, __) => const SizedBox(width: 10),
-                                    itemBuilder: (_, index) {
-                                      final image = _isCampaign
-                                          ? productList[index].bannerImage
-                                          : product!.galleryImages[index];
-                                      return ClipRRect(
-                                        borderRadius: BorderRadius.circular(18),
-                                        child: Image.asset(image, width: 80, height: 80, fit: BoxFit.cover),
-                                      );
-                                    },
+                        ),
+                        const SizedBox(height: 12),
+                        SizedBox(
+                          height: 82,
+                          child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: product.galleryImages.length,
+                            separatorBuilder: (_, __) => const SizedBox(width: 10),
+                            itemBuilder: (context, index) {
+                              final image = product.galleryImages[index];
+                              final selected = index == _selectedImageIndex;
+                              return GestureDetector(
+                                onTap: () => setState(() => _selectedImageIndex = index),
+                                child: Container(
+                                  width: 82,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(18),
+                                    border: Border.all(
+                                      color: selected ? const Color(0xFF1D4ED8) : const Color(0xFFE2E8F0),
+                                      width: selected ? 2 : 1,
+                                    ),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(17),
+                                    child: _ProductImage(url: image),
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        ];
-
-                        return wide
-                            ? Row(crossAxisAlignment: CrossAxisAlignment.start, children: body)
-                            : Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  body.first,
-                                  const SizedBox(height: 18),
-                                  body.last,
-                                ],
                               );
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 18),
-                  LayoutBuilder(
-                    builder: (context, constraints) {
-                      final wide = constraints.maxWidth >= 1100;
-                      final main = Column(
+                            },
+                          ),
+                        ),
+                      ],
+                    );
+
+                    final details = Container(
+                      padding: const EdgeInsets.all(22),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(28),
+                        border: Border.all(color: const Color(0xFFE2E8F0)),
+                      ),
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _DetailCard(
-                            title: _isCampaign ? 'Sobre a campanha' : 'Descricao do produto',
-                            child: Text(
-                              campaign?.description ?? product!.description,
-                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    color: const Color(0xFF334155),
-                                    height: 1.5,
-                                  ),
-                            ),
+                          Text(
+                            product.name,
+                            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                  fontWeight: FontWeight.w900,
+                                  color: const Color(0xFF0F172A),
+                                ),
                           ),
-                          const SizedBox(height: 14),
-                          _DetailCard(
-                            title: _isCampaign ? 'Produtos da campanha' : 'Destaques',
-                            child: Wrap(
-                              spacing: 10,
-                              runSpacing: 10,
-                              children: _isCampaign
-                                  ? (productList.isEmpty
-                                      ? const [_TinyPill(text: 'Nenhum produto vinculado')]
-                                      : productList
-                                          .map((item) => _TinyPill(text: item.title))
-                                          .toList())
-                                  : product!.highlights
-                                      .map((item) => _TinyPill(text: item.toString()))
-                                      .toList(),
-                            ),
+                          const SizedBox(height: 8),
+                          Text(
+                            product.description.isEmpty ? 'Descrição não informada.' : product.description,
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  color: const Color(0xFF475569),
+                                  height: 1.5,
+                                ),
                           ),
-                          const SizedBox(height: 14),
-                          _DetailCard(
-                            title: 'Relacionados',
-                            child: _isCampaign
-                                ? Wrap(
-                                    spacing: 10,
-                                    runSpacing: 10,
-                                    children: campaigns
-                                        .map(
-                                          (item) => ActionChip(
-                                            label: Text(item.title),
-                                            onPressed: () => context.go('/produto/${item.slug}?kind=campaign'),
-                                          ),
-                                        )
-                                        .toList(),
-                                  )
-                                : Wrap(
-                                    spacing: 10,
-                                    runSpacing: 10,
-                                    children: campaigns
-                                        .map(
-                                          (item) => ActionChip(
-                                            label: Text(item.title),
-                                            onPressed: () => context.go('/produto/${item.slug}?kind=campaign'),
-                                          ),
-                                        )
-                                        .toList(),
+                          const SizedBox(height: 18),
+                          Text(
+                            clienteMoney(product.price),
+                            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                                  fontWeight: FontWeight.w900,
+                                  color: const Color(0xFF1D4ED8),
+                                ),
+                          ),
+                          const SizedBox(height: 18),
+                          Wrap(
+                            spacing: 10,
+                            runSpacing: 10,
+                            children: [
+                              _Metric(label: 'Altura', value: _dimensionText(product.height)),
+                              _Metric(label: 'Largura', value: _dimensionText(product.width)),
+                              _Metric(label: 'Comprimento', value: _dimensionText(product.length)),
+                              _Metric(label: 'Peso', value: _dimensionText(product.weight)),
+                              _Metric(label: 'Embalagem', value: product.packaging),
+                              _Metric(label: 'Reservado', value: '${product.reservedStock}'),
+                              _Metric(label: 'Disponível', value: '${product.availableStock}'),
+                            ],
+                          ),
+                          const SizedBox(height: 18),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: _QuantityPicker(
+                                  quantity: _quantity,
+                                  maxQuantity: product.cartLimit,
+                                  onChanged: (value) => setState(() => _quantity = value),
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: ElevatedButton(
+                                  onPressed: () => _addToCart(product),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xFF1D4ED8),
+                                    foregroundColor: Colors.white,
+                                    padding: const EdgeInsets.symmetric(vertical: 16),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                                   ),
+                                  child: const Text('Adicionar ao carrinho'),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 10),
+                          SizedBox(
+                            width: double.infinity,
+                            child: OutlinedButton(
+                              onPressed: () => context.go('/produtos'),
+                              style: OutlinedButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(vertical: 16),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                              ),
+                              child: const Text('Voltar para produtos'),
+                            ),
                           ),
                         ],
-                      );
+                      ),
+                    );
 
-                      final side = _PurchasePanel(
-                        label: _isCampaign ? 'Comprar item principal' : 'Adicionar ao carrinho',
-                        price: _isCampaign ? campaign!.goal : product!.finalPrice,
-                        quantity: _quantity,
-                        onIncrease: () => setState(() => _quantity += 1),
-                        onDecrease: () {
-                          if (_quantity > 1) setState(() => _quantity -= 1);
-                        },
-                        onTap: () {
-                          final target = _isCampaign
-                              ? (campaignProducts.isNotEmpty ? campaignProducts.first : null)
-                              : product;
-                          if (target == null) {
-                            return;
-                          }
-                          _addToCart(target);
-                        },
-                      );
-
-                      if (wide) {
-                        return Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(flex: 3, child: main),
-                            const SizedBox(width: 18),
-                            SizedBox(width: 360, child: side),
-                          ],
-                        );
-                      }
-
-                      return Column(
+                    if (wide) {
+                      return Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          main,
-                          const SizedBox(height: 14),
-                          side,
+                          Expanded(flex: 5, child: gallery),
+                          const SizedBox(width: 18),
+                          Expanded(flex: 5, child: details),
                         ],
                       );
-                    },
-                  ),
-                  const SizedBox(height: 24),
-                  const EcommerceFooter(),
-                ],
-              ),
+                    }
+
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        gallery,
+                        const SizedBox(height: 18),
+                        details,
+                      ],
+                    );
+                  },
+                ),
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }
-}
 
-class _DetailCard extends StatelessWidget {
-  const _DetailCard({required this.title, required this.child});
-
-  final String title;
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: const Color(0xFF0F172A),
-                  fontWeight: FontWeight.w800,
-                ),
-          ),
-          const SizedBox(height: 12),
-          child,
-        ],
-      ),
-    );
+  String _dimensionText(double? value) {
+    if (value == null || value == 0) {
+      return 'Não informado';
+    }
+    return value % 1 == 0 ? value.toStringAsFixed(0) : value.toStringAsFixed(2);
   }
 }
 
-class _PurchasePanel extends StatelessWidget {
-  const _PurchasePanel({
-    required this.label,
-    required this.price,
+class _QuantityPicker extends StatelessWidget {
+  const _QuantityPicker({
     required this.quantity,
-    required this.onIncrease,
-    required this.onDecrease,
-    required this.onTap,
+    required this.maxQuantity,
+    required this.onChanged,
   });
 
-  final String label;
-  final double price;
   final int quantity;
-  final VoidCallback onIncrease;
-  final VoidCallback onDecrease;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(label, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
-          const SizedBox(height: 10),
-          Text(
-            money(price),
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: const Color(0xFF0F172A),
-                  fontWeight: FontWeight.w900,
-                ),
-          ),
-          const SizedBox(height: 14),
-          QuantitySelector(quantity: quantity, onIncrease: onIncrease, onDecrease: onDecrease),
-          const SizedBox(height: 14),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: onTap,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: CustomColors.baseColor,
-                foregroundColor: Colors.white,
-                elevation: 0,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-              ),
-              child: const Text('Adicionar ao carrinho'),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _TinyPill extends StatelessWidget {
-  const _TinyPill({required this.text});
-
-  final String text;
+  final int maxQuantity;
+  final ValueChanged<int> onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -422,16 +339,77 @@ class _TinyPill extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
         color: const Color(0xFFF8FAFC),
-        borderRadius: BorderRadius.circular(999),
+        borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFE2E8F0)),
       ),
-      child: Text(text, style: Theme.of(context).textTheme.labelSmall?.copyWith(fontWeight: FontWeight.w700)),
+      child: Row(
+        children: [
+          IconButton(
+            onPressed: quantity > 1 ? () => onChanged(quantity - 1) : null,
+            icon: const Icon(Icons.remove_circle_outline_rounded),
+          ),
+          Expanded(
+            child: Center(
+              child: Text(
+                '$quantity',
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.w900,
+                    ),
+              ),
+            ),
+          ),
+          IconButton(
+            onPressed: quantity < maxQuantity ? () => onChanged(quantity + 1) : null,
+            icon: const Icon(Icons.add_circle_outline_rounded),
+          ),
+        ],
+      ),
     );
   }
 }
 
-class _StatusBadge extends StatelessWidget {
-  const _StatusBadge({required this.text});
+class _Metric extends StatelessWidget {
+  const _Metric({required this.label, required this.value});
+
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 160,
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF8FAFC),
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: const Color(0xFFE2E8F0)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: const Color(0xFF64748B),
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            value,
+            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                  color: const Color(0xFF0F172A),
+                  fontWeight: FontWeight.w800,
+                ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _InfoPill extends StatelessWidget {
+  const _InfoPill({required this.text});
 
   final String text;
 
@@ -440,17 +418,31 @@ class _StatusBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.16),
+        color: const Color(0xFFF1F5F9),
         borderRadius: BorderRadius.circular(999),
-        border: Border.all(color: Colors.white.withOpacity(0.18)),
       ),
-      child: Text(
-        text,
-        style: Theme.of(context).textTheme.labelLarge?.copyWith(
-              color: Colors.white,
-              fontWeight: FontWeight.w800,
-            ),
-      ),
+      child: Text(text),
     );
+  }
+}
+
+class _ProductImage extends StatelessWidget {
+  const _ProductImage({required this.url});
+
+  final String url;
+
+  @override
+  Widget build(BuildContext context) {
+    if (url.startsWith('http')) {
+      return Image.network(
+        url,
+        fit: BoxFit.cover,
+        errorBuilder: (_, __, ___) => Image.asset('assets/images/noImage.png', fit: BoxFit.cover),
+      );
+    }
+    if (url.startsWith('assets/')) {
+      return Image.asset(url, fit: BoxFit.cover);
+    }
+    return Image.asset('assets/images/noImage.png', fit: BoxFit.cover);
   }
 }

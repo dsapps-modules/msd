@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Product;
 
 use App\Actions\ImageModifier;
+use App\Actions\MultipleImageModifier;
 use App\Http\Resources\ProductCategoryByIdPublicResource;
 use App\Http\Resources\Store\StoreDetailsForOrderResource;
 use Illuminate\Http\Request;
@@ -28,6 +29,8 @@ class ProductPublicResource extends JsonResource
             'id' => $this->id,
             'store' => new StoreDetailsForOrderResource($this->whenLoaded('store')),
             'store_id' => $this->store->id ?? null,
+            'store_name' => $this->store?->name,
+            'store_slug' => $this->store?->slug,
             'name' => !empty($translation) && $translation->where('key', 'name')->first()
                 ? $translation->where('key', 'name')->first()->value
                 : $this->name, // If language is empty or not provided attribute
@@ -38,11 +41,20 @@ class ProductPublicResource extends JsonResource
             'unit' => $this->unit?->name,
             'image' => $this->image,
             'image_url' => ImageModifier::generateImageUrl($this->image),
+            'gallery_images' => $this->gallery_images,
+            'gallery_images_urls' => MultipleImageModifier::multipleImageModifier($this->gallery_images),
             'wishlist' => auth('api_customer')->check() ? $this->wishlist : false, // Check if the customer is logged in,
             'rating' => number_format((float)$this->rating, 2, '.', ''),
             'review_count' => $this->review_count,
             'max_cart_qty' => $this->max_cart_qty,
             'stock' => $this->variants->isNotEmpty() ? $this->variants->sum('stock_quantity') : null,
+            'estoque_reservado' => $this->estoque_reservado,
+            'altura' => $this->altura,
+            'largura' => $this->largura,
+            'comprimento' => $this->comprimento,
+            'peso' => $this->peso,
+            'embalagem' => $this->embalagem,
+            'valor_venda' => $this->valor_venda,
             'attributes' => $this->variants->pluck('attributes')->map(function ($attribute) {
                 return json_decode($attribute, true);
             })->toArray(),

@@ -1,13 +1,10 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:quick_ecommerce/router/route_name.dart';
 
 import '../../controller/provider/cart_controler.dart';
-import 'ecommerce_v2_data.dart';
-import 'ecommerce_v2_widgets.dart';
-import 'ecommerce_v2_models.dart';
+import '../../controller/provider/cliente_ecommerce_controller.dart';
+import 'cliente_ecommerce_widgets.dart';
 
 class EcommerceCartPage extends StatefulWidget {
   const EcommerceCartPage({super.key});
@@ -24,7 +21,10 @@ class _EcommerceCartPageState extends State<EcommerceCartPage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await context.read<CartProvider>().loadCartItems();
-      if (mounted) setState(() => _loaded = true);
+      await context.read<ClienteEcommerceController>().ensureInitialized();
+      if (mounted) {
+        setState(() => _loaded = true);
+      }
     });
   }
 
@@ -33,165 +33,327 @@ class _EcommerceCartPageState extends State<EcommerceCartPage> {
     return items.fold(0, (sum, item) => sum + (double.tryParse(item.price) ?? 0) * item.quantity);
   }
 
-  double get _shipping => _subtotal >= 300 ? 0 : 19.9;
+  double get _total => _subtotal;
+
+  Future<void> _increase(CartProvider cartProvider, item) async {
+    await cartProvider.updateQuantity(item.productId, item.quantity + 1);
+    if (mounted) setState(() {});
+  }
+
+  Future<void> _decrease(CartProvider cartProvider, item) async {
+    await cartProvider.updateQuantity(item.productId, item.quantity > 1 ? item.quantity - 1 : 1);
+    if (mounted) setState(() {});
+  }
+
+  Future<void> _remove(CartProvider cartProvider, item) async {
+    await cartProvider.deleteItem(item.productId);
+    if (mounted) setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
-    final cart = context.watch<CartProvider>().cartItems;
-    final wide = MediaQuery.of(context).size.width >= 1100;
+    final cartProvider = context.watch<CartProvider>();
+    final cart = cartProvider.cartItems;
+    final cliente = context.watch<ClienteEcommerceController>();
+    final selectedCampaign = cliente.selectedCampaign;
 
-    return Scaffold(
-      backgroundColor: const Color(0xFFF4F7FB),
-      body: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: EcommerceHeader(
-              cartCount: cart.length,
-              currentSection: 'produtos',
-              onSectionSelected: (_) => context.go('/'),
-              onMenuTap: () => context.go('/'),
-              onUserTap: () {
-                if (kIsWeb) {
-                  context.goNamed(RouteNames.webLogin);
-                } else {
-                  context.goNamed(RouteNames.loginScreen);
-                }
-              },
-              onCartTap: () {},
-              onSearchChanged: (_) {},
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Carrinho',
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w900,
-                          color: const Color(0xFF0F172A),
-                        ),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    'Revise os itens selecionados e siga para o checkout com um resumo claro.',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: const Color(0xFF64748B),
-                        ),
-                  ),
-                  const SizedBox(height: 18),
-                  if (!_loaded)
-                    const LoadingStateCard(label: 'Carregando carrinho...')
-                  else if (cart.isEmpty)
-                    EmptyStateCard(
-                      title: 'Seu carrinho esta vazio.',
-                      subtitle: 'Adicione produtos na vitrine para seguir para o checkout.',
-                      actionLabel: 'Voltar para vitrine',
-                      onAction: () => context.go('/'),
-                    )
-                  else
-                    LayoutBuilder(
-                      builder: (context, constraints) {
-                        final wideLayout = constraints.maxWidth >= 1100;
-                        final content = [
-                          Expanded(
-                            flex: wideLayout ? 3 : 1,
-                            child: Column(
-                              children: cart.map((item) {
-                                final product = EcommerceData.productById(item.productId) ??
-                                    EcommerceProduct(
-                                      id: item.productId,
-                                      slug: item.productId.toString(),
-                                      title: item.productName,
-                                      campaignSlug: '',
-                                      campaignTitle: item.storeName,
-                                      supplier: item.storeName,
-                                      category: item.variant,
-                                      description: item.productName,
-                                      price: double.tryParse(item.price) ?? 0,
-                                      discountPercent: 0,
-                                      rating: 0,
-                                      reviews: 0,
-                                      stock: item.stock,
-                                      maxQuantity: item.cartMaxQuantity,
-                                      bannerImage: item.image.isNotEmpty ? item.image : 'assets/images/noImage.png',
-                                      galleryImages: [item.image.isNotEmpty ? item.image : 'assets/images/noImage.png'],
-                                      gradient: const [Color(0xFF0F172A), Color(0xFF1D4ED8)],
-                                      accentColor: const Color(0xFF1D4ED8),
-                                      highlights: const [],
-                                    );
-                                return Padding(
-                                  padding: const EdgeInsets.only(bottom: 14),
-                                  child: CartItemCard(
-                                    product: product,
-                                    quantity: item.quantity,
-                                    onIncrease: () async {
-                                      await context.read<CartProvider>().updateQuantity(item.productId, item.quantity + 1);
-                                      if (mounted) setState(() {});
-                                    },
-                                    onDecrease: () async {
-                                      await context.read<CartProvider>().updateQuantity(
-                                            item.productId,
-                                            item.quantity > 1 ? item.quantity - 1 : 1,
-                                          );
-                                      if (mounted) setState(() {});
-                                    },
-                                    onRemove: () async {
-                                      await context.read<CartProvider>().deleteItem(item.productId);
-                                      if (mounted) setState(() {});
-                                    },
+    return ClientePageShell(
+      title: 'Carrinho',
+      subtitle: 'Revise os itens, escolha a campanha e siga para o pagamento simulado.',
+      trailing: FilledButton.tonal(
+        onPressed: () => context.go('/produtos'),
+        child: const Text('Continuar comprando'),
+      ),
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(18),
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 1240),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClienteSectionTitle(
+                  title: 'Seu carrinho',
+                  subtitle: 'Ajuste quantidades, remova itens e selecione a campanha de comissão.',
+                ),
+                const SizedBox(height: 16),
+                if (!_loaded)
+                  const _LoadingCard()
+                else if (cart.isEmpty)
+                  _EmptyCart(onBack: () => context.go('/produtos'))
+                else
+                  LayoutBuilder(
+                    builder: (context, constraints) {
+                      final wide = constraints.maxWidth >= 1050;
+
+                      final itemsColumn = Column(
+                        children: cart.map((item) {
+                          final image = item.image.isNotEmpty ? item.image : 'assets/images/noImage.png';
+                          final unitPrice = double.tryParse(item.price) ?? 0;
+                          final subtotal = unitPrice * item.quantity;
+
+                          return Container(
+                            margin: const EdgeInsets.only(bottom: 14),
+                            padding: const EdgeInsets.all(14),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(22),
+                              border: Border.all(color: const Color(0xFFE2E8F0)),
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(18),
+                                  child: SizedBox(
+                                    width: 92,
+                                    height: 92,
+                                    child: _CartImage(url: image),
                                   ),
-                                );
-                              }).toList(),
+                                ),
+                                const SizedBox(width: 14),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        item.productName,
+                                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                              fontWeight: FontWeight.w900,
+                                              color: const Color(0xFF0F172A),
+                                            ),
+                                      ),
+                                      const SizedBox(height: 6),
+                                      Text(
+                                        item.storeName,
+                                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                              color: const Color(0xFF64748B),
+                                            ),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Wrap(
+                                        spacing: 12,
+                                        runSpacing: 8,
+                                        children: [
+                                          _TinyInfo(text: 'Unitário: ${clienteMoney(unitPrice)}'),
+                                          _TinyInfo(text: 'Subtotal: ${clienteMoney(subtotal)}'),
+                                          _TinyInfo(text: 'Qtd: ${item.quantity}'),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 12),
+                                      Wrap(
+                                        spacing: 8,
+                                        runSpacing: 8,
+                                        children: [
+                                          OutlinedButton(
+                                            onPressed: () => _decrease(cartProvider, item),
+                                            child: const Icon(Icons.remove_rounded),
+                                          ),
+                                          OutlinedButton(
+                                            onPressed: () => _increase(cartProvider, item),
+                                            child: const Icon(Icons.add_rounded),
+                                          ),
+                                          TextButton(
+                                            onPressed: () => _remove(cartProvider, item),
+                                            child: const Text('Remover'),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                          const SizedBox(width: 18),
-                          SizedBox(
-                            width: 360,
-                            child: SummaryCard(
-                              items: cart.length,
-                              subtotal: _subtotal,
-                              shipping: _shipping,
-                              total: _subtotal + _shipping,
-                              primaryLabel: 'Ir para checkout',
-                              paymentLabel: 'Resumo pronto',
-                              onPrimaryTap: () => context.go('/checkout'),
-                            ),
-                          ),
-                        ];
+                          );
+                        }).toList(),
+                      );
 
-                        if (wideLayout) {
-                          return Row(crossAxisAlignment: CrossAxisAlignment.start, children: content);
-                        }
-
-                        return Column(
+                      final campaignBlock = Container(
+                        padding: const EdgeInsets.all(18),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(24),
+                          border: Border.all(color: const Color(0xFFE2E8F0)),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            content.first,
+                            Text(
+                              'Escolha a campanha que receberá a comissão da sua compra',
+                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    fontWeight: FontWeight.w900,
+                                    color: const Color(0xFF0F172A),
+                                  ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              'Parte da sua compra será vinculada à campanha selecionada.',
+                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color: const Color(0xFF64748B),
+                                  ),
+                            ),
                             const SizedBox(height: 16),
-                            SummaryCard(
-                              items: cart.length,
-                              subtotal: _subtotal,
-                              shipping: _shipping,
-                              total: _subtotal + _shipping,
-                              primaryLabel: 'Ir para checkout',
-                              paymentLabel: 'Resumo pronto',
-                              onPrimaryTap: () => context.go('/checkout'),
+                            ...cliente.activeCampaigns.map(
+                              (campaign) => Padding(
+                                padding: const EdgeInsets.only(bottom: 12),
+                                child: ClienteCampaignCard(
+                                  campaign: campaign,
+                                  selected: selectedCampaign?.slug == campaign.slug,
+                                  onTap: () => cliente.selectCampaign(campaign.slug),
+                                ),
+                              ),
                             ),
                           ],
+                        ),
+                      );
+
+                      final summary = ClienteSummaryCard(
+                        itemsCount: cart.length,
+                        subtotal: _subtotal,
+                        total: _total,
+                        selectedCampaign: selectedCampaign,
+                        primaryLabel: 'Ir para pagamento',
+                        onPrimaryTap: () => context.go('/checkout'),
+                        secondaryLabel: 'Continuar comprando',
+                        onSecondaryTap: () => context.go('/produtos'),
+                        errorMessage: cliente.checkoutErrorMessage,
+                      );
+
+                      if (wide) {
+                        return Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              flex: 3,
+                              child: Column(
+                                children: [
+                                  itemsColumn,
+                                  const SizedBox(height: 14),
+                                  campaignBlock,
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: 18),
+                            SizedBox(width: 360, child: summary),
+                          ],
                         );
-                      },
-                    ),
-                  const SizedBox(height: 22),
-                  const EcommerceFooter(),
-                ],
-              ),
+                      }
+
+                      return Column(
+                        children: [
+                          itemsColumn,
+                          campaignBlock,
+                          const SizedBox(height: 14),
+                          summary,
+                        ],
+                      );
+                    },
+                  ),
+              ],
             ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _LoadingCard extends StatelessWidget {
+  const _LoadingCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(24),
+      ),
+      child: const LinearProgressIndicator(minHeight: 10),
+    );
+  }
+}
+
+class _EmptyCart extends StatelessWidget {
+  const _EmptyCart({required this.onBack});
+
+  final VoidCallback onBack;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: const Color(0xFFE2E8F0)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Seu carrinho está vazio.',
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.w900,
+                ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Volte para a vitrine e adicione produtos para continuar.',
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: const Color(0xFF64748B),
+                ),
+          ),
+          const SizedBox(height: 14),
+          ElevatedButton(
+            onPressed: onBack,
+            child: const Text('Voltar para vitrine'),
           ),
         ],
       ),
     );
+  }
+}
+
+class _TinyInfo extends StatelessWidget {
+  const _TinyInfo({required this.text});
+  final String text;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF8FAFC),
+        borderRadius: BorderRadius.circular(999),
+      ),
+      child: Text(
+        text,
+        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: const Color(0xFF334155),
+              fontWeight: FontWeight.w600,
+            ),
+      ),
+    );
+  }
+}
+
+class _CartImage extends StatelessWidget {
+  const _CartImage({required this.url});
+  final String url;
+
+  @override
+  Widget build(BuildContext context) {
+    if (url.startsWith('http')) {
+      return Image.network(
+        url,
+        fit: BoxFit.cover,
+        errorBuilder: (_, __, ___) => Image.asset('assets/images/noImage.png', fit: BoxFit.cover),
+      );
+    }
+    if (url.startsWith('assets/')) {
+      return Image.asset(url, fit: BoxFit.cover);
+    }
+    return Image.asset('assets/images/noImage.png', fit: BoxFit.cover);
   }
 }

@@ -18,19 +18,19 @@
         </div>
 
         <div class="grid cols-4">
-            <div class="panel" style="background: rgba(255,255,255,.03);">
+            <div class="surface-soft" style="padding: 16px;">
                 <div class="muted">Valor de venda</div>
                 <strong>R$ {{ number_format((float) $product->valor_venda, 2, ',', '.') }}</strong>
             </div>
-            <div class="panel" style="background: rgba(255,255,255,.03);">
+            <div class="surface-soft" style="padding: 16px;">
                 <div class="muted">Estoque reservado</div>
                 <strong>{{ $product->estoque_reservado }}</strong>
             </div>
-            <div class="panel" style="background: rgba(255,255,255,.03);">
+            <div class="surface-soft" style="padding: 16px;">
                 <div class="muted">Peso</div>
                 <strong>{{ $product->peso }}</strong>
             </div>
-            <div class="panel" style="background: rgba(255,255,255,.03);">
+            <div class="surface-soft" style="padding: 16px;">
                 <div class="muted">Status</div>
                 <strong>{{ $product->status }}</strong>
             </div>
