@@ -12,7 +12,12 @@ class EnsureDivulgadorAccess
     {
         $user = auth('sanctum')->user();
 
-        if (!$user || !$user->isDivulgadorAccount() || $user->activity_scope !== 'divulgador_level') {
+        if (
+            !$user ||
+            !$user->isDivulgadorAccount() ||
+            $user->activity_scope !== 'divulgador_level' ||
+            !$user->isDivulgadorApproved()
+        ) {
             return response()->json([
                 'message' => 'Forbidden',
                 'status' => 403,

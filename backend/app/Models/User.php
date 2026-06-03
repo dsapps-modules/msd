@@ -27,6 +27,16 @@ class User extends Authenticatable
         'last_name',
         'birth_day',
         'cpf',
+        'cnpj',
+        'cep',
+        'street_type',
+        'street_name',
+        'street_number',
+        'street_complement',
+        'street_neighborhood',
+        'street_city',
+        'street_state',
+        'address',
         'slug',
         'phone',
         'email',
@@ -42,6 +52,7 @@ class User extends Authenticatable
         'account_type',
         'divulgador_account_code',
         'status',
+        'divulgador_status',
         'google_id',
         'facebook_id',
         'apple_id',
@@ -259,6 +270,21 @@ class User extends Authenticatable
         return $this->account_type === 'divulgador'
             || $this->accountHasRole('divulgador_admin')
             || $this->accountHasRole('divulgador_colaborador');
+    }
+
+    public function isDivulgadorApproved(): bool
+    {
+        return $this->divulgador_status === 'approved';
+    }
+
+    public function isDivulgadorPending(): bool
+    {
+        return $this->divulgador_status === 'pending';
+    }
+
+    public function isDivulgadorRejected(): bool
+    {
+        return $this->divulgador_status === 'rejected';
     }
 
     public function isFornecedorAccount(): bool

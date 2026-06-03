@@ -30,7 +30,6 @@ class DivulgadorLoginController extends Controller
 
         $user = User::query()
             ->whereRaw('LOWER(email) = ?', [$email])
-            ->where('status', 1)
             ->first();
 
         if (!$user || !$user->isDivulgadorAccount() || $user->activity_scope !== 'divulgador_level') {
@@ -39,6 +38,33 @@ class DivulgadorLoginController extends Controller
                 'status_code' => 422,
                 'message' => 'User is not a divulgador.',
             ], 422);
+        }
+
+        if ($user->isDivulgadorPending()) {
+            return response()->json([
+                'status' => false,
+                'status_code' => 423,
+                'message' => 'Cadastro do divulgador em analise.',
+                'divulgador_status' => $user->divulgador_status,
+            ], 423);
+        }
+
+        if ($user->isDivulgadorRejected()) {
+            return response()->json([
+                'status' => false,
+                'status_code' => 403,
+                'message' => 'Cadastro do divulgador rejeitado.',
+                'divulgador_status' => $user->divulgador_status,
+            ], 403);
+        }
+
+        if (!$user->isDivulgadorApproved()) {
+            return response()->json([
+                'status' => false,
+                'status_code' => 403,
+                'message' => 'Cadastro do divulgador nao aprovado.',
+                'divulgador_status' => $user->divulgador_status,
+            ], 403);
         }
 
         if (!Hash::check($request->password, $user->password)) {
@@ -73,6 +99,7 @@ class DivulgadorLoginController extends Controller
             'email_verified' => (bool) $user->email_verified,
             'account_type' => $user->account_type,
             'activity_scope' => $user->activity_scope,
+            'divulgador_status' => $user->divulgador_status,
             'role' => $roleName,
             'permissions' => $roleName ? [$roleName] : [],
         ]);

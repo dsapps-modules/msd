@@ -5,6 +5,8 @@ use App\Http\Controllers\Fornecedor\FornecedorDashboardController;
 use App\Http\Controllers\Fornecedor\FornecedorCadastroController;
 use App\Http\Controllers\Fornecedor\FornecedorProductController;
 use App\Http\Controllers\Fornecedor\FornecedorAuthController;
+use App\Http\Controllers\Divulgador\DivulgadorCadastroController;
+use App\Http\Controllers\Divulgador\DivulgadorAuthController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -78,4 +80,18 @@ Route::middleware(['auth:web', 'ensure.fornecedor.access'])->prefix('fornecedor'
         Route::post('importar/confirmar', [FornecedorProductManageController::class, 'confirmImport'])->name('fornecedor.produtos.confirmar');
         Route::get('modelo', [FornecedorProductManageController::class, 'template'])->name('fornecedor.produtos.modelo');
     });
+});
+
+Route::prefix('divulgador')->group(function () {
+    Route::get('/', function () {
+        return redirect()->route('divulgador.login.form');
+    });
+    Route::get('cadastro', [DivulgadorCadastroController::class, 'create'])->name('divulgador.cadastro.create');
+    Route::post('cadastro', [DivulgadorCadastroController::class, 'store'])->name('divulgador.cadastro.store');
+    Route::get('cadastro/analisando', [DivulgadorAuthController::class, 'analysing'])->name('divulgador.cadastro.analisando');
+    Route::get('login', [DivulgadorAuthController::class, 'create'])->name('divulgador.login.form');
+    Route::post('login', [DivulgadorAuthController::class, 'store'])->name('divulgador.login.submit');
+    Route::get('analisando', [DivulgadorAuthController::class, 'analysing'])->name('divulgador.analisando');
+    Route::get('dashboard', [DivulgadorAuthController::class, 'dashboard'])->name('divulgador.dashboard');
+    Route::post('logout', [DivulgadorAuthController::class, 'destroy'])->name('divulgador.logout');
 });

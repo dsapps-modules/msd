@@ -4,6 +4,7 @@
 
 - Admin: `http://127.0.0.1:3000/pt-BR/admin/signin`
 - Seller: `http://127.0.0.1:3000/pt-BR/seller/signin`
+- Divulgador: `http://127.0.0.1:8000/divulgador/login/`
 - API: `http://127.0.0.1:8000/api/v1/site-general-info`
 - Frontend web: `http://127.0.0.1:3001`
 
