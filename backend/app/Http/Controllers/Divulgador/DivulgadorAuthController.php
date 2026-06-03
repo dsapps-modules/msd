@@ -13,6 +13,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class DivulgadorAuthController extends Controller
@@ -97,6 +99,11 @@ class DivulgadorAuthController extends Controller
         }
 
         $accountCode = (string) ($user->divulgador_account_code ?: 'demo-divulgador');
+        $campaignRows = $this->buildCampaignRows($user, $accountCode);
+        $selectedCampaignId = $request->integer('edit_campaign');
+        $selectedCampaign = $selectedCampaignId
+            ? collect($campaignRows)->firstWhere('id', $selectedCampaignId)
+            : null;
         $featuredCampaigns = $this->buildFeaturedCampaigns($user, $accountCode);
         $recentProducts = $this->buildRecentProducts($accountCode);
         $recentSales = $this->buildRecentSales($accountCode, $user, $recentProducts);
@@ -109,6 +116,8 @@ class DivulgadorAuthController extends Controller
             'user' => $user,
             'roleLabel' => $user->divulgadorHasRole('divulgador_admin') ? 'Admin' : 'Colaborador',
             'summaryCards' => $summaryCards,
+            'campaignRows' => $campaignRows,
+            'campaignForm' => $this->buildCampaignFormData($selectedCampaign),
             'featuredCampaigns' => $featuredCampaigns,
             'recentProducts' => $recentProducts,
             'recentSales' => $recentSales,
@@ -125,6 +134,101 @@ class DivulgadorAuthController extends Controller
             'menuItems' => $this->buildMenuItems($user),
             'logoutUrl' => route('divulgador.logout'),
         ]);
+    }
+
+    public function storeCampaign(Request $request): RedirectResponse
+    {
+        $user = $request->user('web');
+
+        if (!$user || !$user->isDivulgadorAccount() || !$user->isDivulgadorApproved()) {
+            return redirect()->route('divulgador.login.form');
+        }
+
+        $data = $request->validate([
+            'titulo' => ['required', 'string', 'max:255'],
+            'objetivo' => ['required', 'string', 'max:2000'],
+            'meta_financeira' => ['required', 'numeric', 'min:0.01'],
+            'banner' => ['required', 'file', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'data_inicio' => ['required', 'date'],
+            'data_fim' => ['required', 'date', 'after_or_equal:data_inicio'],
+        ]);
+
+        $campaign = DivulgadorCampaign::create([
+            'account_code' => (string) ($user->divulgador_account_code ?: 'demo-divulgador'),
+            'divulgador_id' => $user->id,
+            'titulo' => $data['titulo'],
+            'objetivo' => $data['objetivo'],
+            'meta_financeira' => $data['meta_financeira'],
+            'banner' => $this->storeCampaignBanner($request->file('banner')),
+            'data_inicio' => $data['data_inicio'],
+            'data_fim' => $data['data_fim'],
+            'nome_campanha' => $data['titulo'],
+            'meta_total' => (int) round((float) $data['meta_financeira']),
+            'progresso_atual' => 0,
+            'link_divulgacao' => null,
+        ]);
+
+        return redirect()
+            ->route('divulgador.dashboard', ['edit_campaign' => $campaign->id])
+            ->with('status', 'Campanha criada com sucesso.');
+    }
+
+    public function updateCampaign(Request $request, int $campaign): RedirectResponse
+    {
+        $user = $request->user('web');
+
+        if (!$user || !$user->isDivulgadorAccount() || !$user->isDivulgadorApproved()) {
+            return redirect()->route('divulgador.login.form');
+        }
+
+        $campaignModel = $this->ownedCampaignQuery($user)->findOrFail($campaign);
+
+        $data = $request->validate([
+            'titulo' => ['required', 'string', 'max:255'],
+            'objetivo' => ['required', 'string', 'max:2000'],
+            'meta_financeira' => ['required', 'numeric', 'min:0.01'],
+            'banner' => ['nullable', 'file', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'data_inicio' => ['required', 'date'],
+            'data_fim' => ['required', 'date', 'after_or_equal:data_inicio'],
+        ]);
+
+        $banner = $campaignModel->banner;
+        if ($request->hasFile('banner')) {
+            $this->removeCampaignBanner($campaignModel->banner);
+            $banner = $this->storeCampaignBanner($request->file('banner'));
+        }
+
+        $campaignModel->update([
+            'titulo' => $data['titulo'],
+            'objetivo' => $data['objetivo'],
+            'meta_financeira' => $data['meta_financeira'],
+            'banner' => $banner,
+            'data_inicio' => $data['data_inicio'],
+            'data_fim' => $data['data_fim'],
+            'nome_campanha' => $data['titulo'],
+            'meta_total' => (int) round((float) $data['meta_financeira']),
+        ]);
+
+        return redirect()
+            ->route('divulgador.dashboard', ['edit_campaign' => $campaignModel->id])
+            ->with('status', 'Campanha atualizada com sucesso.');
+    }
+
+    public function destroyCampaign(Request $request, int $campaign): RedirectResponse
+    {
+        $user = $request->user('web');
+
+        if (!$user || !$user->isDivulgadorAccount() || !$user->isDivulgadorApproved()) {
+            return redirect()->route('divulgador.login.form');
+        }
+
+        $campaignModel = $this->ownedCampaignQuery($user)->findOrFail($campaign);
+        $this->removeCampaignBanner($campaignModel->banner);
+        $campaignModel->delete();
+
+        return redirect()
+            ->route('divulgador.dashboard')
+            ->with('status', 'Campanha excluída com sucesso.');
     }
 
     public function destroy(Request $request): RedirectResponse
@@ -231,6 +335,42 @@ class DivulgadorAuthController extends Controller
                     'period' => $campaign->data_inicio && $campaign->data_fim
                         ? optional($campaign->data_inicio)->format('d/m/Y') . ' a ' . optional($campaign->data_fim)->format('d/m/Y')
                         : '',
+                ];
+            })
+            ->values()
+            ->all();
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    private function buildCampaignRows(User $user, string $accountCode): array
+    {
+        return $this->ownedCampaignQuery($user, $accountCode)
+            ->orderByDesc('created_at')
+            ->get()
+            ->map(function (DivulgadorCampaign $campaign): array {
+                $goal = (float) ($campaign->meta_financeira ?? $campaign->meta_total ?? 0);
+                $progress = (float) ($campaign->progresso_atual ?? 0);
+                $progressPercent = (int) min(100, round(($progress / max(1, $goal)) * 100));
+
+                return [
+                    'id' => $campaign->id,
+                    'title' => $campaign->titulo ?: $campaign->nome_campanha,
+                    'objective' => $campaign->objetivo ?: '',
+                    'product' => $campaign->produto_nome ?: 'Produto nao informado',
+                    'supplier' => $campaign->fornecedor_nome ?: 'Fornecedor nao informado',
+                    'goal' => $this->money($goal),
+                    'progress' => $this->money($progress),
+                    'progress_percent' => $progressPercent,
+                    'status' => $campaign->status,
+                    'banner_url' => $campaign->banner_url,
+                    'link_divulgacao' => $campaign->link_divulgacao,
+                    'data_inicio' => optional($campaign->data_inicio)->format('Y-m-d'),
+                    'data_fim' => optional($campaign->data_fim)->format('Y-m-d'),
+                    'data_inicio_formatada' => optional($campaign->data_inicio)->format('d/m/Y'),
+                    'data_fim_formatada' => optional($campaign->data_fim)->format('d/m/Y'),
+                    'created_at' => optional($campaign->created_at)->format('d/m/Y H:i'),
                 ];
             })
             ->values()
@@ -350,9 +490,10 @@ class DivulgadorAuthController extends Controller
     {
         $items = [
             ['label' => 'Dashboard', 'href' => route('divulgador.dashboard'), 'active' => true],
-            ['label' => 'Campanhas', 'href' => url('/api/v1/divulgador/campanhas'), 'active' => false],
-            ['label' => 'Links', 'href' => url('/api/v1/divulgador/links'), 'active' => false],
-            ['label' => 'Compradores', 'href' => url('/api/v1/divulgador/compradores'), 'active' => false],
+            ['label' => 'Campanhas', 'href' => '#campanhas', 'active' => false],
+            ['label' => 'Gerenciar', 'href' => '#gerenciar-campanhas', 'active' => false],
+            ['label' => 'Links', 'href' => '#links', 'active' => false],
+            ['label' => 'Compradores', 'href' => '#compradores', 'active' => false],
         ];
 
         if ($user->divulgadorHasRole('divulgador_admin')) {
@@ -389,6 +530,55 @@ class DivulgadorAuthController extends Controller
             ],
             'donations_count' => $donations->count(),
         ];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function buildCampaignFormData(?array $campaign): array
+    {
+        return [
+            'id' => $campaign['id'] ?? null,
+            'titulo' => $campaign['title'] ?? '',
+            'objetivo' => $campaign['objective'] ?? '',
+            'meta_financeira' => isset($campaign['goal'])
+                ? (float) str_replace(['R$ ', '.', ','], ['', '', '.'], $campaign['goal'])
+                : 0,
+            'data_inicio' => $campaign['data_inicio'] ?? '',
+            'data_fim' => $campaign['data_fim'] ?? '',
+            'banner_url' => $campaign['banner_url'] ?? null,
+        ];
+    }
+
+    private function ownedCampaignQuery(User $user, ?string $accountCode = null)
+    {
+        $code = $accountCode ?: (string) ($user->divulgador_account_code ?: 'demo-divulgador');
+
+        return DivulgadorCampaign::query()->where(function ($query) use ($user, $code) {
+            $query->where('account_code', $code);
+
+            if ($user->id) {
+                $query->orWhere('divulgador_id', $user->id);
+            }
+        });
+    }
+
+    private function storeCampaignBanner(?\Illuminate\Http\UploadedFile $file): ?string
+    {
+        if (!$file) {
+            return null;
+        }
+
+        return $file->store('campanhas/banners', 'public');
+    }
+
+    private function removeCampaignBanner(?string $banner): void
+    {
+        if (!$banner || Str::startsWith($banner, ['http://', 'https://'])) {
+            return;
+        }
+
+        Storage::disk('public')->delete($banner);
     }
 
     private function money(float $value): string

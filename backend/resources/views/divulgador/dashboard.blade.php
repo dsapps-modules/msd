@@ -410,6 +410,114 @@
 
         .section-body { padding: 22px 24px 24px; }
 
+        .alert {
+            margin-bottom: 16px;
+            padding: 14px 16px;
+            border-radius: 14px;
+            border: 1px solid rgba(37, 99, 235, 0.18);
+            background: rgba(37, 99, 235, 0.08);
+            color: #0f3d8c;
+            font-weight: 700;
+        }
+
+        .alert-danger {
+            border-color: rgba(239, 68, 68, 0.18);
+            background: rgba(239, 68, 68, 0.08);
+            color: #b91c1c;
+        }
+
+        .campaign-form-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+            gap: 20px;
+        }
+
+        .form-panel {
+            padding: 18px;
+            border-radius: 22px;
+            border: 1px solid var(--line);
+            background: linear-gradient(180deg, #ffffff, #f8fbff);
+            display: grid;
+            gap: 14px;
+        }
+
+        .form-panel h3 {
+            margin: 0;
+            font-size: 18px;
+            letter-spacing: -0.03em;
+        }
+
+        .field-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .field {
+            display: grid;
+            gap: 8px;
+        }
+
+        .field.full { grid-column: 1 / -1; }
+
+        .field label {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .field input,
+        .field textarea {
+            width: 100%;
+            border-radius: 14px;
+            border: 1px solid var(--line);
+            background: #fff;
+            color: var(--text);
+            padding: 12px 14px;
+            outline: none;
+            transition: border-color .16s ease, box-shadow .16s ease;
+        }
+
+        .field textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .field input:focus,
+        .field textarea:focus {
+            border-color: rgba(37, 99, 235, 0.45);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.10);
+        }
+
+        .form-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 4px;
+        }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.08);
+            color: #b91c1c;
+            border: 1px solid rgba(239, 68, 68, 0.16);
+        }
+
+        .banner-preview {
+            display: block;
+            width: 100%;
+            border-radius: 18px;
+            border: 1px solid var(--line);
+            overflow: hidden;
+            background: #f8fbff;
+        }
+
+        .banner-preview img {
+            display: block;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+
         .summary-grid {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -786,6 +894,7 @@
 
                         <div class="hero-actions">
                             <a class="btn btn-primary" href="#campanhas">Ver campanhas</a>
+                            <a class="btn btn-secondary" href="#gerenciar-campanhas">Gerenciar campanhas</a>
                             <a class="btn btn-secondary" href="#produtos">Ver produtos</a>
                             <a class="btn btn-primary" href="#links">Ver links</a>
                             <a class="btn btn-secondary" href="#compradores">Ver compradores</a>
@@ -866,6 +975,144 @@
                                     </div>
                                 </article>
                             @endforeach
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section" id="gerenciar-campanhas">
+                    <div class="section-head">
+                        <div>
+                            <span class="eyebrow">CRUD</span>
+                            <h2>Gerenciar campanhas</h2>
+                            <p>Crie, edite e exclua campanhas diretamente no dashboard. A lista abaixo usa a mesma base de dados do backend.</p>
+                        </div>
+                    </div>
+                    <div class="section-body">
+                        @if(session('status'))
+                            <div class="alert">{{ session('status') }}</div>
+                        @endif
+
+                        @if($errors->any())
+                            <div class="alert alert-danger">
+                                {{ $errors->first() }}
+                            </div>
+                        @endif
+
+                        @php
+                            $isEditingCampaign = !empty($campaignForm['id']);
+                            $campaignAction = $isEditingCampaign
+                                ? route('divulgador.campanhas.update', $campaignForm['id'])
+                                : route('divulgador.campanhas.store');
+                        @endphp
+
+                        <div class="campaign-form-grid">
+                            <div class="form-panel">
+                                <h3>{{ $isEditingCampaign ? 'Editar campanha' : 'Nova campanha' }}</h3>
+                                <p class="muted">Use este formulário para manter a operação sem sair do dashboard.</p>
+
+                                <form method="POST" action="{{ $campaignAction }}" enctype="multipart/form-data">
+                                    @csrf
+                                    @if($isEditingCampaign)
+                                        @method('PUT')
+                                    @endif
+
+                                    <div class="field-grid">
+                                        <div class="field full">
+                                            <label for="titulo">Título</label>
+                                            <input id="titulo" name="titulo" type="text" value="{{ old('titulo', $campaignForm['titulo'] ?? '') }}" placeholder="Ex.: Campanha Alianca de Paz" required>
+                                        </div>
+
+                                        <div class="field full">
+                                            <label for="objetivo">Objetivo</label>
+                                            <textarea id="objetivo" name="objetivo" placeholder="Descreva o objetivo da campanha" required>{{ old('objetivo', $campaignForm['objetivo'] ?? '') }}</textarea>
+                                        </div>
+
+                                        <div class="field">
+                                            <label for="meta_financeira">Meta financeira</label>
+                                            <input id="meta_financeira" name="meta_financeira" type="number" min="0.01" step="0.01" value="{{ old('meta_financeira', $campaignForm['meta_financeira'] ?? '') }}" placeholder="0,00" required>
+                                        </div>
+
+                                        <div class="field">
+                                            <label for="banner">Banner</label>
+                                            <input id="banner" name="banner" type="file" accept="image/*" {{ $isEditingCampaign ? '' : 'required' }}>
+                                        </div>
+
+                                        <div class="field">
+                                            <label for="data_inicio">Data inicial</label>
+                                            <input id="data_inicio" name="data_inicio" type="date" value="{{ old('data_inicio', $campaignForm['data_inicio'] ?? '') }}" required>
+                                        </div>
+
+                                        <div class="field">
+                                            <label for="data_fim">Data final</label>
+                                            <input id="data_fim" name="data_fim" type="date" value="{{ old('data_fim', $campaignForm['data_fim'] ?? '') }}" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-actions">
+                                        <button class="btn btn-primary" type="submit">{{ $isEditingCampaign ? 'Salvar alterações' : 'Criar campanha' }}</button>
+                                        @if($isEditingCampaign)
+                                            <a class="btn btn-secondary" href="{{ route('divulgador.dashboard') }}#gerenciar-campanhas">Cancelar edição</a>
+                                        @endif
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="form-panel">
+                                <h3>Campanhas cadastradas</h3>
+                                <p class="muted">Clique em editar para carregar a campanha no formulário acima.</p>
+
+                                @if(!empty($campaignForm['banner_url']))
+                                    <div class="banner-preview">
+                                        <img src="{{ $campaignForm['banner_url'] }}" alt="Banner da campanha selecionada">
+                                    </div>
+                                @endif
+
+                                <div class="table-wrap">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Título</th>
+                                                <th>Meta</th>
+                                                <th>Período</th>
+                                                <th>Status</th>
+                                                <th>Ações</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @forelse($campaignRows ?? [] as $campaign)
+                                                <tr>
+                                                    <td>
+                                                        <div>{{ $campaign['title'] }}</div>
+                                                        <div class="muted">{{ \Illuminate\Support\Str::limit($campaign['objective'], 52) }}</div>
+                                                    </td>
+                                                    <td>{{ $campaign['goal'] }}</td>
+                                                    <td>{{ $campaign['data_inicio_formatada'] }} - {{ $campaign['data_fim_formatada'] }}</td>
+                                                    <td>
+                                                        @php
+                                                            $campaignStatusClass = $campaign['status'] === 'ativa' ? 'success' : ($campaign['status'] === 'futura' ? 'warning' : 'danger');
+                                                        @endphp
+                                                        <span class="status-pill {{ $campaignStatusClass }}">{{ $campaign['status'] }}</span>
+                                                    </td>
+                                                    <td>
+                                                        <div class="table-actions">
+                                                            <a class="table-chip primary" href="{{ route('divulgador.dashboard', ['edit_campaign' => $campaign['id']]) }}#gerenciar-campanhas">Editar</a>
+                                                            <form method="POST" action="{{ route('divulgador.campanhas.destroy', $campaign['id']) }}" onsubmit="return confirm('Excluir esta campanha?');" style="display:inline;">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="table-chip" style="cursor:pointer;">Excluir</button>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @empty
+                                                <tr>
+                                                    <td colspan="5" class="muted">Nenhuma campanha cadastrada.</td>
+                                                </tr>
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
