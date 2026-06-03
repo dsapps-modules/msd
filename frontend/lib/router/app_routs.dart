@@ -18,8 +18,8 @@ import '../screens/ecommerce/ecommerce_v2_cart.dart';
 import '../screens/ecommerce/ecommerce_v2_checkout.dart';
 import '../screens/ecommerce/ecommerce_v2_detail.dart';
 import '../screens/ecommerce/ecommerce_v2_home.dart';
-import '../screens/ecommerce/ecommerce_v2_models.dart';
 import '../screens/ecommerce/ecommerce_v2_success.dart';
+import '../screens/ecommerce/ecommerce_v2_tracking.dart';
 import '../screens/dev/preview_catalog_screen.dart';
 import '../screens/web_ui/desktop_tabs_home.dart';
 import '../screens/desktop_item_details/item_details_screen.dart';
@@ -187,6 +187,26 @@ class AppRoutes {
       },
     ),
     GoRoute(
+      name: 'ecommerceProducts',
+      path: '/produtos',
+      pageBuilder: (context, state) {
+        return MaterialPage(
+          key: state.pageKey,
+          child: const EcommerceHomePage(),
+        );
+      },
+    ),
+    GoRoute(
+      name: 'ecommerceProductsAlias',
+      path: '/produtos/',
+      pageBuilder: (context, state) {
+        return MaterialPage(
+          key: state.pageKey,
+          child: const EcommerceHomePage(),
+        );
+      },
+    ),
+    GoRoute(
       name: RouteNames.splashPage,
       path: '/splash',
       pageBuilder: (context, state) {
@@ -229,19 +249,16 @@ class AppRoutes {
     ),
     GoRoute(
       name: RouteNames.ecommerceSuccess,
+      path: '/pedido/recebido/:id',
+      builder: (context, state) {
+        return EcommerceSuccessPage(orderId: state.pathParameters['id']);
+      },
+    ),
+    GoRoute(
+      name: 'ecommerceCheckoutSuccessAlias',
       path: '/checkout/sucesso',
       builder: (context, state) {
-        final extra = state.extra;
-        if (extra is EcommerceOrderSummary) {
-          return EcommerceSuccessPage(summary: extra);
-        }
-        final query = state.uri.queryParameters;
-        return EcommerceSuccessPage(
-          orderNumber: query['order'],
-          total: double.tryParse(query['total'] ?? ''),
-          paymentMethod: query['payment'],
-          itemsCount: int.tryParse(query['items'] ?? ''),
-        );
+        return EcommerceSuccessPage(orderId: state.uri.queryParameters['order']);
       },
     ),
     GoRoute(
@@ -265,19 +282,39 @@ class AppRoutes {
       },
     ),
     GoRoute(
+      name: 'ecommerceProductsDetail',
+      path: '/produtos/:slug',
+      builder: (context, state) {
+        final extraParams = _extraMap(state);
+        final queryParams = _queryMap(state);
+        final String slug = state.pathParameters['slug'] ??
+            _stringValue(extraParams, queryParams, 'slug');
+        final String type = _stringValue(
+          extraParams,
+          queryParams,
+          'type',
+          defaultValue: 'product',
+        );
+        return EcommerceDetailPage(
+          slug: slug,
+          kind: type,
+        );
+      },
+    ),
+    GoRoute(
       name: 'ecommerceSuccessAlias',
       path: '/sucesso',
       builder: (context, state) {
-        final extra = state.extra;
-        if (extra is EcommerceOrderSummary) {
-          return EcommerceSuccessPage(summary: extra);
-        }
         final query = state.uri.queryParameters;
-        return EcommerceSuccessPage(
-          orderNumber: query['order'],
-          total: double.tryParse(query['total'] ?? ''),
-          paymentMethod: query['payment'],
-          itemsCount: int.tryParse(query['items'] ?? ''),
+        return EcommerceSuccessPage(orderId: query['order']);
+      },
+    ),
+    GoRoute(
+      name: 'ecommerceOrderTracking',
+      path: '/pedido/acompanhar/:id',
+      builder: (context, state) {
+        return ClienteOrderTrackingPage(
+          orderId: state.pathParameters['id'] ?? '',
         );
       },
     ),

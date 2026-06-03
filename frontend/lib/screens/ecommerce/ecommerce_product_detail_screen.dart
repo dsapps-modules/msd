@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:quick_ecommerce/config/colors.dart';
 import 'package:quick_ecommerce/router/route_name.dart';
 
 import '../../controller/provider/cart_controler.dart';

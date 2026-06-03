@@ -46,8 +46,8 @@ class FornecedorDashboardController extends Controller
 
         return view('fornecedor.dashboard', [
             'user' => $user,
-            'roleLabel' => $user->accountPrimaryRoleName() === 'fornecedor_admin' ? 'Admin' : 'Colaborador',
-            'isAdmin' => $user->accountPrimaryRoleName() === 'fornecedor_admin',
+            'roleLabel' => $user->accountHasRole('fornecedor_admin') ? 'Admin' : 'Colaborador',
+            'isAdmin' => $user->accountHasRole('fornecedor_admin'),
             'summaryCards' => $summaryCards,
             'featuredCampaigns' => $featuredCampaigns,
             'stockSummary' => $stockSummary,
@@ -101,7 +101,7 @@ class FornecedorDashboardController extends Controller
             ],
         ];
 
-        if ($user->accountPrimaryRoleName() === 'fornecedor_admin') {
+        if ($user->accountHasRole('fornecedor_admin')) {
             $cards[] = [
                 'label' => 'Valor total vendido',
                 'value' => $this->money($metrics['total_sold']),
@@ -300,14 +300,15 @@ class FornecedorDashboardController extends Controller
     {
         $items = [
             ['label' => 'Dashboard', 'href' => route('fornecedor.dashboard'), 'active' => true],
-            ['label' => 'Produtos', 'href' => '#produtos', 'active' => false],
+            ['label' => 'Produtos', 'href' => route('fornecedor.produtos.index'), 'active' => false],
+            ['label' => 'Novo Produto', 'href' => route('fornecedor.produtos.create'), 'active' => false],
             ['label' => 'Importar Produtos', 'href' => route('fornecedor.produtos.importar'), 'active' => false],
             ['label' => 'Campanhas', 'href' => '#campanhas', 'active' => false],
             ['label' => 'Estoque', 'href' => '#estoque', 'active' => false],
             ['label' => 'Vendas', 'href' => '#vendas', 'active' => false],
         ];
 
-        if ($user->accountPrimaryRoleName() === 'fornecedor_admin') {
+        if ($user->accountHasRole('fornecedor_admin')) {
             $items[] = ['label' => 'Financeiro', 'href' => '#financeiro', 'active' => false];
         }
 

@@ -60,6 +60,7 @@ import '../controller/bloc/wallet_transaction_bloc/wallet_transaction_bloc.dart'
 import '../controller/provider/all_product_controller.dart';
 import '../controller/provider/authentication_provider.dart';
 import '../controller/provider/cart_controler.dart';
+import '../controller/provider/cliente_ecommerce_controller.dart';
 import '../controller/provider/checkout_controler.dart';
 import '../controller/provider/common_provider.dart';
 import '../controller/provider/coupon_controller.dart';
@@ -93,6 +94,7 @@ List<SingleChildWidget> getAppProviders(String? theme) {
     ChangeNotifierProvider(create: (context) => CurrencyController()),
     ChangeNotifierProvider(create: (context) => FilterController()),
     ChangeNotifierProvider(create: (context) => CheckoutController()),
+    ChangeNotifierProvider(create: (context) => ClienteEcommerceController()),
     ChangeNotifierProvider(create: (context) => ItemDetailsProvider()),
     ChangeNotifierProvider(create: (context) => MessageInputProvider()),
     ChangeNotifierProvider(create: (context) => CartProvider()),

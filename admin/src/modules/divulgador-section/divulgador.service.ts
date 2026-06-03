@@ -2,6 +2,8 @@ import { DIVULGADOR_API_ENDPOINTS } from "@/endpoints/DivulgadorApiEndPoints";
 import { useBaseService } from "@/modules/core/base.service";
 import {
   DivulgadorDashboardResponse,
+  DivulgadorCampaign,
+  DivulgadorCampaignMutationResponse,
   DivulgadorFinancialResponse,
   DivulgadorBuyersResponse,
   DivulgadorLinksResponse,
@@ -31,5 +33,11 @@ export const useDivulgadorLinksService = () => {
 export const useDivulgadorFinancialService = () => {
   return useBaseService<DivulgadorFinancialResponse>(
     DIVULGADOR_API_ENDPOINTS.FINANCIAL
+  );
+};
+
+export const useDivulgadorCampaignService = () => {
+  return useBaseService<DivulgadorCampaignMutationResponse>(
+    DIVULGADOR_API_ENDPOINTS.CAMPAIGNS
   );
 };

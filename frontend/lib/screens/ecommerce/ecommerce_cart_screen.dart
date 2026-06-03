@@ -127,6 +127,7 @@ class _EcommerceCartScreenState extends State<EcommerceCartScreen> {
                                         EcommerceProduct(
                                           id: item.productId,
                                           slug: item.productId.toString(),
+                                          title: item.productName,
                                           campaignSlug: '',
                                           campaignTitle: item.storeName,
                                           supplier: item.storeName,

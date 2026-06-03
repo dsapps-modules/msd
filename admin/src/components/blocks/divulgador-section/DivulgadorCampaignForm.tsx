@@ -94,9 +94,7 @@ export function DivulgadorCampaignForm({ data }: Props) {
     <div className="space-y-6">
       <div className="flex items-center justify-between gap-3">
         <div>
-          <p className="text-xs uppercase tracking-[0.22em] text-slate-500">
-            Campanhas
-          </p>
+          <p className="text-xs uppercase tracking-[0.22em] text-slate-500">Campanhas</p>
           <h1 className="text-2xl font-semibold text-slate-900">
             {isEditing ? "Editar campanha" : "Nova campanha"}
           </h1>

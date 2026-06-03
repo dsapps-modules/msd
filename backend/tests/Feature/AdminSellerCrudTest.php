@@ -21,6 +21,8 @@ class AdminSellerCrudTest extends TestCase
             'first_name' => 'Maria',
             'last_name' => 'Silva',
             'phone' => '(11) 99999-9999',
+
+
             'email' => $email,
             'password' => 'password123',
             'password_confirmation' => 'password123',
@@ -34,7 +36,7 @@ class AdminSellerCrudTest extends TestCase
         $this->getJson('/api/v1/admin/seller/list')
             ->assertOk()
             ->assertJsonFragment([
-                'email' => $email,
+                'email' => $email
             ]);
 
         $this->getJson("/api/v1/admin/seller/details/{$seller->id}")
@@ -47,7 +49,7 @@ class AdminSellerCrudTest extends TestCase
             'first_name' => 'Maria Updated',
             'last_name' => 'Silva',
             'phone' => '(11) 98888-8888',
-            'email' => $email,
+            'email' =>   $email,
         ])->assertOk();
 
         $this->assertDatabaseHas('users', [

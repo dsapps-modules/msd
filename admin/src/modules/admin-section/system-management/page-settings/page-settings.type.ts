@@ -8,6 +8,7 @@ import { ToastContent } from "react-toastify";
 export interface PageSettingsQueryOptions extends QueryOptions {
   sort?: string;
   sortField?: string;
+  enabled?: boolean;
 }
 
 

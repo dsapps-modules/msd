@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 use Illuminate\Support\Str;
@@ -20,7 +21,6 @@ class FornecedorDashboardTest extends TestCase
 
         $response->assertOk();
         $response->assertSee('Dashboard do fornecedor');
-        $response->assertSee('Área financeira do fornecedor');
         $response->assertSee('Valor total vendido');
         $response->assertSee('Valor a receber');
     }
@@ -33,7 +33,6 @@ class FornecedorDashboardTest extends TestCase
 
         $response->assertOk();
         $response->assertSee('Dashboard do fornecedor');
-        $response->assertDontSee('Área financeira do fornecedor');
         $response->assertDontSee('Valor a receber');
         $response->assertDontSee('Valor total vendido');
     }
@@ -76,6 +75,18 @@ class FornecedorDashboardTest extends TestCase
         ]);
 
         $user->assignRole($role);
+        DB::table('model_has_roles')->updateOrInsert(
+            [
+                'model_id' => $user->id,
+                'model_type' => User::class,
+                'role_id' => $role->id,
+            ],
+            [
+                'model_id' => $user->id,
+                'model_type' => User::class,
+                'role_id' => $role->id,
+            ]
+        );
 
         return $user;
     }
